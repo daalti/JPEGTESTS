@@ -1,26 +1,19 @@
 import logging
-from dunetuf.job.job_history.job_history import JobHistory
-from dunetuf.job.job_queue.job_queue import JobQueue
-from dunetuf.print.print_new import Print
 from dunetuf.print.print_common_types import MediaSize, MediaType
-from dunetuf.media.media import Media
 from dunetuf.print.output_saver import OutputSaver
 from dunetuf.metadata import get_ip, get_emulation_ip
 from dunetuf.cdm import get_cdm_instance
 from dunetuf.udw.udw import get_underware_instance
 from dunetuf.udw import TclSocketClient
 from dunetuf.emulation.print import PrintEmulation
+from jpeg_nuevo.print_base import TestWhenPrinting
 
 from dunetuf.print.print_common_types import MediaInputIds, MediaSize, MediaType, MediaOrientation
 
-class TestWhenPrintingJPEGFile:
+class TestWhenPrintingJPEGFile(TestWhenPrinting):
     @classmethod
     def setup_class(cls):
         """Initialize shared test resources."""
-        cls.job_queue = JobQueue()
-        cls.job_history = JobHistory()
-        cls.print = Print()
-        cls.media = Media()
         cls.outputsaver = OutputSaver()
         cls.ip_address = get_ip()
         cls.cdm = get_cdm_instance(cls.ip_address)
@@ -37,19 +30,6 @@ class TestWhenPrintingJPEGFile:
     def teardown_class(cls):
         """Release shared test resources."""
 
-    def setup_method(self):
-        """Clean up resources after each test."""
-        # Clear job queue
-        self.job_queue.cancel_all_jobs()
-        self.job_queue.wait_for_queue_empty()
-
-        # Clear job history
-        self.job_history.clear()
-        self.job_history.wait_for_history_empty()
-
-        # Get media configuration
-        self.default_configuration = self.media.get_media_configuration()
-
     def teardown_method(self):
         """Clean up resources after each test."""
         # Clear job queue
@@ -63,19 +43,6 @@ class TestWhenPrintingJPEGFile:
         # Reset media configuration to default
         self.media.update_media_configuration(self.default_configuration)
 
-    def _get_tray_and_media_sizes(self, tray = None):
-        """Get the default tray and its supported media sizes.
-        
-        Returns:
-            tuple: (default_tray, media_sizes) where default_tray is the default source
-                   and media_sizes is a list of supported media sizes for that tray
-        """
-        if tray is None:
-            tray = self.media.get_default_source()
-        supported_inputs = self.media.get_media_capabilities().get('supportedInputs', [])
-        media_sizes = next((input.get('supportedMediaSizes', []) for input in supported_inputs if input.get('mediaSourceId') == tray), [])
-        logging.info('Supported Media Sizes (%s): %s', tray, media_sizes)
-        return tray, media_sizes
     """
     $$$$$_BEGIN_TEST_METADATA_DECLARATION_$$$$$
     +purpose:Jpeg test using **2686.jpg

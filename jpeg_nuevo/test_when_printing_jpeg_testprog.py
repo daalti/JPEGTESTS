@@ -1,38 +1,18 @@
 import logging
-from dunetuf.job.job_history.job_history import JobHistory
-from dunetuf.job.job_queue.job_queue import JobQueue
-from dunetuf.print.print_new import Print
 from dunetuf.print.print_common_types import MediaSize, MediaType
-from dunetuf.media.media import Media
 from dunetuf.print.output_saver import OutputSaver
+from jpeg_nuevo.print_base import TestWhenPrinting
 
 
-class TestWhenPrintingJPEGFile:
+class TestWhenPrintingJPEGFile(TestWhenPrinting):
     @classmethod
     def setup_class(cls):
         """Initialize shared test resources."""
-        cls.job_queue = JobQueue()
-        cls.job_history = JobHistory()
-        cls.print = Print()
-        cls.media = Media()
         cls.outputsaver = OutputSaver()
 
     @classmethod
     def teardown_class(cls):
         """Release shared test resources."""
-
-    def setup_method(self):
-        """Clean up resources after each test."""
-        # Clear job queue
-        self.job_queue.cancel_all_jobs()
-        self.job_queue.wait_for_queue_empty()
-
-        # Clear job history
-        self.job_history.clear()
-        self.job_history.wait_for_history_empty()
-
-        # Get media configuration
-        self.default_configuration = self.media.get_media_configuration()
 
     def teardown_method(self):
         """Clean up resources after each test."""
@@ -104,4 +84,3 @@ class TestWhenPrintingJPEGFile:
         assert self.outputsaver.verify_pdl_crc(Current_crc_value), "fail on crc mismatch"
 
         logging.info("JPEG testprog Page- Print job completed successfully")
-
