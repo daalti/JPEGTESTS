@@ -1,7 +1,7 @@
-from dunetuf.print.print_common_types import MediaSize, MediaType
+from dunetuf.print.print_common_types import MediaSize
 from dunetuf.print.output_saver import OutputSaver
 from dunetuf.print.output_verifier import OutputVerifier
-from dunetuf.print.output.intents import Intents, MediaSize, MediaSource, MediaSizeID, get_media_source
+from dunetuf.print.output.intents import Intents, MediaSize
 from jpeg_nuevo.print_base import TestWhenPrinting
 
 A0_WIDTH_IN_INCH = 841000 / 25400.0
@@ -243,5 +243,4 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
             expected_height = round(A0_HEIGHT_IN_INCH * job_resolution)
             self.outputverifier.verify_page_width(Intents.printintent, expected_width, redundance_accepted=1)
             self.outputverifier.verify_page_height(Intents.printintent, expected_height, redundance_accepted=1)
-
         self.outputverifier.verify_media_size(Intents.printintent, expected_media_size) #type:ignore

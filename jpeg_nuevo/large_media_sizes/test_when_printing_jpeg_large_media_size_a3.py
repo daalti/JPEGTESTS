@@ -1,8 +1,7 @@
-from dunetuf.print.print_common_types import MediaSize, MediaType
+from dunetuf.print.print_common_types import MediaSize
 from dunetuf.print.output_saver import OutputSaver
-from dunetuf.print.output.intents import Intents, MediaSize, MediaSource, get_media_source
+from dunetuf.print.output.intents import Intents, MediaSize
 from dunetuf.print.output_verifier import OutputVerifier
-import logging
 from jpeg_nuevo.print_base import TestWhenPrinting
 
 class TestWhenPrintingJPEGFile(TestWhenPrinting):
@@ -413,5 +412,4 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         self.print.wait_for_job_completion(job_id)
 
         self.outputverifier.save_and_parse_output()
-        self.outputverifier.verify_media_size(Intents.printintent, expected_media_size) #type:ignore
-        self.outputverifier.outputsaver.operation_mode('NONE')
+        self.outputverifier.verify_media_size(Intents.printintent, expected_media_size) #type:ignore        self.outputverifier.outputsaver.operation_mode('NONE')

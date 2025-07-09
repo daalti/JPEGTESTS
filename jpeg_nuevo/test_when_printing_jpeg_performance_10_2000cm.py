@@ -1,5 +1,4 @@
 import logging
-from dunetuf.print.print_common_types import MediaSize, MediaType
 from dunetuf.print.output_saver import OutputSaver
 from jpeg_nuevo.print_base import TestWhenPrinting
 
@@ -65,5 +64,4 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         # for non design products total test timeout will be 240
         # for design 300
         self.print.wait_for_job_completion(job_id)
-
         logging.info("JPEG Performance 10_2000cm Page - Print job completed successfully")

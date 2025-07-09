@@ -1,5 +1,4 @@
 import logging
-from dunetuf.print.print_common_types import MediaSize, MediaType
 from dunetuf.print.output_saver import OutputSaver
 from jpeg_nuevo.print_base import TestWhenPrinting
 
@@ -61,5 +60,4 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         job_id = self.print.raw.start('81fc17818224be0036736ce53e5804c5695fe1a4606c96fe694f4b0034c510da')
         self.print.wait_for_job_completion(job_id)
         self.outputsaver.save_output()
-
         logging.info("Jpeg file example photoimages 300 2000 Quality Test Photos 26 - Print job completed successfully")

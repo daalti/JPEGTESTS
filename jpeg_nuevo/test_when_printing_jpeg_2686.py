@@ -1,5 +1,5 @@
 import logging
-from dunetuf.print.print_common_types import MediaSize, MediaType
+from dunetuf.print.print_common_types import MediaType
 from dunetuf.print.output_saver import OutputSaver
 from dunetuf.metadata import get_ip, get_emulation_ip
 from dunetuf.cdm import get_cdm_instance
@@ -8,7 +8,7 @@ from dunetuf.udw import TclSocketClient
 from dunetuf.emulation.print import PrintEmulation
 from jpeg_nuevo.print_base import TestWhenPrinting
 
-from dunetuf.print.print_common_types import MediaInputIds, MediaSize, MediaType, MediaOrientation
+from dunetuf.print.print_common_types import MediaInputIds, MediaType
 
 class TestWhenPrintingJPEGFile(TestWhenPrinting):
     @classmethod
@@ -98,5 +98,4 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         self.outputsaver.save_output()
         logging.info("Get crc value for the current print job")
         Current_crc_value = self.outputsaver.get_crc()
-        logging.info("Validate current crc with master crc")
-        assert self.outputsaver.verify_pdl_crc(Current_crc_value), "fail on crc mismatch"
+        logging.info("Validate current crc with master crc")        assert self.outputsaver.verify_pdl_crc(Current_crc_value), "fail on crc mismatch"

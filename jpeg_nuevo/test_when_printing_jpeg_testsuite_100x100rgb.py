@@ -1,5 +1,4 @@
 import logging
-from dunetuf.print.print_common_types import MediaSize, MediaType
 from dunetuf.print.output_saver import OutputSaver
 from jpeg_nuevo.print_base import TestWhenPrinting
 
@@ -72,5 +71,4 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         self.print.wait_for_job_completion(job_id)
         self.outputsaver.save_output()
         self.outputsaver.operation_mode('NONE')
-
         logging.info("JPEG TestSuite 100x100 rgb Page - Print job completed successfully")

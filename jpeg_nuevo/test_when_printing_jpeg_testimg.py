@@ -1,5 +1,4 @@
 import logging
-from dunetuf.print.print_common_types import MediaSize, MediaType
 from dunetuf.print.output_saver import OutputSaver
 from dunetuf.metadata import get_ip
 from dunetuf.cdm import get_cdm_instance
@@ -83,5 +82,4 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         job_id = self.print.raw.start('ff6133bb58d3dae4f13ecbe05256dc4aaa05b17786b2c67f172cc3e934a00331')
         self.print.wait_for_job_completion(job_id)
         self.outputsaver.save_output()
-
         logging.info("JPEG testimg Page- Print job completed successfully")

@@ -6,7 +6,7 @@ from dunetuf.cdm import get_cdm_instance
 from dunetuf.udw.udw import get_underware_instance
 from dunetuf.udw import TclSocketClient
 from dunetuf.emulation.print import PrintEmulation
-from dunetuf.print.print_common_types import MediaInputIds, MediaSize, MediaType, MediaOrientation
+from dunetuf.print.print_common_types import MediaInputIds, MediaSize, MediaType
 from dunetuf.configuration import Configuration
 from jpeg_nuevo.print_base import TestWhenPrinting
 
@@ -102,5 +102,4 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         job_id = self.print.raw.start('9a0f8feea5185a818537425da9affc905d0ef63c4ef0f675b564fdda4728385b')
         self.print.wait_for_job_completion(job_id)
         self.outputsaver.save_output()
-
         logging.info("Jpeg autoAlign 0921fromHP AutoAlign Landscape 3x2 DSC 0967 file")

@@ -1,4 +1,3 @@
-from dunetuf.print.print_common_types import MediaSize, MediaType
 from dunetuf.print.output_saver import OutputSaver
 from dunetuf.cdm import get_cdm_instance
 from dunetuf.metadata import get_ip
@@ -77,5 +76,4 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
                 event_found = True
                 break 
 
-        assert event_found, f"Test Failed: Event code {event_code} not found."
-        print("Test Passed: Event code found.")
+        assert event_found, f"Test Failed: Event code {event_code} not found."        print("Test Passed: Event code found.")

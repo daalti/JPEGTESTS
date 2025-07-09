@@ -1,5 +1,4 @@
 import logging
-from dunetuf.print.print_common_types import MediaSize, MediaType
 from dunetuf.print.output_saver import OutputSaver
 from jpeg_nuevo.print_base import TestWhenPrinting
 
@@ -61,5 +60,4 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         job_id = self.print.raw.start('be12e5937c270ec1d6690cc50cd3e42b1123f0d0fe04a6540e8c3ef19374c305')
         self.print.wait_for_job_completion(job_id)
         self.outputsaver.save_output()
-
         logging.info("JPEG TestSuite lenna 20dpcm Page - Print job completed successfully")

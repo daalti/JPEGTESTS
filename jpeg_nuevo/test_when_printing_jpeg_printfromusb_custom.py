@@ -1,5 +1,4 @@
 import logging
-from dunetuf.print.print_common_types import MediaSize, MediaType
 from dunetuf.print.output_saver import OutputSaver
 from jpeg_nuevo.print_base import TestWhenPrinting
 
@@ -123,5 +122,4 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         self.outputsaver.verify_output_crc(expected_crc)
 
         self.outputsaver.save_output()
-        self.outputsaver.operation_mode('NONE')
-        assert 'success' in jobstate, 'Unexpected final job state!'
+        self.outputsaver.operation_mode('NONE')        assert 'success' in jobstate, 'Unexpected final job state!'

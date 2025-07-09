@@ -7,7 +7,7 @@ from dunetuf.cdm import get_cdm_instance
 from dunetuf.udw.udw import get_underware_instance
 from dunetuf.udw import TclSocketClient
 from dunetuf.emulation.print import PrintEmulation
-from dunetuf.print.print_common_types import MediaInputIds,  MediaType, MediaOrientation
+from dunetuf.print.print_common_types import MediaInputIds, MediaType
 from dunetuf.configuration import Configuration
 from dunetuf.print.output_verifier import OutputVerifier
 from jpeg_nuevo.print_base import TestWhenPrinting
@@ -496,5 +496,4 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         self.print.wait_for_job_completion(job_id)
 
         self.outputverifier.save_and_parse_output()
-        self.outputverifier.verify_media_size(Intents.printintent, expected_media_size)
-        self.outputverifier.outputsaver.operation_mode('NONE')
+        self.outputverifier.verify_media_size(Intents.printintent, expected_media_size)        self.outputverifier.outputsaver.operation_mode('NONE')

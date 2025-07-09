@@ -1,5 +1,4 @@
 import logging
-from dunetuf.print.print_common_types import MediaSize, MediaType
 from dunetuf.print.output_saver import OutputSaver
 from dunetuf.media.media_handling import MediaHandling
 from jpeg_nuevo.print_base import TestWhenPrinting
@@ -87,5 +86,4 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         logging.info('Print job completed with expected job status!')
 
         self.outputsaver.save_output()
-
         logging.info("Jpeg photoimages_panoramaimages_HPR837_1M-2M_SR016231 file")

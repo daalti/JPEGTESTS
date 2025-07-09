@@ -1,8 +1,7 @@
 import logging
-from dunetuf.print.print_common_types import MediaSize, MediaType
 from dunetuf.print.output_verifier import OutputVerifier
 from dunetuf.print.output_saver import OutputSaver
-from dunetuf.print.output.intents import Intents, MediaSize, ColorMode, PrintQuality, ColorRenderingType, ContentOrientation, Plex, MediaType, MediaSource, PlexBinding
+from dunetuf.print.output.intents import Intents
 from jpeg_nuevo.print_base import TestWhenPrinting
 
 

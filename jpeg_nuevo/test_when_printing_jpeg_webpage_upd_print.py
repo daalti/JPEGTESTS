@@ -1,4 +1,3 @@
-from dunetuf.print.print_common_types import MediaSize, MediaType
 from dunetuf.print.output_saver import OutputSaver
 from jpeg_nuevo.print_base import TestWhenPrinting
 
@@ -58,5 +57,4 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
     def test_when_Webpage_UPD_PRint_JPG_then_succeeds(self):
 
         job_id = self.print.raw.start('a89ef72d5101dabbf55a0722d57141626372518bfd7fa6b3ba53808ba7d1e0f5')
-        self.print.wait_for_job_completion(job_id)
-        self.outputsaver.save_output()
+        self.print.wait_for_job_completion(job_id)        self.outputsaver.save_output()

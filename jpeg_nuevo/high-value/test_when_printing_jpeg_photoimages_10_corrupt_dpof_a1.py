@@ -1,5 +1,4 @@
 import logging
-from dunetuf.print.print_common_types import MediaSize, MediaType
 from dunetuf.print.output_saver import OutputSaver
 from jpeg_nuevo.print_base import TestWhenPrinting
 
@@ -73,5 +72,4 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
             self._update_media_input_config(default_tray, 'custom', 'stationery')
         job_id = self.print.raw.start('150c0425c6a2ab2de1209cd09587ba4b2a8d0a0f7de0e0b7adb5a1947ae6db34')
         self.print.wait_for_job_completion(job_id)
-        self.outputsaver.save_output()
-        logging.info("Jpeg photoimages 10 corrupt DPOF a1 file")
+        self.outputsaver.save_output()        logging.info("Jpeg photoimages 10 corrupt DPOF a1 file")

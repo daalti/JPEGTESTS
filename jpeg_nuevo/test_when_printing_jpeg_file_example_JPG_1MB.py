@@ -1,12 +1,12 @@
 import logging
-from dunetuf.print.print_common_types import MediaSize, MediaType
+from dunetuf.print.print_common_types import MediaType
 from dunetuf.print.output_saver import OutputSaver
 from dunetuf.metadata import get_ip, get_emulation_ip
 from dunetuf.cdm import get_cdm_instance
 from dunetuf.udw.udw import get_underware_instance
 from dunetuf.udw import TclSocketClient
 from dunetuf.emulation.print import PrintEmulation
-from dunetuf.print.print_common_types import MediaType, MediaOrientation
+from dunetuf.print.print_common_types import MediaType
 from dunetuf.configuration import Configuration
 from jpeg_nuevo.print_base import TestWhenPrinting
 
@@ -118,5 +118,4 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
 
         job_id = self.print.raw.start('683a8528125ca09d8314435c051331de2b4c981c756721a2d12c103e8603a1d2')
         self.print.wait_for_job_completion(job_id)
-        self.outputsaver.save_output()
-        logging.info("Jpeg file example JPG 1MB Page - Print job completed successfully")
+        self.outputsaver.save_output()        logging.info("Jpeg file example JPG 1MB Page - Print job completed successfully")

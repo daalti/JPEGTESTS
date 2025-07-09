@@ -1,4 +1,3 @@
-from dunetuf.print.print_common_types import MediaSize, MediaType
 from dunetuf.print.output_saver import OutputSaver
 from dunetuf.localization.LocalizationHelper import LocalizationHelper
 from dunetuf.ui.spice import Spice
@@ -104,5 +103,4 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
 
         #Wait for third job completion
         self.print.wait_for_job_completion(job_id)
-        self.spice.job_ui.goto_job(third_job_id)
-        assert self.spice.job_ui.recover_job_status() == LocalizationHelper.get_string_translation(self.net,"cJobStateTypeCompleted", "en")
+        self.spice.job_ui.goto_job(third_job_id)        assert self.spice.job_ui.recover_job_status() == LocalizationHelper.get_string_translation(self.net,"cJobStateTypeCompleted", "en")

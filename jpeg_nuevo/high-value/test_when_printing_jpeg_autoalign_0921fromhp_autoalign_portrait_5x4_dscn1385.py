@@ -1,5 +1,4 @@
 import logging
-from dunetuf.print.print_common_types import MediaSize, MediaType
 from dunetuf.print.output_saver import OutputSaver
 from jpeg_nuevo.print_base import TestWhenPrinting
 
@@ -69,5 +68,4 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         job_id = self.print.raw.start('44ffc42c2d40cc0e77340abccd78e6de628f0de5bbea5e7ded8137605a70ed7e')
         self.print.wait_for_job_completion(job_id)
         self.outputsaver.save_output()
-
         logging.info("Jpeg autoAlign 0921fromHP AutoAlign Portrait 5x4 DSCN1385 file")

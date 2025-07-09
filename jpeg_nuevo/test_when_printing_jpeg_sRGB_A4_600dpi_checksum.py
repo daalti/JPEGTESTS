@@ -1,7 +1,5 @@
 import logging
-from dunetuf.print.print_common_types import MediaSize, MediaType
 from dunetuf.print.output_saver import OutputSaver
-from dunetuf.utility.systemtestpath import get_system_test_binaries_path
 from jpeg_nuevo.print_base import TestWhenPrinting
 
 class TestWhenPrintingJPEGFile(TestWhenPrinting):
@@ -62,5 +60,4 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
 
         # Read and verify that obtained checksums are the expected ones
         self.outputsaver.save_output()
-        self.outputsaver.verify_output_crc(expected_crc)
-        logging.info("basic file sRGB_A4_600dpi.jpg - Checksum(s) verified successfully")
+        self.outputsaver.verify_output_crc(expected_crc)        logging.info("basic file sRGB_A4_600dpi.jpg - Checksum(s) verified successfully")

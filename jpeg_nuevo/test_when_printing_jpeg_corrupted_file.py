@@ -1,5 +1,4 @@
 import logging
-from dunetuf.print.print_common_types import MediaSize, MediaType
 from dunetuf.print.output_saver import OutputSaver
 from jpeg_nuevo.print_base import TestWhenPrinting
 
@@ -70,5 +69,4 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         job_id = self.print.raw.start('8569b17b86977b3f02e3c5194d6436df02662bc5724f929f007a1a4626a9f122')
         self.print.wait_for_state(job_id, ["failed"])
         self.outputsaver.save_output()
-        self.outputsaver.clear_output()
-        logging.info("Jpeg corrupted file")
+        self.outputsaver.clear_output()        logging.info("Jpeg corrupted file")

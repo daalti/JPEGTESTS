@@ -1,5 +1,4 @@
 import logging
-from dunetuf.print.print_common_types import MediaSize, MediaType
 from dunetuf.print.output_saver import OutputSaver
 from dunetuf.metadata import get_ip
 from dunetuf.cdm import get_cdm_instance
@@ -90,5 +89,4 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
             assert self.outputsaver.verify_pdl_crc(Current_crc_value), "fail on crc mismatch"
 
         self.outputsaver.operation_mode('NONE')
-
         logging.info("JPEG Regression AdobeRGB A4 100dpi Page - Print job completed successfully")

@@ -1,5 +1,4 @@
 import logging
-from dunetuf.print.print_common_types import MediaSize, MediaType
 from dunetuf.print.output_saver import OutputSaver
 from jpeg_nuevo.print_base import TestWhenPrinting
 
@@ -58,5 +57,4 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         self.outputsaver.save_output()
         logging.info("Get crc value for the current print job")
         Current_crc_value = self.outputsaver.get_crc()
-        logging.info("Validate current crc with master crc")
-        assert self.outputsaver.verify_pdl_crc(Current_crc_value), "fail on crc mismatch"
+        logging.info("Validate current crc with master crc")        assert self.outputsaver.verify_pdl_crc(Current_crc_value), "fail on crc mismatch"
