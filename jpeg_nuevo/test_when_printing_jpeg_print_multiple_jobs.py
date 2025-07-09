@@ -1,22 +1,15 @@
-from dunetuf.job.job_history.job_history import JobHistory
-from dunetuf.job.job_queue.job_queue import JobQueue
-from dunetuf.print.print_new import Print
 from dunetuf.print.print_common_types import MediaSize, MediaType
-from dunetuf.media.media import Media
 from dunetuf.print.output_saver import OutputSaver
 from dunetuf.localization.LocalizationHelper import LocalizationHelper
 from dunetuf.ui.spice import Spice
 from dunetuf.metadata import get_qmltest_port, get_screen_capture, get_ip
 from dunetuf.network.net import Network
+from jpeg_nuevo.print_base import TestWhenPrinting
 
-class TestWhenPrintingJPEGFile:
+class TestWhenPrintingJPEGFile(TestWhenPrinting):
     @classmethod
     def setup_class(cls):
         """Initialize shared test resources."""
-        cls.job_queue = JobQueue()
-        cls.job_history = JobHistory()
-        cls.print = Print()
-        cls.media = Media()
         cls.outputsaver = OutputSaver()
         port = get_qmltest_port()
         screen_capture = get_screen_capture()
@@ -27,24 +20,6 @@ class TestWhenPrintingJPEGFile:
     @classmethod
     def teardown_class(cls):
         """Release shared test resources."""
-
-    def setup_method(self):
-        # Go to homescreen        
-        self.spice.cleanSystemEventAndWaitHomeScreen()
-        self.spice.wait_ready()
-        self.spice.goto_homescreen()
-
-        """Clean up resources after each test."""
-        # Clear job queue
-        self.job_queue.cancel_all_jobs()
-        self.job_queue.wait_for_queue_empty()
-
-        # Clear job history
-        self.job_history.clear()
-        self.job_history.wait_for_history_empty()
-
-        # Get media configuration
-        self.default_configuration = self.media.get_media_configuration()
 
     def teardown_method(self):
         """Clean up resources after each test."""
