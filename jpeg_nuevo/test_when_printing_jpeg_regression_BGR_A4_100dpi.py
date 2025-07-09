@@ -89,13 +89,19 @@ class TestWhenPrintingJPEGFile:
 
         logging.warning(f"No media input found for tray: {default_tray}")
 
-    def _get_default_tray_and_media_sizes(self):
-        """Get the default tray and its supported media sizes."""
-        default_tray = self.media.get_default_source()
+    def _get_tray_and_media_sizes(self, tray = None):
+        """Get the default tray and its supported media sizes.
+        
+        Returns:
+            tuple: (default_tray, media_sizes) where default_tray is the default source
+                   and media_sizes is a list of supported media sizes for that tray
+        """
+        if tray is None:
+            tray = self.media.get_default_source()
         supported_inputs = self.media.get_media_capabilities().get('supportedInputs', [])
-        media_sizes = next((inp.get('supportedMediaSizes', []) for inp in supported_inputs if inp.get('mediaSourceId') == default_tray), [])
-        logging.info('Supported Media Sizes (%s): %s', default_tray, media_sizes)
-        return default_tray, media_sizes
+        media_sizes = next((input.get('supportedMediaSizes', []) for input in supported_inputs if input.get('mediaSourceId') == tray), [])
+        logging.info('Supported Media Sizes (%s): %s', tray, media_sizes)
+        return tray, media_sizes
     """
     $$$$$_BEGIN_TEST_METADATA_DECLARATION_$$$$$
     +purpose:Simple print job of Jpeg Regression of BGR A4 100dpi Page from *BGR_A4_100dpi.jpg file
@@ -129,7 +135,7 @@ class TestWhenPrintingJPEGFile:
     def test_when_BGR_A4_100dpi_jpg_then_succeeds(self):
 
         self.outputsaver.validate_crc_tiff()
-        default_tray, media_sizes = self._get_default_tray_and_media_sizes()
+        default_tray, media_sizes = self._get_tray_and_media_sizes()
 
         if 'anycustom' in media_sizes:
             self._update_media_input_config(default_tray, 'anycustom', 'stationery')

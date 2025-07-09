@@ -71,13 +71,19 @@ class TestWhenPrintingJPEGFile:
 
         logging.warning(f"No media input found for tray: {default_tray}")
 
-    def _get_default_tray_and_media_sizes(self):
-        """Get the default tray and its supported media sizes."""
-        default_tray = self.media.get_default_source()
+    def _get_tray_and_media_sizes(self, tray = None):
+        """Get the default tray and its supported media sizes.
+        
+        Returns:
+            tuple: (default_tray, media_sizes) where default_tray is the default source
+                   and media_sizes is a list of supported media sizes for that tray
+        """
+        if tray is None:
+            tray = self.media.get_default_source()
         supported_inputs = self.media.get_media_capabilities().get('supportedInputs', [])
-        media_sizes = next((inp.get('supportedMediaSizes', []) for inp in supported_inputs if inp.get('mediaSourceId') == default_tray), [])
-        logging.info('Supported Media Sizes (%s): %s', default_tray, media_sizes)
-        return default_tray, media_sizes
+        media_sizes = next((input.get('supportedMediaSizes', []) for input in supported_inputs if input.get('mediaSourceId') == tray), [])
+        logging.info('Supported Media Sizes (%s): %s', tray, media_sizes)
+        return tray, media_sizes
     """
     $$$$$_BEGIN_TEST_METADATA_DECLARATION_$$$$$
     +purpose:simple print job of jpeg file of photoimages 1photodpoftestforbat hp945 vader dcim 100hp945 hpim0069
@@ -110,7 +116,7 @@ class TestWhenPrintingJPEGFile:
     """
     def test_when_photoimages_1PhotoDPOFTestforBAT_hp945_Vader_DCIM_100HP945_HPIM0069_JPG_then_succeeds(self):
 
-        default_tray, media_sizes = self._get_default_tray_and_media_sizes()
+        default_tray, media_sizes = self._get_tray_and_media_sizes()
         default_size = self.media.get_default_size(default_tray)
 
         if default_size in media_sizes:
