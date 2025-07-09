@@ -1,4 +1,3 @@
-import pytest
 import logging
 from dunetuf.job.job_history.job_history import JobHistory
 from dunetuf.job.job_queue.job_queue import JobQueue
@@ -81,7 +80,7 @@ class TestWhenPrintingJPEGFile:
 
         expected_state = 'SUCCESS'
 
-        response = cdm.get(cdm.CDM_MEDIA_CAPABILITIES)
+        response = self.media.get_media_capabilities()
 
         media_source= response['supportedInputs'][0]['mediaSourceId']
         resolution = response['supportedInputs'][0]['resolution']
@@ -96,8 +95,8 @@ class TestWhenPrintingJPEGFile:
             if(image_width<(left_margin+right_margin) or image_height<(top_margin+bottom_margin)):
                 expected_state='FAILED'
 
-        self.outputsaver.validate_crc_tiff(udw)
-        job_id = self.print.raw.start('24770f706b81b40a71944af3b39aad8a3f7ffb21c4f2725447022e518222d823',expected_job_state=expected_state, timeout=120)
+        self.outputsaver.validate_crc_tiff()
+        job_id = self.print.raw.start('24770f706b81b40a71944af3b39aad8a3f7ffb21c4f2725447022e518222d823')
         self.print.wait_for_job_completion(job_id)
         self.outputsaver.save_output()
         Current_crc_value = self.outputsaver.get_crc()

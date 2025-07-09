@@ -1,4 +1,3 @@
-import pytest
 import logging
 from dunetuf.job.job_history.job_history import JobHistory
 from dunetuf.job.job_queue.job_queue import JobQueue
@@ -73,11 +72,11 @@ class TestWhenPrintingJPEGFile:
     """
     def test_when_large_image_jpg_then_succeeds(self):
 
-        self.outputsaver.validate_crc_tiff(udw)
+        self.outputsaver.validate_crc_tiff()
         job_id = self.print.raw.start('40c7bdccc3b536ed31a43208fa935333481533bd65f37fe7dec9a6cf24dc9078')
         self.print.wait_for_job_completion(job_id)
         self.outputsaver.save_output()
         logging.info("Get crc value for the current print job")
         Current_crc_value = self.outputsaver.get_crc()
         logging.info("Validate current crc with master crc")
-        assert self.outputsaver.verify_pdl_crc(Current_crc_value), "fail on crc mismatch"
+        assert self.outputsaver.verify_pdl_crc(Current_crc_value), "fail on crc mismatch"

@@ -1,4 +1,3 @@
-import pytest
 import logging
 from dunetuf.job.job_history.job_history import JobHistory
 from dunetuf.job.job_queue.job_queue import JobQueue
@@ -146,8 +145,8 @@ class TestWhenPrintingJPEGFile:
             self._update_media_input_config(default_tray, 'any', 'any')
         else:
             self._update_media_input_config(default_tray, 'custom', 'stationery')
-        self.outputsaver.validate_crc_tiff(udw) 
-        job_id = self.print.raw.start('dfcaa88adf10d6833f97280b5a58893db02845db6c41495cd324ccb1145bda9a', timeout=600)
+        self.outputsaver.validate_crc_tiff() 
+        job_id = self.print.raw.start('dfcaa88adf10d6833f97280b5a58893db02845db6c41495cd324ccb1145bda9a')
         self.print.wait_for_job_completion(job_id)
         self.outputsaver.save_output()
         logging.info("Get crc value for the current print job")

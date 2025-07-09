@@ -1,4 +1,3 @@
-import pytest
 import logging
 from dunetuf.job.job_history.job_history import JobHistory
 from dunetuf.job.job_queue.job_queue import JobQueue
@@ -7,6 +6,7 @@ from dunetuf.print.print_common_types import MediaSize, MediaType
 from dunetuf.media.media import Media
 from dunetuf.print.output_saver import OutputSaver
 from dunetuf.metadata import get_ip, get_emulation_ip
+from dunetuf.configuration import Configuration
 from dunetuf.cdm import get_cdm_instance
 from dunetuf.udw.udw import get_underware_instance
 from dunetuf.udw import TclSocketClient
@@ -23,6 +23,9 @@ class TestWhenPrintingJPEGFile:
         cls.print = Print()
         cls.media = Media()
         cls.outputsaver = OutputSaver()
+        cls.ip_address = get_ip()
+        cls.cdm = get_cdm_instance(cls.ip_address)
+        cls.configuration = Configuration(cls.cdm)
         cls.ip_address = get_ip()
         cls.cdm = get_cdm_instance(cls.ip_address)
         cls.udw = get_underware_instance(cls.ip_address)
@@ -105,12 +108,12 @@ class TestWhenPrintingJPEGFile:
     def test_when_Low_Resolution_jpg_then_succeeds(self):
 
         # Setting udw command for crc to true for generating pdl crc after print job done
-        self.outputsaver.validate_crc_tiff(udw)
+        self.outputsaver.validate_crc_tiff()
         if self.print_emulation.print_engine_platform == 'emulator':
             installed_trays = self.print_emulation.tray.get_installed_trays()
 
             for tray_id in installed_trays:
-                if self.outputsaver.configuration.productname == "camden":
+                if self.configuration.productname == "camden":
                     self.print_emulation.tray.load(tray_id, 'ThreeXFive', MediaType.Plain.name)
                 else:
                     self.print_emulation.tray.load(tray_id, MediaSize.A4.name, MediaType.Plain.name)

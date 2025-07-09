@@ -1,4 +1,3 @@
-import pytest
 import logging
 from dunetuf.job.job_history.job_history import JobHistory
 from dunetuf.job.job_queue.job_queue import JobQueue
@@ -47,6 +46,38 @@ class TestWhenPrintingJPEGFile:
 
         # Reset media configuration to default
         self.media.update_media_configuration(self.default_configuration)
+
+    def _update_media_input_config(self, default_tray, media_size, media_type):
+        """Update media configuration for a specific tray."""
+        media_input = self.media.get_media_configuration().get('inputs', [])
+
+        for input_config in media_input:
+            if input_config.get('mediaSourceId') == default_tray:
+                if media_size == 'custom':
+                    supported_inputs = self.media.get_media_capabilities().get('supportedInputs', [])
+                    capability = next(
+                        (cap for cap in supported_inputs if cap.get('mediaSourceId') == default_tray),
+                        {}
+                    )
+                    input_config['currentMediaWidth'] = capability.get('mediaWidthMaximum')
+                    input_config['currentMediaLength'] = capability.get('mediaLengthMaximum')
+                    input_config['currentResolution'] = capability.get('resolution')
+
+                input_config['mediaSize'] = media_size
+                input_config['mediaType'] = media_type
+
+                self.media.update_media_configuration({'inputs': [input_config]})
+                return
+
+        logging.warning(f"No media input found for tray: {default_tray}")
+
+    def _get_default_tray_and_media_sizes(self):
+        """Get the default tray and its supported media sizes."""
+        default_tray = self.media.get_default_source()
+        supported_inputs = self.media.get_media_capabilities().get('supportedInputs', [])
+        media_sizes = next((inp.get('supportedMediaSizes', []) for inp in supported_inputs if inp.get('mediaSourceId') == default_tray), [])
+        logging.info('Supported Media Sizes (%s): %s', default_tray, media_sizes)
+        return default_tray, media_sizes
     """
     $$$$$_BEGIN_TEST_METADATA_DECLARATION_$$$$$
     +purpose:Simple print job of Jpeg Regression of faces small Page from *faces_small.jpg file
@@ -79,11 +110,12 @@ class TestWhenPrintingJPEGFile:
     """
     def test_when_faces_small_jpg_then_succeeds(self):
 
-        default = tray.get_default_source()
-        if tray.is_size_supported('anycustom', default):
-            tray.configure_tray(default, 'anycustom', 'stationery')
+        default_tray, media_sizes = self._get_default_tray_and_media_sizes()
+
+        if 'anycustom' in media_sizes:
+            self._update_media_input_config(default_tray, 'anycustom', 'stationery')
         else:
-            tray.configure_tray(default, 'custom', 'stationery')
+            self._update_media_input_config(default_tray, 'custom', 'stationery')
 
         job_id = self.print.raw.start('19d6b2e4af3faca6ef1c95c5750a3c8dea079b14a04a061cf4d2acdfaf2cb9fc')
         self.print.wait_for_job_completion(job_id)

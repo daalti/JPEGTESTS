@@ -1,4 +1,3 @@
-import pytest
 import logging
 from dunetuf.job.job_history.job_history import JobHistory
 from dunetuf.job.job_queue.job_queue import JobQueue
@@ -79,7 +78,7 @@ class TestWhenPrintingJPEGFile:
     """
     def test_when_combo_SWOP_embedded_jpg_then_succeeds(self):
 
-        self.outputsaver.validate_crc_tiff(udw)
+        self.outputsaver.validate_crc_tiff()
         job_id = self.print.raw.start('d9904a956bcf378816ff4f2c5c7ef8c6b8e03a68f7bcdad1aa0a47f218508b88')
         self.print.wait_for_job_completion(job_id)
         self.outputsaver.save_output()

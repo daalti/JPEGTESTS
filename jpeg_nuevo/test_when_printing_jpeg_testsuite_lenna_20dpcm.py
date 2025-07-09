@@ -1,4 +1,3 @@
-import pytest
 import logging
 from dunetuf.job.job_history.job_history import JobHistory
 from dunetuf.job.job_queue.job_queue import JobQueue
@@ -79,7 +78,7 @@ class TestWhenPrintingJPEGFile:
     """
     def test_when_lenna_20dpcm_jpg_then_succeeds(self):
 
-        job_id = self.print.raw.start('be12e5937c270ec1d6690cc50cd3e42b1123f0d0fe04a6540e8c3ef19374c305', timeout=180)
+        job_id = self.print.raw.start('be12e5937c270ec1d6690cc50cd3e42b1123f0d0fe04a6540e8c3ef19374c305')
         self.print.wait_for_job_completion(job_id)
         self.outputsaver.save_output()
 

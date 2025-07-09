@@ -5,7 +5,6 @@ from dunetuf.print.print_new import Print
 from dunetuf.print.print_common_types import MediaSize, MediaType
 from dunetuf.media.media import Media
 from dunetuf.print.output_saver import OutputSaver
-import pytest
 
 @pytest.fixture(autouse=True)
 def setup_teardown_pdl_test(job, usbdevice):
@@ -98,6 +97,7 @@ class TestWhenPrintingJPEGFile:
             +configuration: DocumentFormat=JPEG & DeviceFunction=PrintFromUsb & ConsumableSupport=Ink & MediaInputInstalled=Tray1
     $$$$$_END_TEST_METADATA_DECLARATION_$$$$$
     """
+    #TODO: UPDATE IT
     def test_when_5x7in_1_1006_jpg_then_succeeds(self):
 
         # Upload required images to simulated usb device
@@ -144,4 +144,4 @@ class TestWhenPrintingJPEGFile:
 
         self.outputsaver.save_output()
         self.outputsaver.operation_mode('NONE')
-        assert 'success' in jobstate, 'Unexpected final job state!'
+        assert 'success' in jobstate, 'Unexpected final job state!'

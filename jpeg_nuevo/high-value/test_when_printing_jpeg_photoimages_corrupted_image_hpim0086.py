@@ -1,4 +1,3 @@
-import pytest
 import logging
 from dunetuf.job.job_history.job_history import JobHistory
 from dunetuf.job.job_queue.job_queue import JobQueue
@@ -79,8 +78,8 @@ class TestWhenPrintingJPEGFile:
     """
     def test_when_photoimages_Corrupted_image_HPIM0086_JPG_then_succeeds(self):
 
-        job_id = self.print.raw.start('344788233baa04baf642da4985648ad970fbb293285be13529ac743264435ad6','FAILED')
-        self.print.wait_for_job_completion(job_id)
+        job_id = self.print.raw.start('344788233baa04baf642da4985648ad970fbb293285be13529ac743264435ad6')
+        self.print.wait_for_state(job_id, ["failed"])
         self.outputsaver.save_output()
 
         logging.info("Jpeg photoimages Corrupted image HPIM0086 file")

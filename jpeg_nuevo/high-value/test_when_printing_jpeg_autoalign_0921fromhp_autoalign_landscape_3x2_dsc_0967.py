@@ -1,4 +1,3 @@
-import pytest
 import logging
 from dunetuf.job.job_history.job_history import JobHistory
 from dunetuf.job.job_queue.job_queue import JobQueue
@@ -64,6 +63,53 @@ class TestWhenPrintingJPEGFile:
 
         # Reset media configuration to default
         self.media.update_media_configuration(self.default_configuration)
+    
+    def _update_media_input_config(self, default_tray, media_size, media_type):
+        """Update media configuration for a specific tray.
+        
+        Args:
+            default_tray: Default tray identifier
+            media_size: Media size to set
+            media_type: Media type to set
+        """
+        media_input = self.media.get_media_configuration().get('inputs', [])
+        
+        for input_config in media_input:
+            if input_config.get('mediaSourceId') == default_tray:
+                # Handle custom media size configuration
+                if media_size == 'custom':
+                    supported_inputs = self.media.get_media_capabilities().get('supportedInputs', [])
+                    capability = next(
+                        (cap for cap in supported_inputs if cap.get('mediaSourceId') == default_tray),
+                        {}
+                    )
+                    input_config['currentMediaWidth'] = capability.get('mediaWidthMaximum')
+                    input_config['currentMediaLength'] = capability.get('mediaLengthMaximum')
+                    input_config['currentResolution'] = capability.get('resolution')
+                
+                # Update media properties
+                input_config['mediaSize'] = media_size
+                input_config['mediaType'] = media_type
+                
+                # Update configuration and return early
+                self.media.update_media_configuration({'inputs': [input_config]})
+                return
+        
+        logging.warning(f"No media input found for tray: {default_tray}")
+
+    def _get_tray_and_media_sizes(self, tray = None):
+        """Get the default tray and its supported media sizes.
+        
+        Returns:
+            tuple: (default_tray, media_sizes) where default_tray is the default source
+                   and media_sizes is a list of supported media sizes for that tray
+        """
+        if tray is None:
+            tray = self.media.get_default_source()
+        supported_inputs = self.media.get_media_capabilities().get('supportedInputs', [])
+        media_sizes = next((input.get('supportedMediaSizes', []) for input in supported_inputs if input.get('mediaSourceId') == tray), [])
+        logging.info('Supported Media Sizes (%s): %s', tray, media_sizes)
+        return tray, media_sizes
     """
     $$$$$_BEGIN_TEST_METADATA_DECLARATION_$$$$$
     +purpose: simple print job of jpeg file of autoalign 0921fromhp autoalign landscape 3x2 dsc 0967
@@ -105,18 +151,19 @@ class TestWhenPrintingJPEGFile:
     """
     def test_when_autoAlign_0921fromHP_AutoAlign_Landscape_3x2_DSC_0967_JPG_then_succeeds(self):
 
-        default = tray.get_default_source()
-        if tray.is_size_supported('anycustom', default):
+        default_tray, media_sizes = self._get_tray_and_media_sizes()
+        if 'anycustom' in media_sizes:
             if self.print_emulation.print_engine_platform == 'emulator' and self.configuration.familyname == 'enterprise':
                 tray1 = MediaInputIds.Tray1.name
-                if tray.is_size_supported('custom', 'tray-1'):
+                tray, media_sizes = self._get_tray_and_media_sizes('tray-1')
+                if 'custom' in media_sizes:
                     self.print_emulation.tray.open(tray1)
                     self.print_emulation.tray.load(tray1, MediaSize.Custom.name, MediaType.Plain.name)
                     self.print_emulation.tray.close(tray1)
             else:
-                tray.configure_tray(default, 'anycustom', 'stationery')
+                self._update_media_input_config(default_tray, 'anycustom', 'stationery')
         else:
-            tray.configure_tray(default, 'custom', 'stationery')
+            self._update_media_input_config(default_tray, 'custom', 'stationery')
 
         job_id = self.print.raw.start('9a0f8feea5185a818537425da9affc905d0ef63c4ef0f675b564fdda4728385b')
         self.print.wait_for_job_completion(job_id)

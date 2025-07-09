@@ -47,6 +47,54 @@ class TestWhenPrintingJPEGFile:
 
         # Reset media configuration to default
         self.media.update_media_configuration(self.default_configuration)
+
+    def _update_media_input_config(self, default_tray, media_size, media_type):
+        """Update media configuration for a specific tray.
+        
+        Args:
+            default_tray: Default tray identifier
+            media_size: Media size to set
+            media_type: Media type to set
+        """
+        media_input = self.media.get_media_configuration().get('inputs', [])
+        
+        for input_config in media_input:
+            if input_config.get('mediaSourceId') == default_tray:
+                # Handle custom media size configuration
+                if media_size == 'custom':
+                    supported_inputs = self.media.get_media_capabilities().get('supportedInputs', [])
+                    capability = next(
+                        (cap for cap in supported_inputs if cap.get('mediaSourceId') == default_tray),
+                        {}
+                    )
+                    input_config['currentMediaWidth'] = capability.get('mediaWidthMaximum')
+                    input_config['currentMediaLength'] = capability.get('mediaLengthMaximum')
+                    input_config['currentResolution'] = capability.get('resolution')
+                
+                # Update media properties
+                input_config['mediaSize'] = media_size
+                input_config['mediaType'] = media_type
+                
+                # Update configuration and return early
+                self.media.update_media_configuration({'inputs': [input_config]})
+                return
+        
+        logging.warning(f"No media input found for tray: {default_tray}")
+
+    def _get_tray_and_media_sizes(self, tray = None):
+        """Get the default tray and its supported media sizes.
+        
+        Returns:
+            tuple: (default_tray, media_sizes) where default_tray is the default source
+                   and media_sizes is a list of supported media sizes for that tray
+        """
+        if tray is None:
+            tray = self.media.get_default_source()
+        supported_inputs = self.media.get_media_capabilities().get('supportedInputs', [])
+        media_sizes = next((input.get('supportedMediaSizes', []) for input in supported_inputs if input.get('mediaSourceId') == tray), [])
+        logging.info('Supported Media Sizes (%s): %s', tray, media_sizes)
+        return tray, media_sizes
+    
     """
     $$$$$_BEGIN_TEST_METADATA_DECLARATION_$$$$$
     +purpose: simple print job of jpeg file of photoimages resolution jpg jpg1760x1168
@@ -77,12 +125,14 @@ class TestWhenPrintingJPEGFile:
 
     $$$$$_END_TEST_METADATA_DECLARATION_$$$$$
     """
+
+    #TODO: UPDATE THE TEST
     def test_when_photoimages_resolution_jpg_jpg1760x1168_JPG_then_succeeds(self):
 
         self.outputsaver.operation_mode('TIFF')
-
+        self.media.get_media_capabilities()
         selected_media_source = ''
-        for tray_capabilities in tray.capabilities["supportedInputs"]:
+        for tray_capabilities in self.media.get_media_capabilities()["supportedInputs"]:
             selected_media_source = tray_capabilities['mediaSourceId']
             if tray.is_media_combination_supported(selected_media_source, "custom", "stationery"):
                 if tray_capabilities['mediaWidthMinimum'] <= 233000 and tray_capabilities['mediaWidthMaximum'] >= 233000 and tray_capabilities['mediaLengthMinimum'] <= 155000 and tray_capabilities['mediaLengthMaximum'] >= 155000:

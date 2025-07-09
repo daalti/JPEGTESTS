@@ -1,4 +1,3 @@
-import pytest
 import logging
 from dunetuf.job.job_history.job_history import JobHistory
 from dunetuf.job.job_queue.job_queue import JobQueue
@@ -79,7 +78,7 @@ class TestWhenPrintingJPEGFile:
     """
     def test_when_DemoImages_jpg_then_succeeds(self):
 
-        job_id = self.print.raw.start('3c685134a542d477374788bb6a3f1027cd8f433d49a0255b2ac7f5246bd7010c', timeout=180)
+        job_id = self.print.raw.start('3c685134a542d477374788bb6a3f1027cd8f433d49a0255b2ac7f5246bd7010c')
         self.print.wait_for_job_completion(job_id)
         self.outputsaver.save_output()
 

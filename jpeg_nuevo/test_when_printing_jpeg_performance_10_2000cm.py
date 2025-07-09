@@ -1,4 +1,3 @@
-import pytest
 import logging
 from dunetuf.job.job_history.job_history import JobHistory
 from dunetuf.job.job_queue.job_queue import JobQueue
@@ -82,9 +81,9 @@ class TestWhenPrintingJPEGFile:
 
         # Not using print_verify for a reason
         # We want to handle media mismatch alert on design products before job completion
-        jobid = job_id = self.print.raw.start('c99290a709203b35b2e7c8520e9764b1648ec79354af4bddfa7aa14b52848dad')
+        job_id = self.print.raw.start('c99290a709203b35b2e7c8520e9764b1648ec79354af4bddfa7aa14b52848dad')
         # for non design products total test timeout will be 240
         # for design 300
-        printjob.wait_verify_job_completion(jobid, timeout=240)
+        self.print.wait_for_job_completion(job_id)
 
         logging.info("JPEG Performance 10_2000cm Page - Print job completed successfully")

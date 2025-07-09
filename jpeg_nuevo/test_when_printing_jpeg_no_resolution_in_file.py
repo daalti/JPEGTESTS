@@ -1,10 +1,10 @@
-import pytest
 import logging
 from dunetuf.job.job_history.job_history import JobHistory
 from dunetuf.job.job_queue.job_queue import JobQueue
 from dunetuf.print.print_new import Print
 from dunetuf.print.print_common_types import MediaSize, MediaType
 from dunetuf.media.media import Media
+from dunetuf.print.output_verifier import OutputVerifier
 from dunetuf.print.output_saver import OutputSaver
 from dunetuf.print.output.intents import Intents, MediaSize, ColorMode, PrintQuality, ColorRenderingType, ContentOrientation, Plex, MediaType, MediaSource, PlexBinding
 
@@ -18,6 +18,7 @@ class TestWhenPrintingJPEGFile:
         cls.print = Print()
         cls.media = Media()
         cls.outputsaver = OutputSaver()
+        cls.outputverifier = OutputVerifier(cls.outputsaver)
 
     @classmethod
     def teardown_class(cls):
@@ -48,6 +49,54 @@ class TestWhenPrintingJPEGFile:
 
         # Reset media configuration to default
         self.media.update_media_configuration(self.default_configuration)
+
+    def _update_media_input_config(self, default_tray, media_size, media_type):
+        """Update media configuration for a specific tray.
+        
+        Args:
+            default_tray: Default tray identifier
+            media_size: Media size to set
+            media_type: Media type to set
+        """
+        media_input = self.media.get_media_configuration().get('inputs', [])
+        
+        for input_config in media_input:
+            if input_config.get('mediaSourceId') == default_tray:
+                # Handle custom media size configuration
+                if media_size == 'custom':
+                    supported_inputs = self.media.get_media_capabilities().get('supportedInputs', [])
+                    capability = next(
+                        (cap for cap in supported_inputs if cap.get('mediaSourceId') == default_tray),
+                        {}
+                    )
+                    input_config['currentMediaWidth'] = capability.get('mediaWidthMaximum')
+                    input_config['currentMediaLength'] = capability.get('mediaLengthMaximum')
+                    input_config['currentResolution'] = capability.get('resolution')
+                
+                # Update media properties
+                input_config['mediaSize'] = media_size
+                input_config['mediaType'] = media_type
+                
+                # Update configuration and return early
+                self.media.update_media_configuration({'inputs': [input_config]})
+                return
+        
+        logging.warning(f"No media input found for tray: {default_tray}")
+
+    def _get_tray_and_media_sizes(self, tray = None):
+        """Get the default tray and its supported media sizes.
+        
+        Returns:
+            tuple: (default_tray, media_sizes) where default_tray is the default source
+                   and media_sizes is a list of supported media sizes for that tray
+        """
+        if tray is None:
+            tray = self.media.get_default_source()
+        supported_inputs = self.media.get_media_capabilities().get('supportedInputs', [])
+        media_sizes = next((input.get('supportedMediaSizes', []) for input in supported_inputs if input.get('mediaSourceId') == tray), [])
+        logging.info('Supported Media Sizes (%s): %s', tray, media_sizes)
+        return tray, media_sizes
+    
     """
     $$$$$_BEGIN_TEST_METADATA_DECLARATION_$$$$$
     +purpose:Test jpeg job when no resolution in specified in file
@@ -80,22 +129,22 @@ class TestWhenPrintingJPEGFile:
     """
     def test_when_road_nores_jpeg_then_succeeds(self):
 
-        default_tray = tray.get_default_source()
-        if tray.is_size_supported('custom', default_tray):
-            tray.configure_tray(default_tray, 'custom', 'stationery')
+        default_tray, media_sizes = self._get_tray_and_media_sizes()
+        if 'custom' in media_sizes:
+            self._update_media_input_config(default_tray, 'custom', 'stationery')
 
-        self.outputsaver.validate_crc_tiff(udw)
+        self.outputsaver.validate_crc_tiff()
 
-        job_id = self.print.raw.start('116ef2798a4d195fd1e3ea20d81af3b8c20373587e119d10a6ff0f0d70ee6f86', 'SUCCESS', 300, 1)
+        job_id = self.print.raw.start('116ef2798a4d195fd1e3ea20d81af3b8c20373587e119d10a6ff0f0d70ee6f86')
         self.print.wait_for_job_completion(job_id)
-        outputverifier.save_and_parse_output()
+        self.outputverifier.save_and_parse_output()
         logging.info("Get crc value for the current print job")
         Current_crc_value = self.outputsaver.get_crc()
         logging.info("Validate current crc with master crc")
         assert self.outputsaver.verify_pdl_crc(Current_crc_value), "fail on crc mismatch"
 
-        outputverifier.verify_resolution(Intents.printintent, 600)
-        outputverifier.verify_page_width(Intents.printintent, 3000)
-        outputverifier.verify_page_height(Intents.printintent, 3749)
+        self.outputverifier.verify_resolution(Intents.printintent, 600)
+        self.outputverifier.verify_page_width(Intents.printintent, 3000)
+        self.outputverifier.verify_page_height(Intents.printintent, 3749)
         self.outputsaver.operation_mode('NONE')
 

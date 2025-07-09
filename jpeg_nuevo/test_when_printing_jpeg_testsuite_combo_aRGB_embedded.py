@@ -1,4 +1,3 @@
-import pytest
 import logging
 from dunetuf.job.job_history.job_history import JobHistory
 from dunetuf.job.job_queue.job_queue import JobQueue
@@ -79,7 +78,7 @@ class TestWhenPrintingJPEGFile:
     """
     def test_when_combo_aRGB_embedded_jpg_then_succeeds(self):
 
-        self.outputsaver.validate_crc_tiff(udw)
+        self.outputsaver.validate_crc_tiff()
         job_id = self.print.raw.start('50f412884b1ddafb50dcadf66349776bbdcdbdcaa219cda6da5bb84f1e2e7cc6')
         self.print.wait_for_job_completion(job_id)
         self.outputsaver.save_output()

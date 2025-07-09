@@ -13,6 +13,7 @@ from dunetuf.udw import TclSocketClient
 from dunetuf.emulation.print import PrintEmulation
 from dunetuf.print.print_common_types import MediaInputIds,  MediaType, MediaOrientation
 from dunetuf.configuration import Configuration
+from dunetuf.print.output_verifier import OutputVerifier
 
 class TestWhenPrintingJPEGFile:
     @classmethod
@@ -34,6 +35,7 @@ class TestWhenPrintingJPEGFile:
             engine_simulator_ip = None
         logging.info('Instantiating PrintEmulation with %s', engine_simulator_ip)
         cls.print_emulation = PrintEmulation(cls.cdm, cls.udw, cls.tcl, engine_simulator_ip)
+        cls.outputverifier = OutputVerifier(cls.outputsaver)
 
     @classmethod
     def teardown_class(cls):
@@ -64,6 +66,53 @@ class TestWhenPrintingJPEGFile:
 
         # Reset media configuration to default
         self.media.update_media_configuration(self.default_configuration)
+    
+    def _update_media_input_config(self, default_tray, media_size, media_type):
+        """Update media configuration for a specific tray.
+        
+        Args:
+            default_tray: Default tray identifier
+            media_size: Media size to set
+            media_type: Media type to set
+        """
+        media_input = self.media.get_media_configuration().get('inputs', [])
+        
+        for input_config in media_input:
+            if input_config.get('mediaSourceId') == default_tray:
+                # Handle custom media size configuration
+                if media_size == 'custom':
+                    supported_inputs = self.media.get_media_capabilities().get('supportedInputs', [])
+                    capability = next(
+                        (cap for cap in supported_inputs if cap.get('mediaSourceId') == default_tray),
+                        {}
+                    )
+                    input_config['currentMediaWidth'] = capability.get('mediaWidthMaximum')
+                    input_config['currentMediaLength'] = capability.get('mediaLengthMaximum')
+                    input_config['currentResolution'] = capability.get('resolution')
+                
+                # Update media properties
+                input_config['mediaSize'] = media_size
+                input_config['mediaType'] = media_type
+                
+                # Update configuration and return early
+                self.media.update_media_configuration({'inputs': [input_config]})
+                return
+        
+        logging.warning(f"No media input found for tray: {default_tray}")
+
+    def _get_tray_and_media_sizes(self, tray = None):
+        """Get the default tray and its supported media sizes.
+        
+        Returns:
+            tuple: (default_tray, media_sizes) where default_tray is the default source
+                   and media_sizes is a list of supported media sizes for that tray
+        """
+        if tray is None:
+            tray = self.media.get_default_source()
+        supported_inputs = self.media.get_media_capabilities().get('supportedInputs', [])
+        media_sizes = next((input.get('supportedMediaSizes', []) for input in supported_inputs if input.get('mediaSourceId') == tray), [])
+        logging.info('Supported Media Sizes (%s): %s', tray, media_sizes)
+        return tray, media_sizes
     """
     $$$$$_BEGIN_TEST_METADATA_DECLARATION_$$$$$
     +purpose:Jpeg test using CS(300X200)-150-L.jpg
@@ -77,7 +126,7 @@ class TestWhenPrintingJPEGFile:
     +test_framework:TUF
     +external_files:CS300X200-150-L.jpg=98b2abe4245f479ed174d858e18953abd74f50c131b1accb82141c9c190657c0
     +test_classification:System
-    +name:TestWhenPrintingJPEGFile::test_when_CS300X200_150_L_jpg_then_succeeds_8
+    +name:TestWhenPrintingJPEGFile::test_when_CS300X200_150_L_jpg_then_succeeds
     +categorization:
         +segment:Platform
         +area:Print
@@ -96,257 +145,422 @@ class TestWhenPrintingJPEGFile:
     """
     def test_when_CS300X200_150_L_jpg_then_succeeds(self):
 
-        self.outputsaver.validate_crc_tiff(udw)
-        default = tray.get_default_source()
-        default_size = tray.get_default_size(default)
-        if tray.is_size_supported('anycustom', default):
-            tray.configure_tray(default, 'anycustom', 'stationery')
+        self.outputsaver.validate_crc_tiff()
+        default_tray, media_sizes = self._get_tray_and_media_sizes()
+
+        if 'anycustom' in media_sizes:
+            self._update_media_input_config(default_tray, 'anycustom', 'stationery')
         else:
-            tray.configure_tray(default, 'custom', 'stationery')
+            self._update_media_input_config(default_tray, 'custom', 'stationery')
 
         job_id = self.print.raw.start('98b2abe4245f479ed174d858e18953abd74f50c131b1accb82141c9c190657c0')
         self.print.wait_for_job_completion(job_id)
 
-        outputverifier.save_and_parse_output()
-        outputverifier.verify_media_size(Intents.printintent, MediaSize.custom)
-        outputverifier.self.outputsaver.operation_mode('NONE')
-
-
+        self.outputverifier.save_and_parse_output()
+        self.outputverifier.verify_media_size(Intents.printintent, MediaSize.custom) #type:ignore
+        self.outputverifier.outputsaver.operation_mode('NONE')
 
 
     """
     $$$$$_BEGIN_TEST_METADATA_DECLARATION_$$$$$
+        +purpose:Jpeg test using CS(300X200)-231-L.jpg
+        +test_tier:1
+        +is_manual:False
+        +reqid:DUNE-17136
+        +timeout:180
         +asset:PDL_New
         +delivery_team:QualityGuild
-        +name:TestWhenPrintingJPEGFile::test_when_CS300X200_150_L_jpg_then_succeeds_8
-        +guid:1df711df-ebf3-4634-977e-140345662b53
+        +feature_team:PDLSolns
+        +test_framework:TUF
+        +external_files:CS300X200-231-L.jpg=cda4d59f5ef4aa6c7b7a1ab26a50ce25e3dede1ab33db39c8ea1dfe9cd81a4b1
+        +test_classification:System
+        +name:TestWhenPrintingJPEGFile::test_when_CS300X200_150_L_jpg_then_succeeds_2
+        +categorization:
+            +segment:Platform
+            +area:Print
+            +feature:PDL
+            +sub_feature:JPEG
+            +interaction:Headless
+            +test_type:Positive
+        +test:
+            +title:test_jpeg_custom_size_300x200_231_landscape
+            +guid:1df711df-ebf3-4634-977e-140345662b53
+            +dut:
+                +type:Simulator
+                +configuration:DocumentFormat=JPEG
+
     $$$$$_END_TEST_METADATA_DECLARATION_$$$$$
     """
+
     def test_when_CS300X200_150_L_jpg_then_succeeds_2(self):
 
-        outputverifier.self.outputsaver.operation_mode('TIFF')
-        default = tray.get_default_source()
-        default_size = tray.get_default_size(default)
-        if tray.is_size_supported('anycustom', default):
-            tray.configure_tray(default, 'anycustom', 'stationery')
+        self.outputverifier.outputsaver.operation_mode('TIFF')
+        default_tray, media_sizes = self._get_tray_and_media_sizes()
+
+        if 'anycustom' in media_sizes:
+            self._update_media_input_config(default_tray, 'anycustom', 'stationery')
         else:
-            tray.configure_tray(default, 'custom', 'stationery')
+            self._update_media_input_config(default_tray, 'custom', 'stationery')
 
 
         job_id = self.print.raw.start('cda4d59f5ef4aa6c7b7a1ab26a50ce25e3dede1ab33db39c8ea1dfe9cd81a4b1')
         self.print.wait_for_job_completion(job_id)
 
-        outputverifier.save_and_parse_output()
-        outputverifier.verify_media_size(Intents.printintent, MediaSize.custom)
-        outputverifier.self.outputsaver.operation_mode('NONE')
-
+        self.outputverifier.save_and_parse_output()
+        self.outputverifier.verify_media_size(Intents.printintent, MediaSize.custom) #type:ignore
+        self.outputverifier.outputsaver.operation_mode('NONE')
 
 
 
     """
     $$$$$_BEGIN_TEST_METADATA_DECLARATION_$$$$$
+        +purpose:Jpeg test using CS(300X200)-300-L.jpg
+        +test_tier:1
+        +is_manual:False
+        +reqid:DUNE-17136
+        +timeout:180
         +asset:PDL_New
         +delivery_team:QualityGuild
-        +name:TestWhenPrintingJPEGFile::test_when_CS300X200_150_L_jpg_then_succeeds_8
-        +guid:807972b7-2ba5-4dc3-a6c7-041542a6a715
+        +feature_team:PDLSolns
+        +test_framework:TUF
+        +external_files:CS300X200-300-L.jpg=e764a78f35cd170ec6be58b5b3b528d0beb822e7165d79f0bef48ddb8be4f50b
+        +test_classification:System
+        +name:TestWhenPrintingJPEGFile::test_when_CS300X200_150_L_jpg_then_succeeds_3
+        +categorization:
+            +segment:Platform
+            +area:Print
+            +feature:PDL
+            +sub_feature:JPEG
+            +interaction:Headless
+            +test_type:Positive
+        +test:
+            +title:test_jpeg_custom_size_300x200_300_landscape
+            +guid:807972b7-2ba5-4dc3-a6c7-041542a6a715
+            +dut:
+                +type:Simulator
+                +configuration:DocumentFormat=JPEG
+
     $$$$$_END_TEST_METADATA_DECLARATION_$$$$$
     """
+
     def test_when_CS300X200_150_L_jpg_then_succeeds_3(self):
 
-        outputverifier.self.outputsaver.operation_mode('TIFF')
+        self.outputverifier.outputsaver.operation_mode('TIFF')
 
-        expected_media_size = MediaSize.custom
+        default_tray, media_sizes = self._get_tray_and_media_sizes()
 
-        default = tray.get_default_source()
-        if tray.is_size_supported('anycustom', default):
-            tray.configure_tray(default, 'anycustom', 'stationery')
-            expected_media_size = MediaSize.custom
+        if 'anycustom' in media_sizes:
+            self._update_media_input_config(default_tray, 'anycustom', 'stationery')
         else:
-            tray.configure_tray(default, 'custom', 'stationery')
-            expected_media_size = MediaSize.custom
+            self._update_media_input_config(default_tray, 'custom', 'stationery')
 
         job_id = self.print.raw.start('e764a78f35cd170ec6be58b5b3b528d0beb822e7165d79f0bef48ddb8be4f50b')
         self.print.wait_for_job_completion(job_id)
 
-        outputverifier.save_and_parse_output()
-        outputverifier.verify_media_size(Intents.printintent, expected_media_size)
-        outputverifier.self.outputsaver.operation_mode('NONE')
-
-
+        self.outputverifier.save_and_parse_output()
+        self.outputverifier.verify_media_size(Intents.printintent, MediaSize.custom) #type:ignore
+        self.outputverifier.outputsaver.operation_mode('NONE')
 
 
     """
     $$$$$_BEGIN_TEST_METADATA_DECLARATION_$$$$$
+        +purpose:Jpeg test using CS(300X200)-600-L.jpg
+        +test_tier:1
+        +is_manual:False
+        +reqid:DUNE-17136
+        +timeout:180
         +asset:PDL_New
         +delivery_team:QualityGuild
-        +name:TestWhenPrintingJPEGFile::test_when_CS300X200_150_L_jpg_then_succeeds_8
-        +guid:3b4a60fc-1f2a-417e-bf1e-4b1328782fdc
+        +feature_team:PDLSolns
+        +test_framework:TUF
+        +external_files:CS300X200-600-L.jpg=da2f863844d9803c20e43af79113f5dc247548f79daccc3f8c34be97374d4f6f
+        +test_classification:System
+        +name:TestWhenPrintingJPEGFile::test_when_CS300X200_150_L_jpg_then_succeeds_4
+        +categorization:
+            +segment:Platform
+            +area:Print
+            +feature:PDL
+            +sub_feature:JPEG
+            +interaction:Headless
+            +test_type:Positive
+        +test:
+            +title:test_jpeg_custom_size_300x200_600_landscape
+            +guid:3b4a60fc-1f2a-417e-bf1e-4b1328782fdc
+            +dut:
+                +type:Simulator
+                +configuration:DocumentFormat=JPEG
+
     $$$$$_END_TEST_METADATA_DECLARATION_$$$$$
     """
+
     def test_when_CS300X200_150_L_jpg_then_succeeds_4(self):
 
-        outputverifier.self.outputsaver.operation_mode('TIFF')
+        self.outputverifier.outputsaver.operation_mode('TIFF')
 
-        expected_media_size = MediaSize.custom
+        default_tray, media_sizes = self._get_tray_and_media_sizes()
 
-        default = tray.get_default_source()
-        if tray.is_size_supported('anycustom', default):
-            tray.configure_tray(default, 'anycustom', 'stationery')
-            expected_media_size = MediaSize.custom
+        if 'anycustom' in media_sizes:
+            self._update_media_input_config(default_tray, 'anycustom', 'stationery')
         else:
-            tray.configure_tray(default, 'custom', 'stationery')
-            expected_media_size = MediaSize.custom
+            self._update_media_input_config(default_tray, 'custom', 'stationery')
 
         job_id = self.print.raw.start('da2f863844d9803c20e43af79113f5dc247548f79daccc3f8c34be97374d4f6f')
         self.print.wait_for_job_completion(job_id)
 
-        outputverifier.save_and_parse_output()
-        outputverifier.verify_media_size(Intents.printintent, expected_media_size)
-        outputverifier.self.outputsaver.operation_mode('NONE')
-
-
-
+        self.outputverifier.save_and_parse_output()
+        self.outputverifier.verify_media_size(Intents.printintent, MediaSize.custom) #type:ignore
+        self.outputverifier.outputsaver.operation_mode('NONE')
 
     """
     $$$$$_BEGIN_TEST_METADATA_DECLARATION_$$$$$
+        +purpose:Jpeg test using cs(200X300)-600-P.jpg
+        +test_tier:1
+        +is_manual:False
+        +reqid:DUNE-17136
+        +timeout:180
         +asset:PDL_New
         +delivery_team:QualityGuild
-        +name:TestWhenPrintingJPEGFile::test_when_CS300X200_150_L_jpg_then_succeeds_8
-        +guid:320cb2cb-8aca-4247-a8fb-20f3b082e76e
+        +feature_team:PDLSolns
+        +test_framework:TUF
+        +external_files:cs200X300-600-P.jpg=8e3bb43894bdac34f661ab3b93d9494468671f0677715dc315108c3873f54658
+        +test_classification:System
+        +name:TestWhenPrintingJPEGFile::test_when_CS300X200_150_L_jpg_then_succeeds_5
+        +categorization:
+            +segment:Platform
+            +area:Print
+            +feature:PDL
+            +sub_feature:JPEG
+            +interaction:Headless
+            +test_type:Positive
+        +test:
+            +title:test_jpeg_custom_size_200X300_600_portrait
+            +guid:320cb2cb-8aca-4247-a8fb-20f3b082e76e
+            +dut:
+                +type:Simulator
+                +configuration:DocumentFormat=JPEG
+
+        +overrides:
+            +Enterprise:
+                +is_manual:False
+                +timeout:600
+                +test:
+                    +dut:
+                        +type:Emulator
+
+
     $$$$$_END_TEST_METADATA_DECLARATION_$$$$$
     """
+
     def test_when_CS300X200_150_L_jpg_then_succeeds_5(self):
 
-        outputverifier.self.outputsaver.operation_mode('TIFF')
-        expected_media_size = MediaSize.custom
-        default = tray.get_default_source()
+        self.outputverifier.outputsaver.operation_mode('TIFF')
+        default_tray, media_sizes = self._get_tray_and_media_sizes()
         if self.print_emulation.print_engine_platform == 'emulator' and self.configuration.familyname == 'enterprise':
             tray1 = MediaInputIds.Tray1.name
-            if tray.is_size_supported('anycustom', 'tray-1'):
+            tray, media_sizes = self._get_tray_and_media_sizes('tray-1')
+            if 'anycustom' in media_sizes:
                 self.print_emulation.tray.open(tray1)
                 self.print_emulation.tray.load(tray1, "Custom", MediaType.Plain.name)
                 self.print_emulation.tray.close(tray1)
         else:
-            if tray.is_size_supported('anycustom', default):
-                tray.configure_tray(default, 'anycustom', 'stationery')
-                expected_media_size = MediaSize.custom
+            if 'anycustom' in media_sizes:
+                self._update_media_input_config(default_tray, 'anycustom', 'stationery')
             else:
-                tray.configure_tray(default, 'custom', 'stationery')
-                expected_media_size = MediaSize.custom
-
+                self._update_media_input_config(default_tray, 'custom', 'stationery')
+        
         job_id = self.print.raw.start('8e3bb43894bdac34f661ab3b93d9494468671f0677715dc315108c3873f54658')
         self.print.wait_for_job_completion(job_id)
 
-        outputverifier.save_and_parse_output()
-        outputverifier.verify_media_size(Intents.printintent, expected_media_size)
-        outputverifier.self.outputsaver.operation_mode('NONE')
-
-
+        self.outputverifier.save_and_parse_output()
+        self.outputverifier.verify_media_size(Intents.printintent, MediaSize.custom) #type:ignore
+        self.outputverifier.outputsaver.operation_mode('NONE')
 
 
     """
     $$$$$_BEGIN_TEST_METADATA_DECLARATION_$$$$$
+        +purpose:Jpeg test using cs(200X300)-150-P.jpg
+        +test_tier:1
+        +is_manual:False
+        +reqid:DUNE-17136
+        +timeout:180
         +asset:PDL_New
         +delivery_team:QualityGuild
-        +name:TestWhenPrintingJPEGFile::test_when_CS300X200_150_L_jpg_then_succeeds_8
-        +guid:6dab437b-db2f-4e4f-86a3-73fe7be88bba
+        +feature_team:PDLSolns
+        +test_framework:TUF
+        +external_files:cs200X300-150-P.jpg=d5c61c429865ee5df8b12690ad9e017b724e8aad1d2d562a5daafac7f5b14c5e
+        +test_classification:System
+        +name:TestWhenPrintingJPEGFile::test_when_CS300X200_150_L_jpg_then_succeeds_6
+        +categorization:
+            +segment:Platform
+            +area:Print
+            +feature:PDL
+            +sub_feature:JPEG
+            +interaction:Headless
+            +test_type:Positive
+        +test:
+            +title:test_jpeg_custom_size_200x300_150_portrait
+            +guid:6dab437b-db2f-4e4f-86a3-73fe7be88bba
+            +dut:
+                +type:Simulator
+                +configuration:DocumentFormat=JPEG
+
+        +overrides:
+            +Enterprise:
+                +is_manual:False
+                +timeout:600
+                +test:
+                    +dut:
+                        +type:Emulator
+
+
     $$$$$_END_TEST_METADATA_DECLARATION_$$$$$
     """
+
     def test_when_CS300X200_150_L_jpg_then_succeeds_6(self):
 
-        self.outputsaver.validate_crc_tiff(udw)
-        default = tray.get_default_source()
-        default_size = tray.get_default_size(default)
+        self.outputsaver.validate_crc_tiff()
+        default_tray, media_sizes = self._get_tray_and_media_sizes()
 
         if self.print_emulation.print_engine_platform == 'emulator' and self.configuration.familyname == 'enterprise':
             tray1 = MediaInputIds.Tray1.name
-            if tray.is_size_supported('anycustom', 'tray-1'):
+            tray, media_sizes = self._get_tray_and_media_sizes('tray-1')
+            if 'anycustom' in media_sizes:
                 self.print_emulation.tray.open(tray1)
                 self.print_emulation.tray.load(tray1, "Custom", MediaType.Plain.name)
                 self.print_emulation.tray.close(tray1)
         else:
-            if tray.is_size_supported('anycustom', default):
-                tray.configure_tray(default, 'anycustom', 'stationery')
+            if 'anycustom' in media_sizes:
+                self._update_media_input_config(default_tray, 'anycustom', 'stationery')
             else:
-                tray.configure_tray(default, 'custom', 'stationery')
+                self._update_media_input_config(default_tray, 'custom', 'stationery')
 
         job_id = self.print.raw.start('d5c61c429865ee5df8b12690ad9e017b724e8aad1d2d562a5daafac7f5b14c5e')
         self.print.wait_for_job_completion(job_id)
-        outputverifier.save_and_parse_output()
-        outputverifier.verify_media_size(Intents.printintent, MediaSize.custom)
-        outputverifier.self.outputsaver.operation_mode('NONE')
+        self.outputverifier.save_and_parse_output()
+        self.outputverifier.verify_media_size(Intents.printintent, MediaSize.custom) #type:ignore
+        self.outputverifier.outputsaver.operation_mode('NONE')
         logging.info("Get crc value for the current print job")
         Current_crc_value = self.outputsaver.get_crc()
         logging.info("Validate current crc with master crc")
         assert self.outputsaver.verify_pdl_crc(Current_crc_value), "fail on crc mismatch"
 
 
-
-
     """
     $$$$$_BEGIN_TEST_METADATA_DECLARATION_$$$$$
+        +purpose:Jpeg test using cs(200X300)-231-P.jpg
+        +test_tier:1
+        +is_manual:False
+        +reqid:DUNE-17136
+        +timeout:180
         +asset:PDL_New
         +delivery_team:QualityGuild
-        +name:TestWhenPrintingJPEGFile::test_when_CS300X200_150_L_jpg_then_succeeds_8
-        +guid:d6ee3661-ddd7-4308-a132-16550ee69a53
+        +feature_team:PDLSolns
+        +test_framework:TUF
+        +external_files:cs200X300-231-P.jpg=fdddf6538a2e6bb0830aa6b022da3f7c3f50d00bbb0ee82d9b3417f76307e519
+        +test_classification:System
+        +name:TestWhenPrintingJPEGFile::test_when_CS300X200_150_L_jpg_then_succeeds_7
+        +categorization:
+            +segment:Platform
+            +area:Print
+            +feature:PDL
+            +sub_feature:JPEG
+            +interaction:Headless
+            +test_type:Positive
+        +test:
+            +title:test_jpeg_custom_size_200x300_231_portrait
+            +guid:d6ee3661-ddd7-4308-a132-16550ee69a53
+            +dut:
+                +type:Simulator
+                +configuration:DocumentFormat=JPEG
+
+        +overrides:
+            +Enterprise:
+                +is_manual:False
+                +timeout:600
+                +test:
+                    +dut:
+                        +type:Emulator
+
+
     $$$$$_END_TEST_METADATA_DECLARATION_$$$$$
     """
+
     def test_when_CS300X200_150_L_jpg_then_succeeds_7(self):
 
-        self.outputsaver.validate_crc_tiff(udw)
-        default = tray.get_default_source()
-        default_size = tray.get_default_size(default)
+        self.outputsaver.validate_crc_tiff()
+        default_tray, media_sizes = self._get_tray_and_media_sizes()
         if self.print_emulation.print_engine_platform == 'emulator' and self.configuration.familyname == 'enterprise':
             tray1 = MediaInputIds.Tray1.name
-            if tray.is_size_supported('anycustom', 'tray-1'):
+            tray, media_sizes = self._get_tray_and_media_sizes('tray-1')
+            if 'anycustom' in media_sizes:
                 self.print_emulation.tray.open(tray1)
                 self.print_emulation.tray.load(tray1, "Custom", MediaType.Plain.name)
                 self.print_emulation.tray.close(tray1)
         else:
-            if tray.is_size_supported('anycustom', default):
-                tray.configure_tray(default, 'anycustom', 'stationery')
+            if 'anycustom' in media_sizes:
+                self._update_media_input_config(default_tray, 'anycustom', 'stationery')
             else:
-                tray.configure_tray(default, 'custom', 'stationery')
+                self._update_media_input_config(default_tray, 'custom', 'stationery')
 
         job_id = self.print.raw.start('fdddf6538a2e6bb0830aa6b022da3f7c3f50d00bbb0ee82d9b3417f76307e519')
         self.print.wait_for_job_completion(job_id)
 
-        outputverifier.save_and_parse_output()
-        outputverifier.verify_media_size(Intents.printintent, MediaSize.custom)
-        outputverifier.self.outputsaver.operation_mode('NONE')
+        self.outputverifier.save_and_parse_output()
+        self.outputverifier.verify_media_size(Intents.printintent, MediaSize.custom) #type:ignore
+        self.outputverifier.outputsaver.operation_mode('NONE')
         logging.info("Get crc value for the current print job")
         Current_crc_value = self.outputsaver.get_crc()
         logging.info("Validate current crc with master crc")
         assert self.outputsaver.verify_pdl_crc(Current_crc_value), "fail on crc mismatch"
 
 
-
-
     """
     $$$$$_BEGIN_TEST_METADATA_DECLARATION_$$$$$
+        +purpose:Jpeg test using cs(200X300)-300-P.jpg
+        +test_tier:1
+        +is_manual:False
+        +reqid:DUNE-17136
+        +timeout:180
         +asset:PDL_New
         +delivery_team:QualityGuild
+        +feature_team:PDLSolns
+        +test_framework:TUF
+        +external_files:cs200X300-300-P.jpg=c27a6a5933434299e7cb8ec2804bbf807c4f7adcbbdaa5bc39e7a91bc5082ac2
+        +test_classification:System
         +name:TestWhenPrintingJPEGFile::test_when_CS300X200_150_L_jpg_then_succeeds_8
-        +guid:2dc1eb03-a584-41dc-a055-7e0a68f0f543
+        +categorization:
+            +segment:Platform
+            +area:Print
+            +feature:PDL
+            +sub_feature:JPEG
+            +interaction:Headless
+            +test_type:Positive
+        +test:
+            +title:test_jpeg_custom_size_200x300_300_portrait
+            +guid:2dc1eb03-a584-41dc-a055-7e0a68f0f543
+            +dut:
+                +type:Simulator
+                +configuration:DocumentFormat=JPEG
+
     $$$$$_END_TEST_METADATA_DECLARATION_$$$$$
     """
+
     def test_when_CS300X200_150_L_jpg_then_succeeds_8(self):
 
-        outputverifier.self.outputsaver.operation_mode('TIFF')
+        self.outputverifier.outputsaver.operation_mode('TIFF')
 
-        expected_media_size = MediaSize.custom
+        expected_media_size = MediaSize.custom #type:ignore
 
-        default = tray.get_default_source()
-        if tray.is_size_supported('anycustom', default):
-            tray.configure_tray(default, 'anycustom', 'stationery')
-            expected_media_size = MediaSize.custom
+        default_tray, media_sizes = self._get_tray_and_media_sizes()
+        
+        if 'anycustom' in media_sizes:
+            self._update_media_input_config(default_tray, 'anycustom', 'stationery')
         else:
-            tray.configure_tray(default, 'custom', 'stationery')
-            expected_media_size = MediaSize.custom
+            self._update_media_input_config(default_tray, 'custom', 'stationery')
 
         job_id = self.print.raw.start('c27a6a5933434299e7cb8ec2804bbf807c4f7adcbbdaa5bc39e7a91bc5082ac2')
         self.print.wait_for_job_completion(job_id)
 
-        outputverifier.save_and_parse_output()
-        outputverifier.verify_media_size(Intents.printintent, expected_media_size)
-        outputverifier.self.outputsaver.operation_mode('NONE')
+        self.outputverifier.save_and_parse_output()
+        self.outputverifier.verify_media_size(Intents.printintent, expected_media_size)
+        self.outputverifier.outputsaver.operation_mode('NONE')

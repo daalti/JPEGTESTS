@@ -1,4 +1,3 @@
-import pytest
 import logging
 from dunetuf.job.job_history.job_history import JobHistory
 from dunetuf.job.job_queue.job_queue import JobQueue
@@ -47,6 +46,54 @@ class TestWhenPrintingJPEGFile:
 
         # Reset media configuration to default
         self.media.update_media_configuration(self.default_configuration)
+
+    def _update_media_input_config(self, default_tray, media_size, media_type):
+        """Update media configuration for a specific tray.
+        
+        Args:
+            default_tray: Default tray identifier
+            media_size: Media size to set
+            media_type: Media type to set
+        """
+        media_input = self.media.get_media_configuration().get('inputs', [])
+        
+        for input_config in media_input:
+            if input_config.get('mediaSourceId') == default_tray:
+                # Handle custom media size configuration
+                if media_size == 'custom':
+                    supported_inputs = self.media.get_media_capabilities().get('supportedInputs', [])
+                    capability = next(
+                        (cap for cap in supported_inputs if cap.get('mediaSourceId') == default_tray),
+                        {}
+                    )
+                    input_config['currentMediaWidth'] = capability.get('mediaWidthMaximum')
+                    input_config['currentMediaLength'] = capability.get('mediaLengthMaximum')
+                    input_config['currentResolution'] = capability.get('resolution')
+                
+                # Update media properties
+                input_config['mediaSize'] = media_size
+                input_config['mediaType'] = media_type
+                
+                # Update configuration and return early
+                self.media.update_media_configuration({'inputs': [input_config]})
+                return
+        
+        logging.warning(f"No media input found for tray: {default_tray}")
+
+    def _get_tray_and_media_sizes(self, tray = None):
+        """Get the default tray and its supported media sizes.
+        
+        Returns:
+            tuple: (default_tray, media_sizes) where default_tray is the default source
+                   and media_sizes is a list of supported media sizes for that tray
+        """
+        if tray is None:
+            tray = self.media.get_default_source()
+        supported_inputs = self.media.get_media_capabilities().get('supportedInputs', [])
+        media_sizes = next((input.get('supportedMediaSizes', []) for input in supported_inputs if input.get('mediaSourceId') == tray), [])
+        logging.info('Supported Media Sizes (%s): %s', tray, media_sizes)
+        return tray, media_sizes
+    
     """
     $$$$$_BEGIN_TEST_METADATA_DECLARATION_$$$$$
     +purpose:Simple print job of Jpeg file of 100kB from *file_example_JPG_100kB.jpg
@@ -79,20 +126,21 @@ class TestWhenPrintingJPEGFile:
     """
     def test_when_file_example_JPG_100kB_jpg_then_succeeds(self):
 
-        self.outputsaver.validate_crc_tiff(udw)
-        default = tray.get_default_source()
-        media_width_maximum = tray.capabilities["supportedInputs"][0]["mediaWidthMaximum"]
-        media_length_maximum = tray.capabilities["supportedInputs"][0]["mediaLengthMaximum"]
-        media_width_minimum = tray.capabilities["supportedInputs"][0]["mediaWidthMinimum"]
-        media_length_minimum = tray.capabilities["supportedInputs"][0]["mediaLengthMinimum"]
-        if tray.is_size_supported('anycustom', default):
-            tray.configure_tray(default, 'anycustom', 'stationery')
-        elif tray.is_size_supported('custom', default) and media_width_maximum > 85000 and media_length_maximum >= 110000 and media_width_minimum < 85000 and media_length_minimum <= 110000:
-            tray.configure_tray(default, 'custom', 'stationery')
-        elif tray.is_size_supported('na_letter_8.5x11in', default):
-            tray.configure_tray(default, 'na_letter_8.5x11in', 'stationery')
+        self.outputsaver.validate_crc_tiff()
+        capabilities = self.media.get_media_capabilities()
+        media_width_maximum = capabilities["supportedInputs"][0]["mediaWidthMaximum"]
+        media_length_maximum = capabilities["supportedInputs"][0]["mediaLengthMaximum"]
+        media_width_minimum = capabilities["supportedInputs"][0]["mediaWidthMinimum"]
+        media_length_minimum = capabilities["supportedInputs"][0]["mediaLengthMinimum"]
+        default_tray, media_sizes = self._get_tray_and_media_sizes()
+        if 'anycustom' in media_sizes:
+            self._update_media_input_config(default_tray, 'anycustom', 'stationery')
+        elif 'custom' in media_sizes and media_width_maximum > 85000 and media_length_maximum >= 110000 and media_width_minimum < 85000 and media_length_minimum <= 110000:
+            self._update_media_input_config(default_tray, 'custom', 'stationery')
+        elif 'na_letter_8.5x11in' in media_sizes:
+            self._update_media_input_config(default_tray, 'na_letter_8.5x11in', 'stationery')
 
-        job_id = self.print.raw.start('88aeb1f4467bd1e50cf624de972fbf3f40801632fedb64aaa7b1a8a9ef786fc6', timeout=360)
+        job_id = self.print.raw.start('88aeb1f4467bd1e50cf624de972fbf3f40801632fedb64aaa7b1a8a9ef786fc6')
         self.print.wait_for_job_completion(job_id)
         self.outputsaver.save_output()
         Current_crc_value = self.outputsaver.get_crc()

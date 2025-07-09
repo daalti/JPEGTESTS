@@ -1,4 +1,3 @@
-import pytest
 import logging
 from dunetuf.job.job_history.job_history import JobHistory
 from dunetuf.job.job_queue.job_queue import JobQueue
@@ -63,6 +62,20 @@ class TestWhenPrintingJPEGFile:
 
         # Reset media configuration to default
         self.media.update_media_configuration(self.default_configuration)
+
+    def _get_tray_and_media_sizes(self, tray = None):
+        """Get the default tray and its supported media sizes.
+        
+        Returns:
+            tuple: (default_tray, media_sizes) where default_tray is the default source
+                   and media_sizes is a list of supported media sizes for that tray
+        """
+        if tray is None:
+            tray = self.media.get_default_source()
+        supported_inputs = self.media.get_media_capabilities().get('supportedInputs', [])
+        media_sizes = next((input.get('supportedMediaSizes', []) for input in supported_inputs if input.get('mediaSourceId') == tray), [])
+        logging.info('Supported Media Sizes (%s): %s', tray, media_sizes)
+        return tray, media_sizes
     """
     $$$$$_BEGIN_TEST_METADATA_DECLARATION_$$$$$
     +purpose:Jpeg test using **2686.jpg
@@ -105,13 +118,14 @@ class TestWhenPrintingJPEGFile:
     def test_when_2686_jpg_then_succeeds(self):
 
         if self.print_emulation.print_engine_platform == 'emulator':
-            tray1 = MediaInputIds.Tray1.name
-            if tray.is_size_supported('anycustom', 'tray-1'):
+            tray, media_sizes = self._get_tray_and_media_sizes('tray-1')
+            if 'anycustom' in media_sizes:
+                tray1 = MediaInputIds.Tray1.name
                 self.print_emulation.tray.open(tray1)
                 self.print_emulation.tray.load(tray1, 'Custom', MediaType.Plain.name)
                 self.print_emulation.tray.close(tray1)
 
-        self.outputsaver.validate_crc_tiff(udw)
+        self.outputsaver.validate_crc_tiff()
         job_id = self.print.raw.start('e7a41c713330895d538595fbf74af4f7ac88a25424abb103beb3872d54cc0bfa')
         self.print.wait_for_job_completion(job_id)
         self.outputsaver.save_output()

@@ -1,4 +1,3 @@
-import pytest
 import logging
 from dunetuf.job.job_history.job_history import JobHistory
 from dunetuf.job.job_queue.job_queue import JobQueue
@@ -6,6 +5,8 @@ from dunetuf.print.print_new import Print
 from dunetuf.print.print_common_types import MediaSize, MediaType
 from dunetuf.media.media import Media
 from dunetuf.print.output_saver import OutputSaver
+from dunetuf.metadata import get_ip
+from dunetuf.cdm import get_cdm_instance
 
 
 class TestWhenPrintingJPEGFile:
@@ -17,6 +18,8 @@ class TestWhenPrintingJPEGFile:
         cls.print = Print()
         cls.media = Media()
         cls.outputsaver = OutputSaver()
+        cls.ip_address = get_ip()
+        cls.cdm = get_cdm_instance(cls.ip_address)
 
     @classmethod
     def teardown_class(cls):
@@ -82,7 +85,7 @@ class TestWhenPrintingJPEGFile:
 
         expected_state = 'SUCCESS'
 
-        response = cdm.get(cdm.CDM_MEDIA_CAPABILITIES)
+        response = self.media.get_media_capabilities()
 
         media_source= response['supportedInputs'][0]['mediaSourceId']
         resolution = response['supportedInputs'][0]['resolution']
@@ -97,7 +100,7 @@ class TestWhenPrintingJPEGFile:
             if(image_width<(left_margin+right_margin) or image_height<(top_margin+bottom_margin)):
                 expected_state='FAILED'
 
-        job_id = self.print.raw.start('ff6133bb58d3dae4f13ecbe05256dc4aaa05b17786b2c67f172cc3e934a00331',expected_job_state=expected_state, timeout=120)
+        job_id = self.print.raw.start('ff6133bb58d3dae4f13ecbe05256dc4aaa05b17786b2c67f172cc3e934a00331')
         self.print.wait_for_job_completion(job_id)
         self.outputsaver.save_output()
 

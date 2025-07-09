@@ -1,4 +1,4 @@
-import pytest
+
 import logging
 from dunetuf.job.job_history.job_history import JobHistory
 from dunetuf.job.job_queue.job_queue import JobQueue
@@ -118,7 +118,7 @@ class TestWhenPrintingJPEGFile:
             logging.info(f"Set paper tray <{default_tray}> to paper size <{default_size}>")
             self._update_media_input_config(default_tray, default_size, 'stationery')
 
-        job_id = self.print.raw.start('cb6e516bebfbd46c2e719ebb1bb3c7f4d49cefb80977a40cc167073712f7ba24', timeout=180)
+        job_id = self.print.raw.start('cb6e516bebfbd46c2e719ebb1bb3c7f4d49cefb80977a40cc167073712f7ba24')
         self.print.wait_for_job_completion(job_id)
         self.outputsaver.save_output()
 

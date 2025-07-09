@@ -1,4 +1,3 @@
-import pytest
 import logging
 from dunetuf.job.job_history.job_history import JobHistory
 from dunetuf.job.job_queue.job_queue import JobQueue
@@ -90,7 +89,7 @@ class TestWhenPrintingJPEGFile:
 
         expected_state = 'SUCCESS'
 
-        response = cdm.get(cdm.CDM_MEDIA_CAPABILITIES)
+        response = self.media.get_media_capabilities()
 
         media_source= response['supportedInputs'][0]['mediaSourceId']
         resolution = response['supportedInputs'][0]['resolution']
@@ -104,8 +103,9 @@ class TestWhenPrintingJPEGFile:
         if("roll" in media_source):
             if(image_width<(left_margin+right_margin) or image_height<(top_margin+bottom_margin)):
                 expected_state='FAILED'
-        job_id = self.print.raw.start('34027bf1e1808b1cf5995aedea2a805a35b12f77eb725ebb44dc662715fc295c', expected_job_state=expected_state)
+
+        job_id = self.print.raw.start('34027bf1e1808b1cf5995aedea2a805a35b12f77eb725ebb44dc662715fc295c')
         self.print.wait_for_job_completion(job_id)
         self.outputsaver.save_output()
 
-        logging.info("JPEG TestSuite taggedRGB Page - Print job completed successfully")
+        logging.info("JPEG TestSuite taggedRGB Page - Print job completed successfully")

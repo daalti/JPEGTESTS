@@ -1,4 +1,3 @@
-import pytest
 import logging
 from dunetuf.job.job_history.job_history import JobHistory
 from dunetuf.job.job_queue.job_queue import JobQueue
@@ -6,6 +5,7 @@ from dunetuf.print.print_new import Print
 from dunetuf.print.print_common_types import MediaSize, MediaType
 from dunetuf.media.media import Media
 from dunetuf.print.output_saver import OutputSaver
+from dunetuf.media.media_handling import MediaHandling
 
 
 class TestWhenPrintingJPEGFile:
@@ -17,6 +17,7 @@ class TestWhenPrintingJPEGFile:
         cls.print = Print()
         cls.media = Media()
         cls.outputsaver = OutputSaver()
+        cls.media_handling = MediaHandling()
 
     @classmethod
     def teardown_class(cls):
@@ -47,6 +48,54 @@ class TestWhenPrintingJPEGFile:
 
         # Reset media configuration to default
         self.media.update_media_configuration(self.default_configuration)
+
+    def _update_media_input_config(self, default_tray, media_size, media_type):
+        """Update media configuration for a specific tray.
+        
+        Args:
+            default_tray: Default tray identifier
+            media_size: Media size to set
+            media_type: Media type to set
+        """
+        media_input = self.media.get_media_configuration().get('inputs', [])
+        
+        for input_config in media_input:
+            if input_config.get('mediaSourceId') == default_tray:
+                # Handle custom media size configuration
+                if media_size == 'custom':
+                    supported_inputs = self.media.get_media_capabilities().get('supportedInputs', [])
+                    capability = next(
+                        (cap for cap in supported_inputs if cap.get('mediaSourceId') == default_tray),
+                        {}
+                    )
+                    input_config['currentMediaWidth'] = capability.get('mediaWidthMaximum')
+                    input_config['currentMediaLength'] = capability.get('mediaLengthMaximum')
+                    input_config['currentResolution'] = capability.get('resolution')
+                
+                # Update media properties
+                input_config['mediaSize'] = media_size
+                input_config['mediaType'] = media_type
+                
+                # Update configuration and return early
+                self.media.update_media_configuration({'inputs': [input_config]})
+                return
+        
+        logging.warning(f"No media input found for tray: {default_tray}")
+
+    def _get_tray_and_media_sizes(self, tray = None):
+        """Get the default tray and its supported media sizes.
+        
+        Returns:
+            tuple: (default_tray, media_sizes) where default_tray is the default source
+                   and media_sizes is a list of supported media sizes for that tray
+        """
+        if tray is None:
+            tray = self.media.get_default_source()
+        supported_inputs = self.media.get_media_capabilities().get('supportedInputs', [])
+        media_sizes = next((input.get('supportedMediaSizes', []) for input in supported_inputs if input.get('mediaSourceId') == tray), [])
+        logging.info('Supported Media Sizes (%s): %s', tray, media_sizes)
+        return tray, media_sizes
+    
     """
     $$$$$_BEGIN_TEST_METADATA_DECLARATION_$$$$$
     +purpose: simple print job of jpeg file of photoimages_panoramaimages_hpr837_1m-2m_sr016231
@@ -79,26 +128,29 @@ class TestWhenPrintingJPEGFile:
     """
     def test_when_photoimages_panoramaimages_HPR837_1M_2M_SR016231_JPG_then_succeeds(self):
 
+        capabilities = self.media.get_media_capabilities()
+        media_width_maximum = capabilities["supportedInputs"][0]["mediaWidthMaximum"]
+        media_length_maximum = capabilities["supportedInputs"][0]["mediaLengthMaximum"]
+        media_width_minimum = capabilities["supportedInputs"][0]["mediaWidthMinimum"]
+        media_length_minimum = capabilities["supportedInputs"][0]["mediaLengthMinimum"]
 
-        default = tray.get_default_source()
-        media_width_maximum = tray.capabilities["supportedInputs"][0]["mediaWidthMaximum"]
-        media_length_maximum = tray.capabilities["supportedInputs"][0]["mediaLengthMaximum"]
-        media_width_minimum = tray.capabilities["supportedInputs"][0]["mediaWidthMinimum"]
-        media_length_minimum = tray.capabilities["supportedInputs"][0]["mediaLengthMinimum"]
-        if tray.is_size_supported('anycustom', default):
-            tray.configure_tray(default, 'anycustom', 'stationery')
-        elif tray.is_size_supported('custom', default) and media_width_maximum >= 41066  and media_length_maximum >= 91200 and  media_width_minimum <= 41066  and media_length_minimum <= 91200:
-            tray.configure_tray(default, 'custom', 'stationery')
-        jobid = job_id = self.print.raw.start('0f014240fbd5c018fc18aaf6ed0c8c1d0bc3adfb0a046db1a661008df3a6dccb')
+        default_tray, media_sizes = self._get_tray_and_media_sizes()
+
+        if 'anycustom' in media_sizes:
+            self._update_media_input_config(default_tray, 'anycustom', 'stationery')
+        elif 'custom' in media_sizes and media_width_maximum >= 41066  and media_length_maximum >= 91200 and  media_width_minimum <= 41066  and media_length_minimum <= 91200:
+            self._update_media_input_config(default_tray, 'custom', 'stationery')
+
+        job_id = self.print.raw.start('0f014240fbd5c018fc18aaf6ed0c8c1d0bc3adfb0a046db1a661008df3a6dccb')
 
         # Handle media size mismatch alert
         try:
-            media.wait_for_alerts('mediaMismatchSizeFlow', timeout=30)
-            media.alert_action("mediaMismatchSizeFlow", "continue")
+            self.media_handling.wait_for_alerts('mediaMismatchSizeFlow', timeout=30)
+            self.media_handling.alert_action("mediaMismatchSizeFlow", "continue")
         except:
             logging.info("No mismatch alert, job printing")
 
-        printjob.wait_verify_job_completion(jobid, 'SUCCESS', 120)
+        self.print.wait_for_job_completion(job_id)
         logging.info('Print job completed with expected job status!')
 
         self.outputsaver.save_output()

@@ -1,4 +1,3 @@
-import pytest
 import logging
 from dunetuf.job.job_history.job_history import JobHistory
 from dunetuf.job.job_queue.job_queue import JobQueue
@@ -103,12 +102,12 @@ class TestWhenPrintingJPEGFile:
     """
     def test_when_alt400mm_36inch_landscape_jpg_then_succeeds(self):
 
-        self.outputsaver.validate_crc_tiff(udw)
+        self.outputsaver.validate_crc_tiff()
         if self.print_emulation.print_engine_platform == 'emulator':
             installed_trays = self.print_emulation.tray.get_installed_trays()
             for tray_id in installed_trays:
                 self.print_emulation.tray.load(tray_id, MediaSize.A4.name, MediaType.Plain.name)
-        job_id = self.print.raw.start('8cb2e40ad94a931c43c9c6253ef7f367aa54cabf7b96a09a581c5b621fd00902', timeout=180)
+        job_id = self.print.raw.start('8cb2e40ad94a931c43c9c6253ef7f367aa54cabf7b96a09a581c5b621fd00902')
         self.print.wait_for_job_completion(job_id)
         self.outputsaver.save_output()
         self.outputsaver.operation_mode('NONE')

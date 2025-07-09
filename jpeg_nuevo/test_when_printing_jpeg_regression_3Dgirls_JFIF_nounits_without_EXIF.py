@@ -1,4 +1,3 @@
-import pytest
 import logging
 from dunetuf.job.job_history.job_history import JobHistory
 from dunetuf.job.job_queue.job_queue import JobQueue
@@ -79,7 +78,7 @@ class TestWhenPrintingJPEGFile:
     """
     def test_when_3Dgirls_JFIF_nounits_without_EXIF_jpg_then_succeeds(self):
 
-        job_id = self.print.raw.start('07010aa839653b2355047c770f6f3631997e0e9172537141d42d185c34f39a1d', timeout=180)
+        job_id = self.print.raw.start('07010aa839653b2355047c770f6f3631997e0e9172537141d42d185c34f39a1d')
         self.print.wait_for_job_completion(job_id)
         self.outputsaver.save_output()
 

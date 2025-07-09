@@ -1,4 +1,3 @@
-import pytest
 import logging
 from dunetuf.job.job_history.job_history import JobHistory
 from dunetuf.job.job_queue.job_queue import JobQueue
@@ -88,8 +87,8 @@ class TestWhenPrintingJPEGFile:
     """
     def test_when_DatastreamCorrupted_JPG_then_succeeds(self):
 
-        job_id = self.print.raw.start('8569b17b86977b3f02e3c5194d6436df02662bc5724f929f007a1a4626a9f122', expected_job_state='FAILED')
-        self.print.wait_for_job_completion(job_id)
+        job_id = self.print.raw.start('8569b17b86977b3f02e3c5194d6436df02662bc5724f929f007a1a4626a9f122')
+        self.print.wait_for_state(job_id, ["failed"])
         self.outputsaver.save_output()
         self.outputsaver.clear_output()
         logging.info("Jpeg corrupted file")

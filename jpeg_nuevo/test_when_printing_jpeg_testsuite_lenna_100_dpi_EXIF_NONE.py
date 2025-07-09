@@ -1,4 +1,3 @@
-import pytest
 import logging
 from dunetuf.job.job_history.job_history import JobHistory
 from dunetuf.job.job_queue.job_queue import JobQueue
@@ -85,17 +84,15 @@ class TestWhenPrintingJPEGFile:
     """
     def test_when_lenna_100_dpi_EXIF_NONE_jpg_then_succeeds(self):
 
-        self.outputsaver.validate_crc_tiff(udw)
-        default = tray.get_default_source()
-        default_size = tray.get_default_size(default)
+        self.outputsaver.validate_crc_tiff()
+        default_tray, media_sizes = self._get_tray_and_media_sizes()
 
-        if tray.is_size_supported('anycustom', default):
-            tray.configure_tray(default, "anycustom", 'stationery')
-
+        if 'anycustom' in media_sizes:
+            self._update_media_input_config(default_tray, 'anycustom', 'stationery')
         else:
-            tray.configure_tray(default, 'custom', 'stationery')
+            self._update_media_input_config(default_tray, 'custom', 'stationery')
 
-        job_id = self.print.raw.start('cc7efdcc505cf95c913aeafa9886ad5a4f2c31b4afefd35d9c9f5fd60f4368d3', timeout=180)
+        job_id = self.print.raw.start('cc7efdcc505cf95c913aeafa9886ad5a4f2c31b4afefd35d9c9f5fd60f4368d3')
         self.print.wait_for_job_completion(job_id)
         self.outputsaver.save_output()
         logging.info("Get crc value for the current print job")

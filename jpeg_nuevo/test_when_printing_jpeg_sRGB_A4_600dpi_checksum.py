@@ -1,4 +1,3 @@
-import pytest
 import logging
 from dunetuf.job.job_history.job_history import JobHistory
 from dunetuf.job.job_queue.job_queue import JobQueue
@@ -75,7 +74,7 @@ class TestWhenPrintingJPEGFile:
         # CRC will be calculated using the payload of all the RasterDatas
         self.outputsaver.operation_mode('CRC')
 
-        job_id = self.print.raw.start('86c81bfee5d3a323f7faf4026db8bf534e9d8edf624b9170bb60e3cf2d59773b', timeout=300)
+        job_id = self.print.raw.start('86c81bfee5d3a323f7faf4026db8bf534e9d8edf624b9170bb60e3cf2d59773b')
         self.print.wait_for_job_completion(job_id)
         logging.info("basic file sRGB_A4_600dpi.jpg - Print job completed successfully")
 

@@ -1,4 +1,3 @@
-import pytest
 import logging
 from dunetuf.job.job_history.job_history import JobHistory
 from dunetuf.job.job_queue.job_queue import JobQueue
@@ -47,6 +46,7 @@ class TestWhenPrintingJPEGFile:
 
         # Reset media configuration to default
         self.media.update_media_configuration(self.default_configuration)
+    
     """
     $$$$$_BEGIN_TEST_METADATA_DECLARATION_$$$$$
     +purpose: simple print job of jpeg file of photoimages autoalign portrait 3x4 img 0322

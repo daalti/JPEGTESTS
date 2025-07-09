@@ -1,4 +1,3 @@
-import pytest
 import logging
 from dunetuf.job.job_history.job_history import JobHistory
 from dunetuf.job.job_queue.job_queue import JobQueue
@@ -6,6 +5,9 @@ from dunetuf.print.print_new import Print
 from dunetuf.print.print_common_types import MediaSize, MediaType
 from dunetuf.media.media import Media
 from dunetuf.print.output_saver import OutputSaver
+from dunetuf.metadata import get_ip
+from dunetuf.cdm import get_cdm_instance
+from dunetuf.configuration import Configuration
 
 
 class TestWhenPrintingJPEGFile:
@@ -17,6 +19,9 @@ class TestWhenPrintingJPEGFile:
         cls.print = Print()
         cls.media = Media()
         cls.outputsaver = OutputSaver()
+        cls.ip_address = get_ip()
+        cls.cdm = get_cdm_instance(cls.ip_address)
+        cls.configuration = Configuration(cls.cdm)
 
     @classmethod
     def teardown_class(cls):
@@ -47,6 +52,54 @@ class TestWhenPrintingJPEGFile:
 
         # Reset media configuration to default
         self.media.update_media_configuration(self.default_configuration)
+
+    def _update_media_input_config(self, default_tray, media_size, media_type):
+        """Update media configuration for a specific tray.
+        
+        Args:
+            default_tray: Default tray identifier
+            media_size: Media size to set
+            media_type: Media type to set
+        """
+        media_input = self.media.get_media_configuration().get('inputs', [])
+        
+        for input_config in media_input:
+            if input_config.get('mediaSourceId') == default_tray:
+                # Handle custom media size configuration
+                if media_size == 'custom':
+                    supported_inputs = self.media.get_media_capabilities().get('supportedInputs', [])
+                    capability = next(
+                        (cap for cap in supported_inputs if cap.get('mediaSourceId') == default_tray),
+                        {}
+                    )
+                    input_config['currentMediaWidth'] = capability.get('mediaWidthMaximum')
+                    input_config['currentMediaLength'] = capability.get('mediaLengthMaximum')
+                    input_config['currentResolution'] = capability.get('resolution')
+                
+                # Update media properties
+                input_config['mediaSize'] = media_size
+                input_config['mediaType'] = media_type
+                
+                # Update configuration and return early
+                self.media.update_media_configuration({'inputs': [input_config]})
+                return
+        
+        logging.warning(f"No media input found for tray: {default_tray}")
+
+    def _get_tray_and_media_sizes(self, tray = None):
+        """Get the default tray and its supported media sizes.
+        
+        Returns:
+            tuple: (default_tray, media_sizes) where default_tray is the default source
+                   and media_sizes is a list of supported media sizes for that tray
+        """
+        if tray is None:
+            tray = self.media.get_default_source()
+        supported_inputs = self.media.get_media_capabilities().get('supportedInputs', [])
+        media_sizes = next((input.get('supportedMediaSizes', []) for input in supported_inputs if input.get('mediaSourceId') == tray), [])
+        logging.info('Supported Media Sizes (%s): %s', tray, media_sizes)
+        return tray, media_sizes
+    
     """
     $$$$$_BEGIN_TEST_METADATA_DECLARATION_$$$$$
     +purpose:Simple print job of Jpeg Regression of AdobeRGB A4 100dpi Page from *AdobeRGB_A4_100dpi.jpg file
@@ -79,26 +132,23 @@ class TestWhenPrintingJPEGFile:
     """
     def test_when_AdobeRGB_A4_100dpi_jpg_then_succeeds(self):
 
-        if self.outputsaver.configuration.productname == "jupiter":
+        if self.configuration.productname == "jupiter":
             self.outputsaver.operation_mode('CRC')
         else:
             self.outputsaver.operation_mode('TIFF')
-            self.outputsaver.validate_crc_tiff(udw)
+            self.outputsaver.validate_crc_tiff()
 
-        default = tray.get_default_source()
-        default_size = tray.get_default_size(default)
-
-        if tray.is_size_supported('anycustom', default):
-            tray.configure_tray(default, "anycustom", 'stationery')
-
+        default_tray, media_sizes = self._get_tray_and_media_sizes()
+        if 'anycustom' in media_sizes:
+            self._update_media_input_config(default_tray, 'anycustom', 'stationery')
         else:
-            tray.configure_tray(default, 'custom', 'stationery')
+            self._update_media_input_config(default_tray, 'custom', 'stationery')
 
-        job_id = self.print.raw.start('acc8383b0992e875904aa4c196a4f0ef47ba8e0bfdd0914159876e64f79d2700', timeout=180)
+        job_id = self.print.raw.start('acc8383b0992e875904aa4c196a4f0ef47ba8e0bfdd0914159876e64f79d2700')
         self.print.wait_for_job_completion(job_id)
 
         self.outputsaver.save_output()
-        if self.outputsaver.configuration.productname == "jupiter":
+        if self.configuration.productname == "jupiter":
             expected_crc = ["0x9350fdc4"]
             self.outputsaver.verify_output_crc(expected_crc)
         else:
