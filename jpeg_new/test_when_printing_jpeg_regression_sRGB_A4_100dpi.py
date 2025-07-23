@@ -1,10 +1,10 @@
 import logging
 from dunetuf.print.print_common_types import MediaSize, MediaType
-from dunetuf.print.output_saver import OutputSaver
+from dunetuf.print.new.output.output_saver import OutputSaver
 from dunetuf.configuration import Configuration
 from dunetuf.metadata import get_ip
 from dunetuf.cdm import get_cdm_instance
-from tests.print.pdl.jpeg_new.print_base import TestWhenPrinting
+from tests.print.pdl.print_base import TestWhenPrinting, setup_output_saver, tear_down_output_saver
 
 
 class TestWhenPrintingJPEGFile(TestWhenPrinting):
@@ -13,6 +13,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         """Initialize shared test resources."""
         super().setup_class()
         cls.outputsaver = OutputSaver()
+        setup_output_saver(cls.outputsaver)
         cls.ip_address = get_ip()
         cls.cdm = get_cdm_instance(cls.ip_address)
         cls.configuration = Configuration(cls.cdm)
@@ -33,6 +34,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
 
         # Reset media configuration to default
         self.media.update_media_configuration(self.default_configuration)
+        tear_down_output_saver(self.outputsaver)
 
     """
     $$$$$_BEGIN_TEST_METADATA_DECLARATION_$$$$$
@@ -47,7 +49,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         +test_framework:TUF
         +external_files:sRGB_A4_100dpi.jpg=1ba0f46f30adf9190185558010124bf32a1a432ba8aefd131d9c26bf9b050b09
         +test_classification:System
-        +name:TestWhenPrintingJPEGFile::test_when_sRGB_A4_100dpi_jpg_then_succeeds
+        +name:TestWhenPrintingJPEGFile::test_when_using_sRGB_A4_100dpi_file_then_succeeds
         +categorization:
             +segment:Platform
             +area:Print
@@ -64,7 +66,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
 
     $$$$$_END_TEST_METADATA_DECLARATION_$$$$$
     """
-    def test_when_sRGB_A4_100dpi_jpg_then_succeeds(self):
+    def test_when_using_sRGB_A4_100dpi_file_then_succeeds(self):
 
         if self.configuration.productname == "jupiter":
             self.outputsaver.operation_mode('CRC')
@@ -73,13 +75,8 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
             self.outputsaver.validate_crc_tiff()
 
 
-        default_tray, media_sizes = self.media.get_source_and_media_sizes()
-
-        if 'anycustom' in media_sizes:
-            self.media.tray.configure(default_tray, 'anycustom', 'stationery')
-
-        else:
-            self.media.tray.configure(default_tray, 'custom', 'stationery')
+        default_tray = self.media.get_default_source()
+        self.media.tray.load(default_tray, self.media.MediaSize.Custom, self.media.MediaType.Stationery)
 
         job_id = self.print.raw.start('1ba0f46f30adf9190185558010124bf32a1a432ba8aefd131d9c26bf9b050b09')
         self.print.wait_for_job_completion(job_id)

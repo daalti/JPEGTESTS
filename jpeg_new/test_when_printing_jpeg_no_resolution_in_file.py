@@ -1,9 +1,9 @@
 import logging
 from dunetuf.print.print_common_types import MediaSize, MediaType
-from dunetuf.print.output_verifier import OutputVerifier
-from dunetuf.print.output_saver import OutputSaver
+from dunetuf.print.new.output.output_verifier import OutputVerifier
+from dunetuf.print.new.output.output_saver import OutputSaver
 from dunetuf.print.output.intents import Intents, MediaSize, ColorMode, PrintQuality, ColorRenderingType, ContentOrientation, Plex, MediaType, MediaSource, PlexBinding
-from tests.print.pdl.jpeg_new.print_base import TestWhenPrinting
+from tests.print.pdl.print_base import TestWhenPrinting, setup_output_saver, tear_down_output_saver
 
 
 class TestWhenPrintingJPEGFile(TestWhenPrinting):
@@ -12,6 +12,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         """Initialize shared test resources."""
         super().setup_class()
         cls.outputsaver = OutputSaver()
+        setup_output_saver(cls.outputsaver)
         cls.outputverifier = OutputVerifier(cls.outputsaver)
 
     @classmethod
@@ -30,6 +31,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
 
         # Reset media configuration to default
         self.media.update_media_configuration(self.default_configuration)
+        tear_down_output_saver(self.outputsaver)
 
     """
     $$$$$_BEGIN_TEST_METADATA_DECLARATION_$$$$$
@@ -44,7 +46,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         +test_framework:TUF
         +external_files:road_nores.jpeg=116ef2798a4d195fd1e3ea20d81af3b8c20373587e119d10a6ff0f0d70ee6f86
         +test_classification:System
-        +name:TestWhenPrintingJPEGFile::test_when_road_nores_jpeg_then_succeeds
+        +name:TestWhenPrintingJPEGFile::test_when_using_road_nores_jpeg_then_succeeds
         +categorization:
             +segment:Platform
             +area:Print
@@ -61,11 +63,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
 
     $$$$$_END_TEST_METADATA_DECLARATION_$$$$$
     """
-    def test_when_road_nores_jpeg_then_succeeds(self):
-
-        default_tray, media_sizes = self.media.get_source_and_media_sizes()
-        if 'custom' in media_sizes:
-            self.media.tray.configure(default_tray, 'custom', 'stationery')
+    def test_when_using_road_nores_jpeg_then_succeeds(self):
 
         self.outputsaver.validate_crc_tiff()
 

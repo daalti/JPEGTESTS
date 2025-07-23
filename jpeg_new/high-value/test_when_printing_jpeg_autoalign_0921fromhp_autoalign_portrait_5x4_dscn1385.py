@@ -1,7 +1,7 @@
 import logging
 from dunetuf.print.print_common_types import MediaSize, MediaType
-from dunetuf.print.output_saver import OutputSaver
-from tests.print.pdl.jpeg_new.print_base import TestWhenPrinting
+from dunetuf.print.new.output.output_saver import OutputSaver
+from tests.print.pdl.print_base import TestWhenPrinting, setup_output_saver, tear_down_output_saver
 
 
 class TestWhenPrintingJPEGFile(TestWhenPrinting):
@@ -10,6 +10,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         """Initialize shared test resources."""
         super().setup_class()
         cls.outputsaver = OutputSaver()
+        setup_output_saver(cls.outputsaver)
 
     @classmethod
     def teardown_class(cls):
@@ -27,6 +28,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
 
         # Reset media configuration to default
         self.media.update_media_configuration(self.default_configuration)
+        tear_down_output_saver(self.outputsaver)
     
     """
     $$$$$_BEGIN_TEST_METADATA_DECLARATION_$$$$$
@@ -41,7 +43,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         +test_framework:TUF
         +external_files:autoAlign_0921fromHP_AutoAlign_Portrait_5x4_DSCN1385.JPG=44ffc42c2d40cc0e77340abccd78e6de628f0de5bbea5e7ded8137605a70ed7e
         +test_classification:System
-        +name:TestWhenPrintingJPEGFile::test_when_autoAlign_0921fromHP_AutoAlign_Portrait_5x4_DSCN1385_JPG_then_succeeds
+        +name:TestWhenPrintingJPEGFile::test_when_using_autoAlign_0921fromHP_AutoAlign_Portrait_5x4_DSCN1385_file_then_succeeds
         +categorization:
             +segment:Platform
             +area:Print
@@ -58,14 +60,10 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
 
     $$$$$_END_TEST_METADATA_DECLARATION_$$$$$
     """
-    def test_when_autoAlign_0921fromHP_AutoAlign_Portrait_5x4_DSCN1385_JPG_then_succeeds(self):
+    def test_when_using_autoAlign_0921fromHP_AutoAlign_Portrait_5x4_DSCN1385_file_then_succeeds(self):
 
-        default_tray, media_sizes = self.media.get_source_and_media_sizes()
-
-        if 'anycustom' in media_sizes:
-            self.media.tray.configure(default_tray, 'anycustom', 'stationery')
-        else:
-            self.media.tray.configure(default_tray, 'custom', 'stationery')
+        default_tray = self.media.get_default_source()
+        self.media.tray.load(default_tray, self.media.MediaSize.Custom, self.media.MediaType.Stationery)
 
         job_id = self.print.raw.start('44ffc42c2d40cc0e77340abccd78e6de628f0de5bbea5e7ded8137605a70ed7e')
         self.print.wait_for_job_completion(job_id)

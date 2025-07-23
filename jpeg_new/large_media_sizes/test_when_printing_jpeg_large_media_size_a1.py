@@ -1,8 +1,9 @@
+import logging
 from dunetuf.print.print_common_types import MediaSize, MediaType
-from dunetuf.print.output_saver import OutputSaver
-from dunetuf.print.output_verifier import OutputVerifier
+from dunetuf.print.new.output.output_saver import OutputSaver
+from dunetuf.print.new.output.output_verifier import OutputVerifier
 from dunetuf.print.output.intents import Intents, MediaSize, MediaSource, MediaSizeID, get_media_source
-from tests.print.pdl.jpeg_new.print_base import TestWhenPrinting
+from tests.print.pdl.print_base import TestWhenPrinting, setup_output_saver, tear_down_output_saver
 
 A1_WIDTH_IN_INCH = 594000 / 25400
 A1_HEIGHT_IN_INCH = 841000 / 25400
@@ -12,6 +13,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         """Initialize shared test resources."""
         super().setup_class()
         cls.outputsaver = OutputSaver()
+        setup_output_saver(cls.outputsaver)
         cls.outputverifier = OutputVerifier(cls.outputsaver)
 
     @classmethod
@@ -30,6 +32,18 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
 
         # Reset media configuration to default
         self.media.update_media_configuration(self.default_configuration)
+        tear_down_output_saver(self.outputsaver)
+
+    def get_media_source_from_rolls(self):
+        """
+        Get the media source from the rolls in the media configuration.
+        This is used to verify the media source in the output.
+        """
+        media_configuration = self.media.get_media_configuration().get('inputs', [])
+        rolls = [mediaSource.get('mediaSourceId') for mediaSource in media_configuration if mediaSource.get('inputType') == "continuousRoll"]
+        if rolls:
+            return get_media_source(rolls[0])
+        return None
     """
     $$$$$_BEGIN_TEST_METADATA_DECLARATION_$$$$$
         +purpose:Jpeg test using A1-150-L.jpg
@@ -43,7 +57,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         +test_framework:TUF
         +external_files:A1-150-L.jpg=6b9fb0bfbd3dac81fc5f48347ddd337f30a1ad03e2af9bb541ec251142ca024d
         +test_classification:System
-        +name:TestWhenPrintingJPEGFile::test_when_A1_150_L_jpg_then_succeeds
+        +name:TestWhenPrintingJPEGFile::test_when_using_A1_150_L_file_then_succeeds
         +categorization:
             +segment:Platform
             +area:Print
@@ -60,7 +74,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
 
     $$$$$_END_TEST_METADATA_DECLARATION_$$$$$
     """
-    def test_when_A1_150_L_jpg_then_succeeds(self):
+    def test_when_using_A1_150_L_file_then_succeeds(self):
 
         self.outputverifier.outputsaver.operation_mode('TIFF')
 
@@ -93,7 +107,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         +test_framework:TUF
         +external_files:A1-231-L.jpg=0268b87aa87b04ac03087e8c414f083298dc60ffc655882839b25e98702fe906
         +test_classification:System
-        +name:TestWhenPrintingJPEGFile::test_when_A1_231_L_jpg_then_succeeds
+        +name:TestWhenPrintingJPEGFile::test_when_using_A1_231_L_file_then_succeeds
         +categorization:
             +segment:Platform
             +area:Print
@@ -109,19 +123,18 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
                 +configuration:DocumentFormat=JPEG & MediaSizeSupported=iso_a1_594x841mm
     $$$$$_END_TEST_METADATA_DECLARATION_$$$$$
     """
-    def test_when_A1_231_L_jpg_then_succeeds(self):
+    def test_when_using_A1_231_L_file_then_succeeds(self):
 
         self.outputverifier.outputsaver.operation_mode('TIFF')
 
         job_id = self.print.raw.start('0268b87aa87b04ac03087e8c414f083298dc60ffc655882839b25e98702fe906')
         self.print.wait_for_job_completion(job_id)
 
-        #TODO: CHECK IT
-        #media_source = get_media_source(tray.rolls[0])
+        media_source = self.get_media_source_from_rolls()
 
         self.outputverifier.save_and_parse_output()
         self.outputverifier.verify_media_size(Intents.printintent, MediaSize.custom) #type:ignore
-        #self.outputverifier.verify_media_source(Intents.printintent, media_source)
+        self.outputverifier.verify_media_source(Intents.printintent, media_source)
         self.outputverifier.outputsaver.operation_mode('NONE')
 
     """
@@ -137,7 +150,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         +test_framework:TUF
         +external_files:A1-600-L.jpg=c4ec10f90c24466ce65a838d090a7297d47b83cc1b287b22a7ba468392983ce2
         +test_classification:System
-        +name:TestWhenPrintingJPEGFile::test_when_A1_600_L_jpg_then_succeeds
+        +name:TestWhenPrintingJPEGFile::test_when_using_A1_600_L_file_then_succeeds
         +categorization:
             +segment:Platform
             +area:Print
@@ -153,19 +166,18 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
                 +configuration:DocumentFormat=JPEG & MediaSizeSupported=iso_a0_841x1189mm
     $$$$$_END_TEST_METADATA_DECLARATION_$$$$$
     """
-    def test_when_A1_600_L_jpg_then_succeeds(self):
+    def test_when_using_A1_600_L_file_then_succeeds(self):
 
         self.outputverifier.outputsaver.operation_mode('TIFF')
 
         job_id = self.print.raw.start('c4ec10f90c24466ce65a838d090a7297d47b83cc1b287b22a7ba468392983ce2')
         self.print.wait_for_job_completion(job_id)
 
-        #TODO: CHECK IT
-        #media_source = get_media_source(tray.rolls[0]) 
+        media_source = self.get_media_source_from_rolls()
 
         self.outputverifier.save_and_parse_output()
         self.outputverifier.verify_media_size(Intents.printintent, MediaSize.custom) #type:ignore
-        #self.outputverifier.verify_media_source(Intents.printintent, media_source)
+        self.outputverifier.verify_media_source(Intents.printintent, media_source)
         self.outputverifier.outputsaver.operation_mode('NONE')
 
     """
@@ -181,7 +193,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         +test_framework:TUF
         +external_files:A1-150-P.jpg=4fa0a710aa32e40d244748ff4ffd60c3d1d440d31003ad5c898c0c93f1aab914
         +test_classification:System
-        +name:TestWhenPrintingJPEGFile::test_when_A1_150_P_jpg_then_succeeds
+        +name:TestWhenPrintingJPEGFile::test_when_using_A1_150_P_file_then_succeeds
         +categorization:
             +segment:Platform
             +area:Print
@@ -197,7 +209,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
                 +configuration:DocumentFormat=JPEG & MediaSizeSupported=iso_a1_594x841mm
     $$$$$_END_TEST_METADATA_DECLARATION_$$$$$
     """
-    def test_when_A1_150_P_jpg_then_succeeds(self):
+    def test_when_using_A1_150_P_file_then_succeeds(self):
 
         self.outputverifier.outputsaver.operation_mode('TIFF')
 
@@ -239,7 +251,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         +test_framework:TUF
         +external_files:A1-231-P.jpg=9c3125a439ca88db6e0df33be1cbb786ad07e320e6c1a3a02876f614baf1a89c
         +test_classification:System
-        +name:TestWhenPrintingJPEGFile::test_when_A1_231_P_jpg_then_succeeds
+        +name:TestWhenPrintingJPEGFile::test_when_using_A1_231_P_file_then_succeeds
         +categorization:
             +segment:Platform
             +area:Print
@@ -255,19 +267,18 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
                 +configuration:DocumentFormat=JPEG & MediaSizeSupported=iso_a1_594x841mm
     $$$$$_END_TEST_METADATA_DECLARATION_$$$$$
     """
-    def test_when_A1_231_P_jpg_then_succeeds(self):
+    def test_when_using_A1_231_P_file_then_succeeds(self):
 
         self.outputverifier.outputsaver.operation_mode('TIFF')
 
         job_id = self.print.raw.start('9c3125a439ca88db6e0df33be1cbb786ad07e320e6c1a3a02876f614baf1a89c')
         self.print.wait_for_job_completion(job_id)
 
-        #TODO: Check this
-        #media_source = get_media_source(tray.rolls[0])
+        media_source = self.get_media_source_from_rolls()
 
         self.outputverifier.save_and_parse_output()
         self.outputverifier.verify_media_size(Intents.printintent, MediaSize.custom) #type:ignore
-        #self.outputverifier.verify_media_source(Intents.printintent, media_source)
+        self.outputverifier.verify_media_source(Intents.printintent, media_source)
         self.outputverifier.outputsaver.operation_mode('NONE')
 
     """
@@ -283,7 +294,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         +test_framework:TUF
         +external_files:A1-300-P.jpg=c00d2dfa17efe5d98c11979cdbc18b514f04d4462cd3fe79eeecfcb107d94e22
         +test_classification:System
-        +name:TestWhenPrintingJPEGFile::test_when_A1_300_P_jpg_then_succeeds
+        +name:TestWhenPrintingJPEGFile::test_when_using_A1_300_P_file_then_succeeds
         +categorization:
             +segment:Platform
             +area:Print
@@ -299,19 +310,18 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
                 +configuration:DocumentFormat=JPEG & MediaSizeSupported=iso_a1_594x841mm
     $$$$$_END_TEST_METADATA_DECLARATION_$$$$$
     """
-    def test_when_A1_300_P_jpg_then_succeeds(self):
+    def test_when_using_A1_300_P_file_then_succeeds(self):
 
         self.outputverifier.outputsaver.operation_mode('TIFF')
 
         job_id = self.print.raw.start('c00d2dfa17efe5d98c11979cdbc18b514f04d4462cd3fe79eeecfcb107d94e22')
         self.print.wait_for_job_completion(job_id)
 
-        #TODO: Check this
-        #media_source = get_media_source(tray.rolls[0])
+        media_source = self.get_media_source_from_rolls()
 
         self.outputverifier.save_and_parse_output()
         self.outputverifier.verify_media_size(Intents.printintent, MediaSize.custom) #type:ignore
-        #self.outputverifier.verify_media_source(Intents.printintent, media_source)
+        self.outputverifier.verify_media_source(Intents.printintent, media_source)
         self.outputverifier.outputsaver.operation_mode('NONE')
 
     """
@@ -327,7 +337,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         +test_framework:TUF
         +external_files:A1-600-P.jpg=194d330ac173675bf2b0e445cc1a42971bc90cf67fb7503d0d860938680dc75f
         +test_classification:System
-        +name:TestWhenPrintingJPEGFile::test_when_A1_600_P_jpg_then_succeeds
+        +name:TestWhenPrintingJPEGFile::test_when_using_A1_600_P_file_then_succeeds
         +categorization:
             +segment:Platform
             +area:Print
@@ -343,19 +353,18 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
                 +configuration:DocumentFormat=JPEG & MediaSizeSupported=iso_a1_594x841mm
     $$$$$_END_TEST_METADATA_DECLARATION_$$$$$
     """
-    def test_when_A1_600_P_jpg_then_succeeds(self):
+    def test_when_using_A1_600_P_file_then_succeeds(self):
 
         self.outputverifier.outputsaver.operation_mode('TIFF')
 
         job_id = self.print.raw.start('194d330ac173675bf2b0e445cc1a42971bc90cf67fb7503d0d860938680dc75f')
         self.print.wait_for_job_completion(job_id)
 
-        #TODO: Check this
-        #media_source = get_media_source(tray.rolls[0])
+        media_source = self.get_media_source_from_rolls()
 
         self.outputverifier.save_and_parse_output()
         self.outputverifier.verify_media_size(Intents.printintent, MediaSize.custom) #type:ignore
-        #self.outputverifier.verify_media_source(Intents.printintent, media_source)
+        self.outputverifier.verify_media_source(Intents.printintent, media_source)
         self.outputverifier.outputsaver.operation_mode('NONE')
 
     """
@@ -371,7 +380,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         +test_framework:TUF
         +external_files:A1-72-P.jpg=546bd634cfc1d42f3a3f2cb2067061599d02f89fc07e0f8e9b9f98eba977c760
         +test_classification:System
-        +name:TestWhenPrintingJPEGFile::test_when_A1_72_P_jpg_then_succeeds
+        +name:TestWhenPrintingJPEGFile::test_when_using_A1_72_P_file_then_succeeds
         +categorization:
             +segment:Platform
             +area:Print
@@ -387,7 +396,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
                 +configuration:DocumentFormat=JPEG & MediaSizeSupported=iso_a1_594x841mm
     $$$$$_END_TEST_METADATA_DECLARATION_$$$$$
     """
-    def test_when_A1_72_P_jpg_then_succeeds(self):
+    def test_when_using_A1_72_P_file_then_succeeds(self):
 
         self.outputverifier.outputsaver.operation_mode('TIFF')
 
@@ -401,13 +410,18 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         if rolls is not None:
             expected_media_size = MediaSize.custom
             job_resolution = self.outputverifier.get_intent(Intents.printintent)[0].resolution
+            logging.info(f"Job resolution: {job_resolution}")
             autorotate_enabled = self.outputverifier.get_intent(Intents.printintent)[0].autorotate_enable
             # verify A1 dimensions
             expected_width = round(A1_WIDTH_IN_INCH * job_resolution)
+
             expected_height = round(A1_HEIGHT_IN_INCH * job_resolution)
 
             if autorotate_enabled:
                 expected_height, expected_width = expected_width, expected_height
+
+            logging.info(f"Expected width: {expected_width}")
+            logging.info(f"Expected height: {expected_height}")
 
             self.outputverifier.verify_page_width(Intents.printintent, expected_width, redundance_accepted=1)
             self.outputverifier.verify_page_height(Intents.printintent, expected_height, redundance_accepted=1)

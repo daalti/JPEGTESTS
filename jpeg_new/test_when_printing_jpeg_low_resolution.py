@@ -1,14 +1,14 @@
 import logging
 from dunetuf.print.print_common_types import MediaSize, MediaType
-from dunetuf.print.output_saver import OutputSaver
+from dunetuf.print.new.output.output_saver import OutputSaver
 from dunetuf.metadata import get_ip, get_emulation_ip
 from dunetuf.configuration import Configuration
 from dunetuf.cdm import get_cdm_instance
 from dunetuf.udw.udw import get_underware_instance
 from dunetuf.udw import TclSocketClient
 from dunetuf.emulation.print import PrintEmulation
-from dunetuf.print.print_common_types import MediaInputIds,MediaSize, MediaType, MediaOrientation, TrayLevel
-from tests.print.pdl.jpeg_new.print_base import TestWhenPrinting
+from dunetuf.print.print_common_types import MediaSize, MediaType
+from tests.print.pdl.print_base import TestWhenPrinting, setup_output_saver, tear_down_output_saver
 
 
 class TestWhenPrintingJPEGFile(TestWhenPrinting):
@@ -17,19 +17,10 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         """Initialize shared test resources."""
         super().setup_class()
         cls.outputsaver = OutputSaver()
+        setup_output_saver(cls.outputsaver)
         cls.ip_address = get_ip()
         cls.cdm = get_cdm_instance(cls.ip_address)
         cls.configuration = Configuration(cls.cdm)
-        cls.ip_address = get_ip()
-        cls.cdm = get_cdm_instance(cls.ip_address)
-        cls.udw = get_underware_instance(cls.ip_address)
-        engine_simulator_ip = get_emulation_ip()
-        cls.tcl = TclSocketClient(cls.ip_address, 9104)
-        if engine_simulator_ip == 'None':
-            logging.debug('Instantiating PrintEmulation: no engineSimulatorIP specified, was -eip not set to emulator/simulator emulation IP?')
-            engine_simulator_ip = None
-        logging.info('Instantiating PrintEmulation with %s', engine_simulator_ip)
-        cls.print_emulation = PrintEmulation(cls.cdm, cls.udw, cls.tcl, engine_simulator_ip)
 
     @classmethod
     def teardown_class(cls):
@@ -47,6 +38,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
 
         # Reset media configuration to default
         self.media.update_media_configuration(self.default_configuration)
+        tear_down_output_saver(self.outputsaver)
     """
     $$$$$_BEGIN_TEST_METADATA_DECLARATION_$$$$$
         +purpose:Jpeg test using **Low_Resolution.jpg
@@ -60,7 +52,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         +test_framework:TUF
         +external_files:Low_Resolution.jpg=c8c83c0ed7b494873b33ce156398af91d873f8317276b8055ccb0022d8f1b398
         +test_classification:System
-        +name:TestWhenPrintingJPEGFile::test_when_Low_Resolution_jpg_then_succeeds
+        +name:TestWhenPrintingJPEGFile::test_when_using_Low_Resolution_file_then_succeeds
         +categorization:
             +segment:Platform
             +area:Print
@@ -86,18 +78,19 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
 
     $$$$$_END_TEST_METADATA_DECLARATION_$$$$$
     """
-    def test_when_Low_Resolution_jpg_then_succeeds(self):
+    def test_when_using_Low_Resolution_file_then_succeeds(self):
 
         # Setting udw command for crc to true for generating pdl crc after print job done
         self.outputsaver.validate_crc_tiff()
-        if self.print_emulation.print_engine_platform == 'emulator':
-            installed_trays = self.print_emulation.tray.get_installed_trays()
-
+        if self.get_platform() == 'emulator':
+            installed_trays = self.media.tray.get()
             for tray_id in installed_trays:
                 if self.configuration.productname == "camden":
-                    self.print_emulation.tray.load(tray_id, 'ThreeXFive', MediaType.Plain.name)
+                    self.media.tray.load(tray_id, self.media.MediaSize.ThreeXFive, self.media.MediaType.Plain)
+
                 else:
-                    self.print_emulation.tray.load(tray_id, MediaSize.A4.name, MediaType.Plain.name)
+                    self.media.tray.load(tray_id, self.media.MediaSize.A4, self.media.MediaType.Plain)
+
         job_id = self.print.raw.start('c8c83c0ed7b494873b33ce156398af91d873f8317276b8055ccb0022d8f1b398')
         self.print.wait_for_job_completion(job_id)
         self.outputsaver.save_output()

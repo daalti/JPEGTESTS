@@ -1,14 +1,14 @@
 import logging
 from dunetuf.print.print_common_types import MediaSize, MediaType
-from dunetuf.print.mapper import PrintMapper
-from dunetuf.print.output_saver import OutputSaver
+from dunetuf.print.new.mapper.mapper import PrintMapper
+from dunetuf.print.new.output.output_saver import OutputSaver
 from dunetuf.metadata import get_ip, get_emulation_ip
 from dunetuf.cdm import get_cdm_instance
 from dunetuf.udw.udw import get_underware_instance
 from dunetuf.udw import TclSocketClient
 from dunetuf.emulation.print import PrintEmulation
 from dunetuf.print.print_common_types import MediaSize, MediaType
-from tests.print.pdl.jpeg_new.print_base import TestWhenPrinting
+from tests.print.pdl.print_base import TestWhenPrinting, setup_output_saver, tear_down_output_saver
 
 
 class TestWhenPrintingJPEGFile(TestWhenPrinting):
@@ -17,17 +17,10 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         """Initialize shared test resources."""
         super().setup_class()
         cls.outputsaver = OutputSaver()
+        setup_output_saver(cls.outputsaver)
         cls.ip_address = get_ip()
         cls.cdm = get_cdm_instance(cls.ip_address)
-        cls.udw = get_underware_instance(cls.ip_address)
         cls.print_mapper = PrintMapper(cls.cdm)
-        engine_simulator_ip = get_emulation_ip()
-        cls.tcl = TclSocketClient(cls.ip_address, 9104)
-        if engine_simulator_ip == 'None':
-            logging.debug('Instantiating PrintEmulation: no engineSimulatorIP specified, was -eip not set to emulator/simulator emulation IP?')
-            engine_simulator_ip = None
-        logging.info('Instantiating PrintEmulation with %s', engine_simulator_ip)
-        cls.print_emulation = PrintEmulation(cls.cdm, cls.udw, cls.tcl, engine_simulator_ip)
 
     @classmethod
     def teardown_class(cls):
@@ -45,6 +38,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
 
         # Reset media configuration to default
         self.media.update_media_configuration(self.default_configuration)
+        tear_down_output_saver(self.outputsaver)
 
     """
     $$$$$_BEGIN_TEST_METADATA_DECLARATION_$$$$$
@@ -59,7 +53,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         +test_framework:TUF
         +external_files:parrots_Progressive_Interlaced.jpg=dfcaa88adf10d6833f97280b5a58893db02845db6c41495cd324ccb1145bda9a
         +test_classification:System
-        +name:TestWhenPrintingJPEGFile::test_when_parrots_Progressive_Interlaced_jpg_then_succeeds
+        +name:TestWhenPrintingJPEGFile::test_when_using_parrots_Progressive_Interlaced_file_then_succeeds
         +categorization:
             +segment:Platform
             +area:Print
@@ -82,19 +76,18 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
                         +type:Engine
     $$$$$_END_TEST_METADATA_DECLARATION_$$$$$
     """
-    def test_when_parrots_Progressive_Interlaced_jpg_then_succeeds(self):
+    def test_when_using_parrots_Progressive_Interlaced_file_then_succeeds(self):
 
         # Print file size : width 10.67 inches and height 7.11 inches
-        default_tray, media_sizes = self.media.get_source_and_media_sizes()
+        default_tray = self.media.get_default_source()
+        media_sizes = self.media.get_media_sizes(default_tray)
 
-        if 'anycustom' in media_sizes:
-            self.media.tray.configure(default_tray, 'anycustom', 'stationery')
-        elif 'any' in media_sizes:
-            tray_test_name = self.print_mapper.get_media_input_test_name(default_tray)
-            self.print_emulation.tray.setup_tray(tray_test_name, MediaSize.Letter.name, MediaType.Plain.name)  # type: ignore
-            self.media.tray.configure(default_tray, 'any', 'any')
+        if "anycustom" in media_sizes:
+            self.media.tray.load(default_tray, self.media.MediaSize.AnyCustom, self.media.MediaType.Stationery)
+        elif "any" in media_sizes:
+            self.media.tray.load(default_tray, self.media.MediaSize.Any, self.media.MediaType.Any)
         else:
-            self.media.tray.configure(default_tray, 'custom', 'stationery')
+            self.media.tray.load(default_tray, self.media.MediaSize.Custom, self.media.MediaType.Stationery)
         self.outputsaver.validate_crc_tiff() 
         job_id = self.print.raw.start('dfcaa88adf10d6833f97280b5a58893db02845db6c41495cd324ccb1145bda9a')
         self.print.wait_for_job_completion(job_id)

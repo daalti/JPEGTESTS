@@ -1,6 +1,6 @@
 import logging
 from dunetuf.print.print_common_types import MediaSize, MediaType
-from dunetuf.print.output_saver import OutputSaver
+from dunetuf.print.new.output.output_saver import OutputSaver
 from dunetuf.metadata import get_ip, get_emulation_ip
 from dunetuf.cdm import get_cdm_instance
 from dunetuf.udw.udw import get_underware_instance
@@ -8,7 +8,7 @@ from dunetuf.udw import TclSocketClient
 from dunetuf.emulation.print import PrintEmulation
 from dunetuf.print.print_common_types import MediaInputIds, MediaSize, MediaType, MediaOrientation
 from dunetuf.configuration import Configuration
-from tests.print.pdl.jpeg_new.print_base import TestWhenPrinting
+from tests.print.pdl.print_base import TestWhenPrinting, setup_output_saver, tear_down_output_saver
 
 class TestWhenPrintingJPEGFile(TestWhenPrinting):
     @classmethod
@@ -16,17 +16,11 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         """Initialize shared test resources."""
         super().setup_class()
         cls.outputsaver = OutputSaver()
+        setup_output_saver(cls.outputsaver)
         cls.ip_address = get_ip()
         cls.cdm = get_cdm_instance(cls.ip_address)
         cls.udw = get_underware_instance(cls.ip_address)
         cls.configuration = Configuration(cls.cdm)
-        engine_simulator_ip = get_emulation_ip()
-        cls.tcl = TclSocketClient(cls.ip_address, 9104)
-        if engine_simulator_ip == 'None':
-            logging.debug('Instantiating PrintEmulation: no engineSimulatorIP specified, was -eip not set to emulator/simulator emulation IP?')
-            engine_simulator_ip = None
-        logging.info('Instantiating PrintEmulation with %s', engine_simulator_ip)
-        cls.print_emulation = PrintEmulation(cls.cdm, cls.udw, cls.tcl, engine_simulator_ip)
 
     @classmethod
     def teardown_class(cls):
@@ -44,6 +38,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
 
         # Reset media configuration to default
         self.media.update_media_configuration(self.default_configuration)
+        tear_down_output_saver(self.outputsaver)
     
     """
     $$$$$_BEGIN_TEST_METADATA_DECLARATION_$$$$$
@@ -58,7 +53,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         +test_framework:TUF
         +external_files:autoAlign_0921fromHP_AutoAlign_Landscape_3x2_DSC_0967.JPG=9a0f8feea5185a818537425da9affc905d0ef63c4ef0f675b564fdda4728385b
         +test_classification:System
-        +name:TestWhenPrintingJPEGFile::test_when_autoAlign_0921fromHP_AutoAlign_Landscape_3x2_DSC_0967_JPG_then_succeeds
+        +name:TestWhenPrintingJPEGFile::test_when_using_autoAlign_0921fromHP_AutoAlign_Landscape_3x2_DSC_0967_file_then_succeeds
         +categorization:
             +segment:Platform
             +area:Print
@@ -84,21 +79,20 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
 
     $$$$$_END_TEST_METADATA_DECLARATION_$$$$$
     """
-    def test_when_autoAlign_0921fromHP_AutoAlign_Landscape_3x2_DSC_0967_JPG_then_succeeds(self):
+    def test_when_using_autoAlign_0921fromHP_AutoAlign_Landscape_3x2_DSC_0967_file_then_succeeds(self):
 
-        default_tray, media_sizes = self.media.get_source_and_media_sizes()
-        if 'anycustom' in media_sizes:
-            if self.print_emulation.print_engine_platform == 'emulator' and self.configuration.familyname == 'enterprise':
+        default_tray = self.media.get_default_source()
+        media_sizes = self.media.get_media_sizes(default_tray)
+        if "anycustom" in media_sizes:
+            if self.get_platform() == 'emulator' and self.configuration.familyname == 'enterprise':
                 tray1 = MediaInputIds.Tray1.name
-                tray, media_sizes = self.media.get_source_and_media_sizes('tray-1')
-                if 'custom' in media_sizes:
-                    self.print_emulation.tray.open(tray1)
-                    self.print_emulation.tray.load(tray1, MediaSize.Custom.name, MediaType.Plain.name)
-                    self.print_emulation.tray.close(tray1)
+                media_sizes = self.media.get_media_sizes('tray-1')
+                if "custom" in media_sizes:
+                    self.media.tray.load(tray1, self.media.MediaSize.Custom, self.media.MediaType.Plain, need_open=True)
             else:
-                self.media.tray.configure(default_tray, 'anycustom', 'stationery')
+                self.media.tray.load(default_tray, self.media.MediaSize.AnyCustom, self.media.MediaType.Stationery)
         else:
-            self.media.tray.configure(default_tray, 'custom', 'stationery')
+            self.media.tray.load(default_tray, self.media.MediaSize.Custom, self.media.MediaType.Stationery)
 
         job_id = self.print.raw.start('9a0f8feea5185a818537425da9affc905d0ef63c4ef0f675b564fdda4728385b')
         self.print.wait_for_job_completion(job_id)

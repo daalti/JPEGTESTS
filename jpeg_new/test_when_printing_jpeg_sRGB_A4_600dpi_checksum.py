@@ -1,8 +1,8 @@
 import logging
 from dunetuf.print.print_common_types import MediaSize, MediaType
-from dunetuf.print.output_saver import OutputSaver
+from dunetuf.print.new.output.output_saver import OutputSaver
 from dunetuf.utility.systemtestpath import get_system_test_binaries_path
-from tests.print.pdl.jpeg_new.print_base import TestWhenPrinting
+from tests.print.pdl.print_base import TestWhenPrinting, setup_output_saver, tear_down_output_saver
 
 class TestWhenPrintingJPEGFile(TestWhenPrinting):
     @classmethod
@@ -10,6 +10,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         """Initialize shared test resources."""
         super().setup_class()
         cls.outputsaver = OutputSaver()
+        setup_output_saver(cls.outputsaver)
 
     @classmethod
     def teardown_class(cls):
@@ -27,6 +28,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
 
         # Reset media configuration to default
         self.media.update_media_configuration(self.default_configuration)
+        tear_down_output_saver(self.outputsaver)
     """
     $$$$$_BEGIN_TEST_METADATA_DECLARATION_$$$$$
         +purpose: Print job file *sRGB_A4_600dpi.jpg
@@ -40,7 +42,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         +test_framework:TUF
         +external_files:sRGB_A4_600dpi.jpg=86c81bfee5d3a323f7faf4026db8bf534e9d8edf624b9170bb60e3cf2d59773b
         +test_classification:System
-        +name:TestWhenPrintingJPEGFile::test_when_sRGB_A4_600dpi_jpg_and_crc_then_succeeds
+        +name:TestWhenPrintingJPEGFile::test_when_using_sRGB_A4_600dpi_jpg_and_crc_then_succeeds
         +test:
             +title:test_jpg_sRGB_A4_600dpi_checksum
             +guid:06f3c688-6112-4fa8-b408-dec92505b062
@@ -49,7 +51,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
                 +configuration:PrintEngineType=Maia & DocumentFormat=JPEG
     $$$$$_END_TEST_METADATA_DECLARATION_$$$$$
     """
-    def test_when_sRGB_A4_600dpi_jpg_and_crc_then_succeeds(self):
+    def test_when_using_sRGB_A4_600dpi_jpg_and_crc_then_succeeds(self):
 
 
         # CRC will be calculated using the payload of all the RasterDatas

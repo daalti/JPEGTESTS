@@ -1,7 +1,8 @@
 import logging
 from dunetuf.print.print_common_types import MediaSize, MediaType
-from dunetuf.print.output_saver import OutputSaver
-from tests.print.pdl.jpeg_new.print_base import TestWhenPrinting
+from dunetuf.print.new.output.output_saver import OutputSaver
+from tests.print.pdl.print_base import TestWhenPrinting, setup_output_saver, tear_down_output_saver
+from tests.print.pdl.print_base import setup_output_saver, tear_down_output_saver
 
 
 class TestWhenPrintingJPEGFile(TestWhenPrinting):
@@ -10,6 +11,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         """Initialize shared test resources."""
         super().setup_class()
         cls.outputsaver = OutputSaver()
+        setup_output_saver(cls.outputsaver)
 
     @classmethod
     def teardown_class(cls):
@@ -27,6 +29,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
 
         # Reset media configuration to default
         self.media.update_media_configuration(self.default_configuration)
+        tear_down_output_saver(self.outputsaver)
 
     """
     $$$$$_BEGIN_TEST_METADATA_DECLARATION_$$$$$
@@ -41,7 +44,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         +test_framework:TUF
         +external_files:100x100rgb.jpg=d5ac022cb1f519bf43576315cd62acb7dd7ba4de26bcd229fc544023a5da12ab
         +test_classification:System
-        +name:TestWhenPrintingJPEGFile::test_when_100x100rgb_jpg_then_succeeds
+        +name:TestWhenPrintingJPEGFile::test_when_using_100x100rgb_file_then_succeeds
         +categorization:
             +segment:Platform
             +area:Print
@@ -58,16 +61,17 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
 
     $$$$$_END_TEST_METADATA_DECLARATION_$$$$$
     """
-    def test_when_100x100rgb_jpg_then_succeeds(self):
+    def test_when_using_100x100rgb_file_then_succeeds(self):
 
         self.outputsaver.operation_mode('TIFF')
 
-        default_tray, media_sizes = self.media.get_source_and_media_sizes()
+        default_tray = self.media.get_default_source()
+        media_sizes = self.media.get_media_sizes(default_tray)
         default_size = self.media.get_default_size(default_tray)
 
         if default_size in media_sizes:
             logging.info(f"Set paper tray <{default_tray}> to paper size <{default_size}>")
-            self.media.tray.configure(default_tray, default_size, 'stationery')
+            self.media.tray.load(default_tray, default_size, self.media.MediaType.Stationery)
 
         job_id = self.print.raw.start('d5ac022cb1f519bf43576315cd62acb7dd7ba4de26bcd229fc544023a5da12ab')
         self.print.wait_for_job_completion(job_id)

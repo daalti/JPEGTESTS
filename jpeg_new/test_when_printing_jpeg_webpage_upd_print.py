@@ -1,6 +1,6 @@
 from dunetuf.print.print_common_types import MediaSize, MediaType
-from dunetuf.print.output_saver import OutputSaver
-from tests.print.pdl.jpeg_new.print_base import TestWhenPrinting
+from dunetuf.print.new.output.output_saver import OutputSaver
+from tests.print.pdl.print_base import TestWhenPrinting, setup_output_saver, tear_down_output_saver
 
 
 class TestWhenPrintingJPEGFile(TestWhenPrinting):
@@ -9,6 +9,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         """Initialize shared test resources."""
         super().setup_class()
         cls.outputsaver = OutputSaver()
+        setup_output_saver(cls.outputsaver)
 
     @classmethod
     def teardown_class(cls):
@@ -26,6 +27,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
 
         # Reset media configuration to default
         self.media.update_media_configuration(self.default_configuration)
+        tear_down_output_saver(self.outputsaver)
     """
     $$$$$_BEGIN_TEST_METADATA_DECLARATION_$$$$$
         +purpose:Jpeg test using **Webpage_UPD_PRint.JPG
@@ -39,7 +41,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         +test_framework:TUF
         +external_files:Webpage_UPD_PRint.JPG=a89ef72d5101dabbf55a0722d57141626372518bfd7fa6b3ba53808ba7d1e0f5
         +test_classification:System
-        +name:TestWhenPrintingJPEGFile::test_when_Webpage_UPD_PRint_JPG_then_succeeds
+        +name:TestWhenPrintingJPEGFile::test_when_using_Webpage_UPD_PRint_file_then_succeeds
         +categorization:
             +segment:Platform
             +area:Print
@@ -56,7 +58,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
 
     $$$$$_END_TEST_METADATA_DECLARATION_$$$$$
     """
-    def test_when_Webpage_UPD_PRint_JPG_then_succeeds(self):
+    def test_when_using_Webpage_UPD_PRint_file_then_succeeds(self):
 
         job_id = self.print.raw.start('a89ef72d5101dabbf55a0722d57141626372518bfd7fa6b3ba53808ba7d1e0f5')
         self.print.wait_for_job_completion(job_id)

@@ -1,10 +1,10 @@
 import logging
 from dunetuf.print.print_common_types import MediaSize, MediaType
-from dunetuf.print.output_saver import OutputSaver
+from dunetuf.print.new.output.output_saver import OutputSaver
 from dunetuf.configuration import Configuration
 from dunetuf.metadata import get_ip
 from dunetuf.cdm import get_cdm_instance
-from tests.print.pdl.jpeg_new.print_base import TestWhenPrinting
+from tests.print.pdl.print_base import TestWhenPrinting, setup_output_saver, tear_down_output_saver
 
 
 
@@ -14,6 +14,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         """Initialize shared test resources."""
         super().setup_class()
         cls.outputsaver = OutputSaver()
+        setup_output_saver(cls.outputsaver)
         cls.ip_address = get_ip()
         cls.cdm = get_cdm_instance(cls.ip_address)
         cls.configuration = Configuration(cls.cdm)
@@ -34,6 +35,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
 
         # Reset media configuration to default
         self.media.update_media_configuration(self.default_configuration)
+        tear_down_output_saver(self.outputsaver)
 
     
     """
@@ -49,7 +51,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         +test_framework:TUF
         +external_files:untagged_cmyk_swop_100dpi.jpg=4f9f5dd2775a1a4a733a6a21830b4b257bab151d6971ee664e482c67013d7cda
         +test_classification:System
-        +name:TestWhenPrintingJPEGFile::test_when_untagged_cmyk_swop_100dpi_jpg_then_succeeds
+        +name:TestWhenPrintingJPEGFile::test_when_using_untagged_cmyk_swop_100dpi_file_then_succeeds
         +categorization:
             +segment:Platform
             +area:Print
@@ -66,7 +68,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
 
     $$$$$_END_TEST_METADATA_DECLARATION_$$$$$
     """
-    def test_when_untagged_cmyk_swop_100dpi_jpg_then_succeeds(self):
+    def test_when_using_untagged_cmyk_swop_100dpi_file_then_succeeds(self):
 
         if self.configuration.productname == "jupiter":
             self.outputsaver.operation_mode('CRC')
@@ -74,13 +76,8 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
             self.outputsaver.operation_mode('TIFF')
             self.outputsaver.validate_crc_tiff()
 
-        default_tray, media_sizes = self.media.get_source_and_media_sizes()
-
-        if 'anycustom' in media_sizes:
-            self.media.tray.configure(default_tray, 'anycustom', 'stationery')
-
-        else:
-            self.media.tray.configure(default_tray, 'custom', 'stationery')
+        default_tray = self.media.get_default_source()
+        self.media.tray.load(default_tray, self.media.MediaSize.Custom, self.media.MediaType.Stationery)
 
         job_id = self.print.raw.start('4f9f5dd2775a1a4a733a6a21830b4b257bab151d6971ee664e482c67013d7cda')
         self.print.wait_for_job_completion(job_id)

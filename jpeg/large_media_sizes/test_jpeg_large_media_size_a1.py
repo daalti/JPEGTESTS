@@ -1,4 +1,5 @@
 from dunetuf.print.output.intents import Intents, MediaSize, MediaSource, MediaSizeID, get_media_source
+import logging
 
 A1_WIDTH_IN_INCH = 594000 / 25400
 A1_HEIGHT_IN_INCH = 841000 / 25400
@@ -364,6 +365,7 @@ def test_jpeg_large_media_size_a1_72_portrait(setup_teardown, printjob, outputve
         expected_media_size = MediaSize.custom
         job_resolution = outputverifier.get_intent(Intents.printintent)[0].resolution
         autorotate_enabled = outputverifier.get_intent(Intents.printintent)[0].autorotate_enable
+        logging.info(f"Job resolution: {job_resolution}")
         # verify A1 dimensions
         expected_width = round(A1_WIDTH_IN_INCH * job_resolution)
         expected_height = round(A1_HEIGHT_IN_INCH * job_resolution)
@@ -371,6 +373,8 @@ def test_jpeg_large_media_size_a1_72_portrait(setup_teardown, printjob, outputve
         if autorotate_enabled:
             expected_height, expected_width = expected_width, expected_height
 
+        logging.info(f"Expected width: {expected_width}")
+        logging.info(f"Expected height: {expected_height}")
         outputverifier.verify_page_width(Intents.printintent, expected_width, redundance_accepted=1)
         outputverifier.verify_page_height(Intents.printintent, expected_height, redundance_accepted=1)
          

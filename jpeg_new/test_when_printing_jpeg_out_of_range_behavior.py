@@ -1,10 +1,10 @@
 import logging
 from dunetuf.print.print_common_types import MediaSize, MediaType
-from dunetuf.print.output_saver import OutputSaver
-from dunetuf.print.output_verifier import OutputVerifier
+from dunetuf.print.new.output.output_saver import OutputSaver
+from dunetuf.print.new.output.output_verifier import OutputVerifier
 from dunetuf.print.output.intents import Intents, MediaSize, ColorMode, PrintQuality, ColorRenderingType, ContentOrientation, Plex, MediaType, MediaSource, PlexBinding
 from dunetuf.media.media_handling import MediaHandling
-from tests.print.pdl.jpeg_new.print_base import TestWhenPrinting
+from tests.print.pdl.print_base import TestWhenPrinting, setup_output_saver, tear_down_output_saver
 
 class TestWhenPrintingJPEGFile(TestWhenPrinting):
     @classmethod
@@ -12,6 +12,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         """Initialize shared test resources."""
         super().setup_class()
         cls.outputsaver = OutputSaver()
+        setup_output_saver(cls.outputsaver)
         cls.outputverifier = OutputVerifier(cls.outputsaver)
         cls.media_handling = MediaHandling()
 
@@ -31,6 +32,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
 
         # Reset media configuration to default
         self.media.update_media_configuration(self.default_configuration)
+        tear_down_output_saver(self.outputsaver)
 
     """
     $$$$$_BEGIN_TEST_METADATA_DECLARATION_$$$$$
@@ -45,7 +47,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         +test_framework:TUF
         +external_files:A0-600-L.jpg=b9d02741fadecd94d682bb8b40ec433f5ab27ef63418cdcea21085d7b4e89d90
         +test_classification:System
-        +name:TestWhenPrintingJPEGFile::test_when_A0_600_L_jpg_then_succeeds
+        +name:TestWhenPrintingJPEGFile::test_when_using_A0_600_L_file_then_succeeds
         +categorization:
             +segment:Platform
             +area:Print
@@ -62,7 +64,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
 
     $$$$$_END_TEST_METADATA_DECLARATION_$$$$$
     """
-    def test_when_A0_600_L_jpg_then_succeeds(self):
+    def test_when_using_A0_600_L_file_then_succeeds(self):
 
         self.media.unload_media()
 
@@ -73,16 +75,17 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
             'media-source': 'main-roll'
         }
         ipp_test_file = self.print.ipp.generate_test_file_path(**ipp_test_attribs)
-        job_id = self.print.ipp.start(ipp_test_file, 'b9d02741fadecd94d682bb8b40ec433f5ab27ef63418cdcea21085d7b4e89d90')
+        job_result = self.print.ipp.start(ipp_test_file, 'b9d02741fadecd94d682bb8b40ec433f5ab27ef63418cdcea21085d7b4e89d90')
+        job_id = job_result[0] if isinstance(job_result, tuple) else job_result
 
-        tray, media_sizes = self.media.get_source_and_media_sizes('main-roll')
-        if 'iso_a0_841x1189mm' in media_sizes:
+        media_sizes = self.media.get_media_sizes('main-roll')
+        if "iso_a0_841x1189mm" in media_sizes:
             self.media_handling.wait_for_alerts('mediaLoadFlow', 100)
-            self.media.tray.configure('main-roll', 'iso_a0_841x1189mm', 'stationery')
+            self.media.tray.load('main-roll', self.media.MediaSize.iso_a0_841x1189mm, self.media.MediaType.Stationery)
             self.media.load_media('main-roll')
             self.media_handling.alert_action('mediaLoadFlow', 'ok')
 
-        self.print.wait_for_state(job_id, ["completed"])
+        self.print.wait_for_job_completion(job_id)
 
         self.outputverifier.save_and_parse_output()
         self.media.unload_media()  # Will unload media from all trays

@@ -1,7 +1,7 @@
 import logging
 from dunetuf.print.print_common_types import MediaSize, MediaType
-from dunetuf.print.output_saver import OutputSaver
-from tests.print.pdl.jpeg_new.print_base import TestWhenPrinting
+from dunetuf.print.new.output.output_saver import OutputSaver
+from tests.print.pdl.print_base import TestWhenPrinting, setup_output_saver, tear_down_output_saver
 
 
 class TestWhenPrintingJPEGFile(TestWhenPrinting):
@@ -10,6 +10,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         """Initialize shared test resources."""
         super().setup_class()
         cls.outputsaver = OutputSaver()
+        setup_output_saver(cls.outputsaver)
 
     @classmethod
     def teardown_class(cls):
@@ -27,6 +28,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
 
         # Reset media configuration to default
         self.media.update_media_configuration(self.default_configuration)
+        tear_down_output_saver(self.outputsaver)
     """
     $$$$$_BEGIN_TEST_METADATA_DECLARATION_$$$$$
         +purpose: Print large jpeg job
@@ -40,7 +42,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         +test_framework:TUF
         +external_files:large_image.jpg=40c7bdccc3b536ed31a43208fa935333481533bd65f37fe7dec9a6cf24dc9078
         +test_classification:System
-        +name:TestWhenPrintingJPEGFile::test_when_large_image_jpg_then_succeeds
+        +name:TestWhenPrintingJPEGFile::test_when_using_large_image_file_then_succeeds
         +test:
             +title:test_jpeg_largefile
             +guid:0375c24e-0b72-4d9f-a88d-b9d7700a5246
@@ -51,7 +53,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
 
     $$$$$_END_TEST_METADATA_DECLARATION_$$$$$
     """
-    def test_when_large_image_jpg_then_succeeds(self):
+    def test_when_using_large_image_file_then_succeeds(self):
 
         self.outputsaver.validate_crc_tiff()
         job_id = self.print.raw.start('40c7bdccc3b536ed31a43208fa935333481533bd65f37fe7dec9a6cf24dc9078')

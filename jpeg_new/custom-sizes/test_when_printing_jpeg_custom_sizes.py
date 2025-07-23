@@ -1,16 +1,15 @@
 from dunetuf.print.output.intents import Intents, MediaSize
 import logging
-from dunetuf.print.print_common_types import MediaSize, MediaType
-from dunetuf.print.output_saver import OutputSaver
+from dunetuf.print.new.output.output_saver import OutputSaver
 from dunetuf.metadata import get_ip, get_emulation_ip
 from dunetuf.cdm import get_cdm_instance
 from dunetuf.udw.udw import get_underware_instance
 from dunetuf.udw import TclSocketClient
 from dunetuf.emulation.print import PrintEmulation
-from dunetuf.print.print_common_types import MediaInputIds,  MediaType, MediaOrientation
+from dunetuf.print.print_common_types import MediaInputIds,  MediaType
 from dunetuf.configuration import Configuration
-from dunetuf.print.output_verifier import OutputVerifier
-from tests.print.pdl.jpeg_new.print_base import TestWhenPrinting
+from dunetuf.print.new.output.output_verifier import OutputVerifier
+from tests.print.pdl.print_base import TestWhenPrinting, setup_output_saver, tear_down_output_saver
 
 class TestWhenPrintingJPEGFile(TestWhenPrinting):
     @classmethod
@@ -18,17 +17,10 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         """Initialize shared test resources."""
         super().setup_class()
         cls.outputsaver = OutputSaver()
+        setup_output_saver(cls.outputsaver)
         cls.ip_address = get_ip()
         cls.cdm = get_cdm_instance(cls.ip_address)
-        cls.udw = get_underware_instance(cls.ip_address)
         cls.configuration = Configuration(cls.cdm)
-        engine_simulator_ip = get_emulation_ip()
-        cls.tcl = TclSocketClient(cls.ip_address, 9104)
-        if engine_simulator_ip == 'None':
-            logging.debug('Instantiating PrintEmulation: no engineSimulatorIP specified, was -eip not set to emulator/simulator emulation IP?')
-            engine_simulator_ip = None
-        logging.info('Instantiating PrintEmulation with %s', engine_simulator_ip)
-        cls.print_emulation = PrintEmulation(cls.cdm, cls.udw, cls.tcl, engine_simulator_ip)
         cls.outputverifier = OutputVerifier(cls.outputsaver)
 
     @classmethod
@@ -47,6 +39,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
 
         # Reset media configuration to default
         self.media.update_media_configuration(self.default_configuration)
+        tear_down_output_saver(self.outputsaver)
     
     """
     $$$$$_BEGIN_TEST_METADATA_DECLARATION_$$$$$
@@ -61,7 +54,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         +test_framework:TUF
         +external_files:CS300X200-150-L.jpg=98b2abe4245f479ed174d858e18953abd74f50c131b1accb82141c9c190657c0
         +test_classification:System
-        +name:TestWhenPrintingJPEGFile::test_when_CS300X200_150_L_jpg_then_succeeds
+        +name:TestWhenPrintingJPEGFile::test_when_using_CS300X200_150_L_file_then_succeeds
         +categorization:
             +segment:Platform
             +area:Print
@@ -78,21 +71,17 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
 
     $$$$$_END_TEST_METADATA_DECLARATION_$$$$$
     """
-    def test_when_CS300X200_150_L_jpg_then_succeeds(self):
+    def test_when_using_CS300X200_150_L_file_then_succeeds(self):
 
         self.outputsaver.validate_crc_tiff()
-        default_tray, media_sizes = self.media.get_source_and_media_sizes()
-
-        if 'anycustom' in media_sizes:
-            self.media.tray.configure(default_tray, 'anycustom', 'stationery')
-        else:
-            self.media.tray.configure(default_tray, 'custom', 'stationery')
+        default_tray = self.media.get_default_source()
+        self.media.tray.load(default_tray, self.media.MediaSize.Custom, self.media.MediaType.Stationery)
 
         job_id = self.print.raw.start('98b2abe4245f479ed174d858e18953abd74f50c131b1accb82141c9c190657c0')
         self.print.wait_for_job_completion(job_id)
 
         self.outputverifier.save_and_parse_output()
-        self.outputverifier.verify_media_size(Intents.printintent, MediaSize.Custom) #type:ignore
+        self.outputverifier.verify_media_size(Intents.printintent, MediaSize.custom) #type:ignore
         self.outputverifier.outputsaver.operation_mode('NONE')
 
 
@@ -109,7 +98,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         +test_framework:TUF
         +external_files:CS300X200-231-L.jpg=cda4d59f5ef4aa6c7b7a1ab26a50ce25e3dede1ab33db39c8ea1dfe9cd81a4b1
         +test_classification:System
-        +name:TestWhenPrintingJPEGFile::test_when_CS300X200_150_L_jpg_then_succeeds_2
+        +name:TestWhenPrintingJPEGFile::test_when_using_CS300X200_231_L_file_then_succeeds
         +categorization:
             +segment:Platform
             +area:Print
@@ -127,15 +116,11 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
     $$$$$_END_TEST_METADATA_DECLARATION_$$$$$
     """
 
-    def test_when_CS300X200_150_L_jpg_then_succeeds_2(self):
+    def test_when_using_CS300X200_231_L_file_then_succeeds(self):
 
         self.outputverifier.outputsaver.operation_mode('TIFF')
-        default_tray, media_sizes = self.media.get_source_and_media_sizes()
-
-        if 'anycustom' in media_sizes:
-            self.media.tray.configure(default_tray, 'anycustom', 'stationery')
-        else:
-            self.media.tray.configure(default_tray, 'custom', 'stationery')
+        default_tray = self.media.get_default_source()
+        self.media.tray.load(default_tray, self.media.MediaSize.Custom, self.media.MediaType.Stationery)
 
 
         job_id = self.print.raw.start('cda4d59f5ef4aa6c7b7a1ab26a50ce25e3dede1ab33db39c8ea1dfe9cd81a4b1')
@@ -160,7 +145,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         +test_framework:TUF
         +external_files:CS300X200-300-L.jpg=e764a78f35cd170ec6be58b5b3b528d0beb822e7165d79f0bef48ddb8be4f50b
         +test_classification:System
-        +name:TestWhenPrintingJPEGFile::test_when_CS300X200_150_L_jpg_then_succeeds_3
+        +name:TestWhenPrintingJPEGFile::test_when_using_CS300X200_300_L_file_then_succeeds
         +categorization:
             +segment:Platform
             +area:Print
@@ -178,16 +163,13 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
     $$$$$_END_TEST_METADATA_DECLARATION_$$$$$
     """
 
-    def test_when_CS300X200_150_L_jpg_then_succeeds_3(self):
+    def test_when_using_CS300X200_300_L_file_then_succeeds(self):
 
         self.outputverifier.outputsaver.operation_mode('TIFF')
 
-        default_tray, media_sizes = self.media.get_source_and_media_sizes()
+        default_tray = self.media.get_default_source()
 
-        if 'anycustom' in media_sizes:
-            self.media.tray.configure(default_tray, 'anycustom', 'stationery')
-        else:
-            self.media.tray.configure(default_tray, 'custom', 'stationery')
+        self.media.tray.load(default_tray, self.media.MediaSize.Custom, self.media.MediaType.Stationery)
 
         job_id = self.print.raw.start('e764a78f35cd170ec6be58b5b3b528d0beb822e7165d79f0bef48ddb8be4f50b')
         self.print.wait_for_job_completion(job_id)
@@ -210,7 +192,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         +test_framework:TUF
         +external_files:CS300X200-600-L.jpg=da2f863844d9803c20e43af79113f5dc247548f79daccc3f8c34be97374d4f6f
         +test_classification:System
-        +name:TestWhenPrintingJPEGFile::test_when_CS300X200_150_L_jpg_then_succeeds_4
+        +name:TestWhenPrintingJPEGFile::test_when_using_CS300X200_600_L_file_then_succeeds
         +categorization:
             +segment:Platform
             +area:Print
@@ -228,16 +210,12 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
     $$$$$_END_TEST_METADATA_DECLARATION_$$$$$
     """
 
-    def test_when_CS300X200_150_L_jpg_then_succeeds_4(self):
+    def test_when_using_CS300X200_600_L_file_then_succeeds(self):
 
         self.outputverifier.outputsaver.operation_mode('TIFF')
 
-        default_tray, media_sizes = self.media.get_source_and_media_sizes()
-
-        if 'anycustom' in media_sizes:
-            self.media.tray.configure(default_tray, 'anycustom', 'stationery')
-        else:
-            self.media.tray.configure(default_tray, 'custom', 'stationery')
+        default_tray = self.media.get_default_source()
+        self.media.tray.load(default_tray, self.media.MediaSize.Custom, self.media.MediaType.Stationery)
 
         job_id = self.print.raw.start('da2f863844d9803c20e43af79113f5dc247548f79daccc3f8c34be97374d4f6f')
         self.print.wait_for_job_completion(job_id)
@@ -259,7 +237,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         +test_framework:TUF
         +external_files:cs200X300-600-P.jpg=8e3bb43894bdac34f661ab3b93d9494468671f0677715dc315108c3873f54658
         +test_classification:System
-        +name:TestWhenPrintingJPEGFile::test_when_CS300X200_150_L_jpg_then_succeeds_5
+        +name:TestWhenPrintingJPEGFile::test_when_using_CS300X200_600_P_file_then_succeeds
         +categorization:
             +segment:Platform
             +area:Print
@@ -286,22 +264,19 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
     $$$$$_END_TEST_METADATA_DECLARATION_$$$$$
     """
 
-    def test_when_CS300X200_150_L_jpg_then_succeeds_5(self):
+    def test_when_using_CS300X200_600_P_file_then_succeeds(self):
 
         self.outputverifier.outputsaver.operation_mode('TIFF')
-        default_tray, media_sizes = self.media.get_source_and_media_sizes()
-        if self.print_emulation.print_engine_platform == 'emulator' and self.configuration.familyname == 'enterprise':
+        default_tray = self.media.get_default_source()
+        media_sizes = self.media.get_media_sizes(default_tray)
+        if self.get_platform() == 'emulator' and self.configuration.familyname == 'enterprise':
             tray1 = MediaInputIds.Tray1.name
-            tray, media_sizes = self.media.get_source_and_media_sizes('tray-1')
-            if 'anycustom' in media_sizes:
-                self.print_emulation.tray.open(tray1)
-                self.print_emulation.tray.load(tray1, "Custom", MediaType.Plain.name)
-                self.print_emulation.tray.close(tray1)
+            media_sizes = self.media.get_media_sizes('tray-1')
+            if "anycustom" in media_sizes:
+                self.media.tray.load(tray1, self.media.MediaSize.Custom, self.media.MediaType.Plain, need_open=True)
+
         else:
-            if 'anycustom' in media_sizes:
-                self.media.tray.configure(default_tray, 'anycustom', 'stationery')
-            else:
-                self.media.tray.configure(default_tray, 'custom', 'stationery')
+            self.media.tray.load(default_tray, self.media.MediaSize.Custom, self.media.MediaType.Stationery)
         
         job_id = self.print.raw.start('8e3bb43894bdac34f661ab3b93d9494468671f0677715dc315108c3873f54658')
         self.print.wait_for_job_completion(job_id)
@@ -324,7 +299,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         +test_framework:TUF
         +external_files:cs200X300-150-P.jpg=d5c61c429865ee5df8b12690ad9e017b724e8aad1d2d562a5daafac7f5b14c5e
         +test_classification:System
-        +name:TestWhenPrintingJPEGFile::test_when_CS300X200_150_L_jpg_then_succeeds_6
+        +name:TestWhenPrintingJPEGFile::test_when_using_CS300X200_150_P_file_then_succeeds
         +categorization:
             +segment:Platform
             +area:Print
@@ -351,23 +326,19 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
     $$$$$_END_TEST_METADATA_DECLARATION_$$$$$
     """
 
-    def test_when_CS300X200_150_L_jpg_then_succeeds_6(self):
+    def test_when_using_CS300X200_150_P_file_then_succeeds(self):
 
         self.outputsaver.validate_crc_tiff()
-        default_tray, media_sizes = self.media.get_source_and_media_sizes()
+        default_tray = self.media.get_default_source()
+        media_sizes = self.media.get_media_sizes(default_tray)
 
-        if self.print_emulation.print_engine_platform == 'emulator' and self.configuration.familyname == 'enterprise':
+        if self.get_platform() == 'emulator' and self.configuration.familyname == 'enterprise':
             tray1 = MediaInputIds.Tray1.name
-            tray, media_sizes = self.media.get_source_and_media_sizes('tray-1')
-            if 'anycustom' in media_sizes:
-                self.print_emulation.tray.open(tray1)
-                self.print_emulation.tray.load(tray1, "Custom", MediaType.Plain.name)
-                self.print_emulation.tray.close(tray1)
+            media_sizes = self.media.get_media_sizes('tray-1')
+            if "anycustom" in media_sizes:
+                self.media.tray.load(tray1, self.media.MediaSize.Custom, self.media.MediaType.Plain, need_open=True)
         else:
-            if 'anycustom' in media_sizes:
-                self.media.tray.configure(default_tray, 'anycustom', 'stationery')
-            else:
-                self.media.tray.configure(default_tray, 'custom', 'stationery')
+            self.media.tray.load(default_tray, self.media.MediaSize.Custom, self.media.MediaType.Stationery)
 
         job_id = self.print.raw.start('d5c61c429865ee5df8b12690ad9e017b724e8aad1d2d562a5daafac7f5b14c5e')
         self.print.wait_for_job_completion(job_id)
@@ -393,7 +364,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         +test_framework:TUF
         +external_files:cs200X300-231-P.jpg=fdddf6538a2e6bb0830aa6b022da3f7c3f50d00bbb0ee82d9b3417f76307e519
         +test_classification:System
-        +name:TestWhenPrintingJPEGFile::test_when_CS300X200_150_L_jpg_then_succeeds_7
+        +name:TestWhenPrintingJPEGFile::test_when_using_CS300X200_231_P_file_then_succeeds
         +categorization:
             +segment:Platform
             +area:Print
@@ -420,22 +391,18 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
     $$$$$_END_TEST_METADATA_DECLARATION_$$$$$
     """
 
-    def test_when_CS300X200_150_L_jpg_then_succeeds_7(self):
+    def test_when_using_CS300X200_231_P_file_then_succeeds(self):
 
         self.outputsaver.validate_crc_tiff()
-        default_tray, media_sizes = self.media.get_source_and_media_sizes()
-        if self.print_emulation.print_engine_platform == 'emulator' and self.configuration.familyname == 'enterprise':
+        default_tray = self.media.get_default_source()
+        media_sizes = self.media.get_media_sizes(default_tray)
+        if self.get_platform() == 'emulator' and self.configuration.familyname == 'enterprise':
             tray1 = MediaInputIds.Tray1.name
-            tray, media_sizes = self.media.get_source_and_media_sizes('tray-1')
-            if 'anycustom' in media_sizes:
-                self.print_emulation.tray.open(tray1)
-                self.print_emulation.tray.load(tray1, "Custom", MediaType.Plain.name)
-                self.print_emulation.tray.close(tray1)
+            media_sizes = self.media.get_media_sizes('tray-1')
+            if "anycustom" in media_sizes:
+                self.media.tray.load(tray1, self.media.MediaSize.Custom, self.media.MediaType.Plain, need_open=True)
         else:
-            if 'anycustom' in media_sizes:
-                self.media.tray.configure(default_tray, 'anycustom', 'stationery')
-            else:
-                self.media.tray.configure(default_tray, 'custom', 'stationery')
+            self.media.tray.load(default_tray, self.media.MediaSize.Custom, self.media.MediaType.Stationery)
 
         job_id = self.print.raw.start('fdddf6538a2e6bb0830aa6b022da3f7c3f50d00bbb0ee82d9b3417f76307e519')
         self.print.wait_for_job_completion(job_id)
@@ -462,7 +429,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         +test_framework:TUF
         +external_files:cs200X300-300-P.jpg=c27a6a5933434299e7cb8ec2804bbf807c4f7adcbbdaa5bc39e7a91bc5082ac2
         +test_classification:System
-        +name:TestWhenPrintingJPEGFile::test_when_CS300X200_150_L_jpg_then_succeeds_8
+        +name:TestWhenPrintingJPEGFile::test_when_using_CS300X200_300_P_file_then_succeeds
         +categorization:
             +segment:Platform
             +area:Print
@@ -480,22 +447,16 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
     $$$$$_END_TEST_METADATA_DECLARATION_$$$$$
     """
 
-    def test_when_CS300X200_150_L_jpg_then_succeeds_8(self):
+    def test_when_using_CS300X200_300_P_file_then_succeeds(self):
 
         self.outputverifier.outputsaver.operation_mode('TIFF')
 
-        expected_media_size = MediaSize.custom #type:ignore
-
-        default_tray, media_sizes = self.media.get_source_and_media_sizes()
-        
-        if 'anycustom' in media_sizes:
-            self.media.tray.configure(default_tray, 'anycustom', 'stationery')
-        else:
-            self.media.tray.configure(default_tray, 'custom', 'stationery')
+        default_tray = self.media.get_default_source()       
+        self.media.tray.load(default_tray, self.media.MediaSize.Custom, self.media.MediaType.Stationery)
 
         job_id = self.print.raw.start('c27a6a5933434299e7cb8ec2804bbf807c4f7adcbbdaa5bc39e7a91bc5082ac2')
         self.print.wait_for_job_completion(job_id)
 
         self.outputverifier.save_and_parse_output()
-        self.outputverifier.verify_media_size(Intents.printintent, expected_media_size)
+        self.outputverifier.verify_media_size(Intents.printintent, MediaSize.custom) #type:ignore
         self.outputverifier.outputsaver.operation_mode('NONE')

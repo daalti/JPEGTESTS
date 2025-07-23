@@ -1,8 +1,8 @@
 import logging
 from dunetuf.print.print_common_types import MediaSize, MediaType
 from dunetuf.media.media_handling import MediaHandling
-from dunetuf.print.output_saver import OutputSaver
-from tests.print.pdl.jpeg_new.print_base import TestWhenPrinting
+from dunetuf.print.new.output.output_saver import OutputSaver
+from tests.print.pdl.print_base import TestWhenPrinting, setup_output_saver, tear_down_output_saver
 
 
 class TestWhenPrintingJPEGFile(TestWhenPrinting):
@@ -11,6 +11,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         """Initialize shared test resources."""
         super().setup_class()
         cls.outputsaver = OutputSaver()
+        setup_output_saver(cls.outputsaver)
         cls.media_handling = MediaHandling()
 
     @classmethod
@@ -29,6 +30,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
 
         # Reset media configuration to default
         self.media.update_media_configuration(self.default_configuration)
+        tear_down_output_saver(self.outputsaver)
 
     """
     $$$$$_BEGIN_TEST_METADATA_DECLARATION_$$$$$
@@ -43,7 +45,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         +feature_team:PDLSolns
         +test_framework:TUF
         +external_files:file_example_JPG_2500kB.jpg=b6630f7d0ff76f53f21b472f0d383b41a0b8a730a29282f12db435dc390dfdeb
-        +name:TestWhenPrintingJPEGFile::test_when_file_example_JPG_2500kB_jpg_then_succeeds
+        +name:TestWhenPrintingJPEGFile::test_when_using_file_example_JPG_2500kB_file_then_succeeds
         +categorization:
             +segment:Platform
             +area:Print
@@ -69,16 +71,16 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
 
     $$$$$_END_TEST_METADATA_DECLARATION_$$$$$
     """
-    def test_when_file_example_JPG_2500kB_jpg_then_succeeds(self):
+    def test_when_using_file_example_JPG_2500kB_file_then_succeeds(self):
 
         self.outputsaver.validate_crc_tiff()
 
-        default = self.media.get_default_source()
-        default_tray, media_sizes = self.media.get_source_and_media_sizes()
-        if 'anycustom' in media_sizes:
-            self.media.tray.configure(default_tray, 'anycustom', default_tray)
-        elif 'na_letter_8.5x11in' in media_sizes:
-            self.media.tray.configure(default_tray, 'na_letter_8.5x11in', 'stationery')
+        default_tray = self.media.get_default_source()
+        media_sizes = self.media.get_media_sizes(default_tray)
+        if "anycustom" in media_sizes:
+            self.media.tray.load(default_tray, self.media.MediaSize.AnyCustom, default_tray)
+        elif "na_letter_8.5x11in" in media_sizes:
+            self.media.tray.load(default_tray, self.media.MediaSize.Letter, self.media.MediaType.Stationery)
 
         # Not using print_verify for a reason
         # We want to handle media mismatch alert on roll products before job completion
@@ -87,14 +89,14 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         # This jpeg job has large dimensions
         # On non-roll products, it will print on Letter
         media_configuration = self.media.get_media_configuration().get('inputs', [])
-        media_soruces = [tray.get('mediaSourceId') for tray in media_configuration]
+        media_sources = [tray.get('mediaSourceId') for tray in media_configuration]
 
-        if 'main-roll' in media_soruces:
+        if self.media.MediaInputIds.MainRoll in media_sources:
             # On Beam, it will print on main-roll after out of range media check clipping target size leading to a prompt
             self.media_handling.wait_for_alerts('mediaMismatchUnsupportedSize', 100)
             # Handle the prompt displayed to user to continue printing
             self.media_handling.alert_action('mediaMismatchUnsupportedSize', 'continue')
-        elif 'roll-1' in media_soruces:
+        elif self.media.MediaInputIds.Roll1 in media_sources:
             # Apply same workaround for multi-roll products, alert is mediaMismatchSizeFlow
             self.media_handling.wait_for_alerts('mediaMismatchSizeFlow', 100)
             self.media_handling.alert_action("mediaMismatchSizeFlow", "continue")

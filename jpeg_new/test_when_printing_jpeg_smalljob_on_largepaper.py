@@ -1,10 +1,10 @@
 import logging
-from dunetuf.print.print_common_types import MediaSize, MediaType
-from dunetuf.print.output_saver import OutputSaver
-from dunetuf.print.output.intents import Intents, MediaSize, ColorMode, PrintQuality, ColorRenderingType, ContentOrientation, Plex, MediaType, MediaSource, PlexBinding
+from dunetuf.print.print_common_types import MediaSize
+from dunetuf.print.new.output.output_saver import OutputSaver
+from dunetuf.print.output.intents import Intents, MediaSize, MediaSource
 from dunetuf.media.media_handling import MediaHandling
-from dunetuf.print.output_verifier import OutputVerifier
-from tests.print.pdl.jpeg_new.print_base import TestWhenPrinting
+from dunetuf.print.new.output.output_verifier import OutputVerifier
+from tests.print.pdl.print_base import TestWhenPrinting, setup_output_saver, tear_down_output_saver
 
 class TestWhenPrintingJPEGFile(TestWhenPrinting):
     @classmethod
@@ -12,6 +12,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         """Initialize shared test resources."""
         super().setup_class()
         cls.outputsaver = OutputSaver()
+        setup_output_saver(cls.outputsaver)
         cls.outputverifier = OutputVerifier(cls.outputsaver)
         cls.media_handling = MediaHandling()
 
@@ -31,6 +32,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
 
         # Reset media configuration to default
         self.media.update_media_configuration(self.default_configuration)
+        tear_down_output_saver(self.outputsaver)
 
     """
     $$$$$_BEGIN_TEST_METADATA_DECLARATION_$$$$$
@@ -45,7 +47,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         +test_framework:TUF
         +external_files:abbey-4x6-L.jpg=1fcc44e51d4702a75c0487be852ae62fca82a2cab4bf0d19645b83e3264eb1d0
         +test_classification:System
-        +name:TestWhenPrintingJPEGFile::test_when_abbey_4x6_L_jpg_then_succeeds
+        +name:TestWhenPrintingJPEGFile::test_when_using_abbey_4x6_L_file_then_succeeds
         +categorization:
             +segment:Platform
             +area:Print
@@ -62,13 +64,13 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
 
     $$$$$_END_TEST_METADATA_DECLARATION_$$$$$
     """
-    def test_when_abbey_4x6_L_jpg_then_succeeds(self):
+    def test_when_using_abbey_4x6_L_file_then_succeeds(self):
 
         self.media.unload_media()
 
-        tray, media_sizes = self.media.get_source_and_media_sizes('main')
-        if 'iso_a4_210x297mm' in media_sizes:
-            self.media.tray.configure('main', 'iso_a4_210x297mm', 'stationery')
+        media_sizes = self.media.get_media_sizes('main')
+        if "iso_a4_210x297mm" in media_sizes:
+            self.media.tray.load('main', self.media.MediaSize.iso_a4_210x297mm, self.media.MediaType.Stationery)
             self.media.load_media('main')
 
         ipp_test_attribs = {
@@ -79,14 +81,18 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         ipp_test_file = self.print.ipp.generate_test_file_path(**ipp_test_attribs)
         job_id = self.print.ipp.start(ipp_test_file, '1fcc44e51d4702a75c0487be852ae62fca82a2cab4bf0d19645b83e3264eb1d0')
 
-        self.print.wait_for_state(job_id, ["completed"])
+        # Extract job ID if it's returned as a tuple
+        if isinstance(job_id, tuple):
+            job_id = job_id[0]
+
+        self.print.wait_for_job_completion(job_id)
 
         self.outputverifier.save_and_parse_output()
         self.media.unload_media()  # Will unload media from all trays
         self.media.load_media()  # Will load media in all trays to default
 
-        self.outputverifier.verify_media_source(Intents.printintent, MediaSource.main)
-        self.outputverifier.verify_media_size(Intents.printintent, MediaSize.a4)  # coming as a4 due to jpeg scaling
+        self.outputverifier.verify_media_source(Intents.printintent, MediaSource.main) #type:ignore
+        self.outputverifier.verify_media_size(Intents.printintent, MediaSize.a4)  #type:ignore
 
         # CRC check
         self.outputsaver.operation_mode('TIFF')

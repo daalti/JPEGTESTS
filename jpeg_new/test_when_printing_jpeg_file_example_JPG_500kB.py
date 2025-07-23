@@ -1,7 +1,6 @@
 import logging
-from dunetuf.print.print_common_types import MediaSize, MediaType
-from dunetuf.print.output_saver import OutputSaver
-from tests.print.pdl.jpeg_new.print_base import TestWhenPrinting
+from dunetuf.print.new.output.output_saver import OutputSaver
+from tests.print.pdl.print_base import TestWhenPrinting, setup_output_saver, tear_down_output_saver
 
 
 class TestWhenPrintingJPEGFile(TestWhenPrinting):
@@ -10,6 +9,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         """Initialize shared test resources."""
         super().setup_class()
         cls.outputsaver = OutputSaver()
+        setup_output_saver(cls.outputsaver)
 
     @classmethod
     def teardown_class(cls):
@@ -27,6 +27,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
 
         # Reset media configuration to default
         self.media.update_media_configuration(self.default_configuration)
+        tear_down_output_saver(self.outputsaver)
     """
     $$$$$_BEGIN_TEST_METADATA_DECLARATION_$$$$$
         +purpose:Simple print job of Jpeg file of 500kB from *file_example_JPG_500kB.jpg
@@ -40,7 +41,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         +feature_team:PDLSolns
         +test_framework:TUF
         +external_files:file_example_JPG_500kB.jpg=838e346997ab5f2dd6745e9e536de6f9cd68965088354597f2fba016ad40ab2c
-        +name:TestWhenPrintingJPEGFile::test_when_file_example_JPG_500kB_jpg_then_succeeds
+        +name:TestWhenPrintingJPEGFile::test_when_using_file_example_JPG_500kB_file_then_succeeds
         +categorization:
             +segment:Platform
             +area:Print
@@ -57,7 +58,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
 
     $$$$$_END_TEST_METADATA_DECLARATION_$$$$$
     """
-    def test_when_file_example_JPG_500kB_jpg_then_succeeds(self):
+    def test_when_using_file_example_JPG_500kB_file_then_succeeds(self):
 
         job_id = self.print.raw.start('838e346997ab5f2dd6745e9e536de6f9cd68965088354597f2fba016ad40ab2c')
         self.print.wait_for_job_completion(job_id)

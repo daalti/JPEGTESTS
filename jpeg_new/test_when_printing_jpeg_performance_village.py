@@ -1,7 +1,7 @@
 import logging
 from dunetuf.print.print_common_types import MediaSize, MediaType
-from dunetuf.print.output_saver import OutputSaver
-from tests.print.pdl.jpeg_new.print_base import TestWhenPrinting
+from dunetuf.print.new.output.output_saver import OutputSaver
+from tests.print.pdl.print_base import TestWhenPrinting, setup_output_saver, tear_down_output_saver
 
 
 class TestWhenPrintingJPEGFile(TestWhenPrinting):
@@ -10,6 +10,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         """Initialize shared test resources."""
         super().setup_class()
         cls.outputsaver = OutputSaver()
+        setup_output_saver(cls.outputsaver)
 
     @classmethod
     def teardown_class(cls):
@@ -27,6 +28,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
 
         # Reset media configuration to default
         self.media.update_media_configuration(self.default_configuration)
+        tear_down_output_saver(self.outputsaver)
     """
     $$$$$_BEGIN_TEST_METADATA_DECLARATION_$$$$$
         +purpose:C52178012 Simple print job of Jpeg Performance of village Page from *village.jpg file
@@ -40,7 +42,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         +test_framework:TUF
         +external_files:village.jpg=ff0629b82de8d14c732795720966dfa96a8c8231553415c175af735ce47a0ef5
         +test_classification:System
-        +name:TestWhenPrintingJPEGFile::test_when_village_jpg_then_succeeds
+        +name:TestWhenPrintingJPEGFile::test_when_using_village_file_then_succeeds
         +categorization:
             +segment:Platform
             +area:Print
@@ -63,7 +65,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
                         +type:Engine
     $$$$$_END_TEST_METADATA_DECLARATION_$$$$$
     """
-    def test_when_village_jpg_then_succeeds(self):
+    def test_when_using_village_file_then_succeeds(self):
 
         self.outputsaver.validate_crc_tiff()
         job_id = self.print.raw.start('ff0629b82de8d14c732795720966dfa96a8c8231553415c175af735ce47a0ef5')

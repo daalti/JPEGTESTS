@@ -1,7 +1,7 @@
 import logging
 from dunetuf.print.print_common_types import MediaSize, MediaType
-from dunetuf.print.output_saver import OutputSaver
-from tests.print.pdl.jpeg_new.print_base import TestWhenPrinting
+from dunetuf.print.new.output.output_saver import OutputSaver
+from tests.print.pdl.print_base import TestWhenPrinting, setup_output_saver, tear_down_output_saver
 
 
 class TestWhenPrintingJPEGFile(TestWhenPrinting):
@@ -10,6 +10,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         """Initialize shared test resources."""
         super().setup_class()
         cls.outputsaver = OutputSaver()
+        setup_output_saver(cls.outputsaver)
 
     @classmethod
     def teardown_class(cls):
@@ -27,6 +28,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
 
         # Reset media configuration to default
         self.media.update_media_configuration(self.default_configuration)
+        tear_down_output_saver(self.outputsaver)
     """
     $$$$$_BEGIN_TEST_METADATA_DECLARATION_$$$$$
         +purpose:simple print job of jpeg file of photoimages 300 2000 quality test photos 24
@@ -40,7 +42,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         +test_framework:TUF
         +external_files:photoimages_300_2000_Quality_Test_Photos_24.jpg=d543b80d11d21075192efdf9b01f9987faa0cb6a57721f10b54bd8c04f1df39a
         +test_classification:System
-        +name:TestWhenPrintingJPEGFile::test_when_photoimages_300_2000_Quality_Test_Photos_24_jpg_then_succeeds
+        +name:TestWhenPrintingJPEGFile::test_when_using_photoimages_300_2000_Quality_Test_Photos_24_file_then_succeeds
         +categorization:
             +segment:Platform
             +area:Print
@@ -57,7 +59,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
 
     $$$$$_END_TEST_METADATA_DECLARATION_$$$$$
     """
-    def test_when_photoimages_300_2000_Quality_Test_Photos_24_jpg_then_succeeds(self):
+    def test_when_using_photoimages_300_2000_Quality_Test_Photos_24_file_then_succeeds(self):
 
         job_id = self.print.raw.start('d543b80d11d21075192efdf9b01f9987faa0cb6a57721f10b54bd8c04f1df39a')
         self.print.wait_for_job_completion(job_id)

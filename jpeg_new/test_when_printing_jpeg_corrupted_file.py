@@ -1,7 +1,7 @@
 import logging
 from dunetuf.print.print_common_types import MediaSize, MediaType
-from dunetuf.print.output_saver import OutputSaver
-from tests.print.pdl.jpeg_new.print_base import TestWhenPrinting
+from dunetuf.print.new.output.output_saver import OutputSaver
+from tests.print.pdl.print_base import TestWhenPrinting, setup_output_saver, tear_down_output_saver
 
 
 class TestWhenPrintingJPEGFile(TestWhenPrinting):
@@ -10,6 +10,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         """Initialize shared test resources."""
         super().setup_class()
         cls.outputsaver = OutputSaver()
+        setup_output_saver(cls.outputsaver)
 
     @classmethod
     def teardown_class(cls):
@@ -27,6 +28,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
 
         # Reset media configuration to default
         self.media.update_media_configuration(self.default_configuration)
+        tear_down_output_saver(self.outputsaver)
     """
     $$$$$_BEGIN_TEST_METADATA_DECLARATION_$$$$$
         +purpose: Simple Print job of Jpeg file of 1MB from **
@@ -40,7 +42,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         +test_framework:TUF
         +external_files:DatastreamCorrupted.JPG=8569b17b86977b3f02e3c5194d6436df02662bc5724f929f007a1a4626a9f122
         +test_classification:System
-        +name:TestWhenPrintingJPEGFile::test_when_DatastreamCorrupted_JPG_then_succeeds
+        +name:TestWhenPrintingJPEGFile::test_when_using_DatastreamCorrupted_then_fails
         +categorization:
             +segment:Platform
             +area:Print
@@ -66,10 +68,14 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
 
     $$$$$_END_TEST_METADATA_DECLARATION_$$$$$
     """
-    def test_when_DatastreamCorrupted_JPG_then_succeeds(self):
+    def test_when_using_DatastreamCorrupted_then_fails(self):
 
+        #TODO: Ares cannot run this test right now.
         job_id = self.print.raw.start('8569b17b86977b3f02e3c5194d6436df02662bc5724f929f007a1a4626a9f122')
-        self.print.wait_for_state(job_id, ["completed"]) #TODO, check for failure
+        self.print.wait_for_state(job_id, ["completed"])
+        self.job_history.wait_for_jobs()
+        history = self.job_history.get()
+        assert history[0]["completionState"] == "failed"
         self.outputsaver.save_output()
         self.outputsaver.clear_output()
         logging.info("Jpeg corrupted file")

@@ -1,7 +1,7 @@
 import logging
 from dunetuf.print.print_common_types import MediaSize, MediaType
-from dunetuf.print.output_saver import OutputSaver
-from tests.print.pdl.jpeg_new.print_base import TestWhenPrinting
+from dunetuf.print.new.output.output_saver import OutputSaver
+from tests.print.pdl.print_base import TestWhenPrinting, setup_output_saver, tear_down_output_saver
 
 
 class TestWhenPrintingJPEGFile(TestWhenPrinting):
@@ -10,6 +10,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         """Initialize shared test resources."""
         super().setup_class()
         cls.outputsaver = OutputSaver()
+        setup_output_saver(cls.outputsaver)
 
     @classmethod
     def teardown_class(cls):
@@ -27,6 +28,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
 
         # Reset media configuration to default
         self.media.update_media_configuration(self.default_configuration)
+        tear_down_output_saver(self.outputsaver)
     """
     $$$$$_BEGIN_TEST_METADATA_DECLARATION_$$$$$
         +purpose:Simple print job of Jpeg TestSuite taggedRGB Page from *taggedRGB.jpg file
@@ -40,7 +42,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         +test_framework:TUF
         +external_files:taggedRGB.jpg=34027bf1e1808b1cf5995aedea2a805a35b12f77eb725ebb44dc662715fc295c
         +test_classification:System
-        +name:TestWhenPrintingJPEGFile::test_when_taggedRGB_jpg_then_succeeds
+        +name:TestWhenPrintingJPEGFile::test_when_using_taggedRGB_file_then_succeeds
         +categorization:
             +segment:Platform
             +area:Print
@@ -66,8 +68,8 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
 
     $$$$$_END_TEST_METADATA_DECLARATION_$$$$$
     """
-    def test_when_taggedRGB_jpg_then_succeeds(self):
-
+    def test_when_using_taggedRGB_file_then_succeeds(self):
+        #TODO: REVIEW THIS TEST
         expected_state = 'SUCCESS'
 
         response = self.media.get_media_capabilities()

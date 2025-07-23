@@ -1,7 +1,7 @@
 import logging
 from dunetuf.print.print_common_types import MediaSize, MediaType
-from dunetuf.print.output_saver import OutputSaver
-from tests.print.pdl.jpeg_new.print_base import TestWhenPrinting
+from dunetuf.print.new.output.output_saver import OutputSaver
+from tests.print.pdl.print_base import TestWhenPrinting, setup_output_saver, tear_down_output_saver
 
 
 class TestWhenPrintingJPEGFile(TestWhenPrinting):
@@ -10,6 +10,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         """Initialize shared test resources."""
         super().setup_class()
         cls.outputsaver = OutputSaver()
+        setup_output_saver(cls.outputsaver)
 
     @classmethod
     def teardown_class(cls):
@@ -27,6 +28,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
 
         # Reset media configuration to default
         self.media.update_media_configuration(self.default_configuration)
+        tear_down_output_saver(self.outputsaver)
     
     """
     $$$$$_BEGIN_TEST_METADATA_DECLARATION_$$$$$
@@ -41,7 +43,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         +test_framework:TUF
         +external_files:sRGB_A4_600dpi.jpg=86c81bfee5d3a323f7faf4026db8bf534e9d8edf624b9170bb60e3cf2d59773b
         +test_classification:System
-        +name:TestWhenPrintingJPEGFile::test_when_sRGB_A4_600dpi_jpg_then_succeeds
+        +name:TestWhenPrintingJPEGFile::test_when_using_sRGB_A4_600dpi_file_then_succeeds
         +test:
             +title:test_jpeg_sRGB_A4_600dpi
             +guid:07072c6f-336c-488b-82bd-c1053f546e91
@@ -50,17 +52,12 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
                 +configuration:DocumentFormat=JPEG
     $$$$$_END_TEST_METADATA_DECLARATION_$$$$$
     """
-    def test_when_sRGB_A4_600dpi_jpg_then_succeeds(self):
+    def test_when_using_sRGB_A4_600dpi_file_then_succeeds(self):
 
         self.outputsaver.operation_mode('TIFF')
 
-        default_tray, media_sizes = self.media.get_source_and_media_sizes()
-
-        if 'anycustom' in media_sizes:
-            self.media.tray.configure(default_tray, 'anycustom', 'stationery')
-
-        else:
-            self.media.tray.configure(default_tray, 'custom', 'stationery')
+        default_tray = self.media.get_default_source()
+        self.media.tray.load(default_tray, self.media.MediaSize.Custom, self.media.MediaType.Stationery)
 
         job_id = self.print.raw.start('86c81bfee5d3a323f7faf4026db8bf534e9d8edf624b9170bb60e3cf2d59773b')
         self.print.wait_for_job_completion(job_id)

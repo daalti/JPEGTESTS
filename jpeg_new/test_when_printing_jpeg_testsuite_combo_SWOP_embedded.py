@@ -1,7 +1,7 @@
 import logging
 from dunetuf.print.print_common_types import MediaSize, MediaType
-from dunetuf.print.output_saver import OutputSaver
-from tests.print.pdl.jpeg_new.print_base import TestWhenPrinting
+from dunetuf.print.new.output.output_saver import OutputSaver
+from tests.print.pdl.print_base import TestWhenPrinting, setup_output_saver, tear_down_output_saver
 
 
 class TestWhenPrintingJPEGFile(TestWhenPrinting):
@@ -10,6 +10,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         """Initialize shared test resources."""
         super().setup_class()
         cls.outputsaver = OutputSaver()
+        setup_output_saver(cls.outputsaver)
 
     @classmethod
     def teardown_class(cls):
@@ -27,6 +28,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
 
         # Reset media configuration to default
         self.media.update_media_configuration(self.default_configuration)
+        tear_down_output_saver(self.outputsaver)
     """
     $$$$$_BEGIN_TEST_METADATA_DECLARATION_$$$$$
         +purpose:Simple print job of Jpeg TestSuite combo SWOP embedded Page from *combo_SWOP_embedded.jpg file
@@ -40,7 +42,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         +test_framework:TUF
         +external_files:combo_SWOP_embedded.jpg=d9904a956bcf378816ff4f2c5c7ef8c6b8e03a68f7bcdad1aa0a47f218508b88
         +test_classification:System
-        +name:TestWhenPrintingJPEGFile::test_when_combo_SWOP_embedded_jpg_then_succeeds
+        +name:TestWhenPrintingJPEGFile::test_when_using_combo_SWOP_embedded_file_then_succeeds
         +categorization:
             +segment:Platform
             +area:Print
@@ -57,7 +59,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
 
     $$$$$_END_TEST_METADATA_DECLARATION_$$$$$
     """
-    def test_when_combo_SWOP_embedded_jpg_then_succeeds(self):
+    def test_when_using_combo_SWOP_embedded_file_then_succeeds(self):
 
         self.outputsaver.validate_crc_tiff()
         job_id = self.print.raw.start('d9904a956bcf378816ff4f2c5c7ef8c6b8e03a68f7bcdad1aa0a47f218508b88')

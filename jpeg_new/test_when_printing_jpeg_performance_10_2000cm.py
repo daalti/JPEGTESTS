@@ -1,7 +1,7 @@
 import logging
 from dunetuf.print.print_common_types import MediaSize, MediaType
-from dunetuf.print.output_saver import OutputSaver
-from tests.print.pdl.jpeg_new.print_base import TestWhenPrinting
+from dunetuf.print.new.output.output_saver import OutputSaver
+from tests.print.pdl.print_base import TestWhenPrinting, setup_output_saver, tear_down_output_saver
 
 
 class TestWhenPrintingJPEGFile(TestWhenPrinting):
@@ -10,6 +10,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         """Initialize shared test resources."""
         super().setup_class()
         cls.outputsaver = OutputSaver()
+        setup_output_saver(cls.outputsaver)
 
     @classmethod
     def teardown_class(cls):
@@ -27,6 +28,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
 
         # Reset media configuration to default
         self.media.update_media_configuration(self.default_configuration)
+        tear_down_output_saver(self.outputsaver)
     """
     $$$$$_BEGIN_TEST_METADATA_DECLARATION_$$$$$
         +purpose:Simple print job of Jpeg Performance of 10_2000cm Page from *10_2000cm.jpg file
@@ -40,7 +42,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         +test_framework:TUF
         +external_files:10_2000cm.jpg=c99290a709203b35b2e7c8520e9764b1648ec79354af4bddfa7aa14b52848dad
         +test_classification:System
-        +name:TestWhenPrintingJPEGFile::test_when_10_2000cm_jpg_then_succeeds
+        +name:TestWhenPrintingJPEGFile::test_when_using_10_2000cm_file_then_succeeds
         +categorization:
             +segment:Platform
             +area:Print
@@ -57,14 +59,8 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
 
     $$$$$_END_TEST_METADATA_DECLARATION_$$$$$
     """
-    def test_when_10_2000cm_jpg_then_succeeds(self):
+    def test_when_using_10_2000cm_file_then_succeeds(self):
 
-
-        # Not using print_verify for a reason
-        # We want to handle media mismatch alert on design products before job completion
         job_id = self.print.raw.start('c99290a709203b35b2e7c8520e9764b1648ec79354af4bddfa7aa14b52848dad')
-        # for non design products total test timeout will be 240
-        # for design 300
         self.print.wait_for_job_completion(job_id)
-
         logging.info("JPEG Performance 10_2000cm Page - Print job completed successfully")

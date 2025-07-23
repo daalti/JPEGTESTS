@@ -1,7 +1,7 @@
 import logging
 from dunetuf.print.print_common_types import MediaSize, MediaType
-from dunetuf.print.output_saver import OutputSaver
-from tests.print.pdl.jpeg_new.print_base import TestWhenPrinting
+from dunetuf.print.new.output.output_saver import OutputSaver
+from tests.print.pdl.print_base import TestWhenPrinting, setup_output_saver, tear_down_output_saver
 
 
 class TestWhenPrintingJPEGFile(TestWhenPrinting):
@@ -10,6 +10,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         """Initialize shared test resources."""
         super().setup_class()
         cls.outputsaver = OutputSaver()
+        setup_output_saver(cls.outputsaver)
 
     @classmethod
     def teardown_class(cls):
@@ -27,6 +28,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
 
         # Reset media configuration to default
         self.media.update_media_configuration(self.default_configuration)
+        tear_down_output_saver(self.outputsaver)
     """
     $$$$$_BEGIN_TEST_METADATA_DECLARATION_$$$$$
         +purpose:Simple print job of Jpeg TestSuite lenna 20dpcm Page from *lenna_20dpcm.jpg file
@@ -40,7 +42,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         +test_framework:TUF
         +external_files:lenna_20dpcm.jpg=be12e5937c270ec1d6690cc50cd3e42b1123f0d0fe04a6540e8c3ef19374c305
         +test_classification:System
-        +name:TestWhenPrintingJPEGFile::test_when_lenna_20dpcm_jpg_then_succeeds
+        +name:TestWhenPrintingJPEGFile::test_when_using_lenna_20dpcm_file_then_succeeds
         +categorization:
             +segment:Platform
             +area:Print
@@ -57,7 +59,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
 
     $$$$$_END_TEST_METADATA_DECLARATION_$$$$$
     """
-    def test_when_lenna_20dpcm_jpg_then_succeeds(self):
+    def test_when_using_lenna_20dpcm_file_then_succeeds(self):
 
         job_id = self.print.raw.start('be12e5937c270ec1d6690cc50cd3e42b1123f0d0fe04a6540e8c3ef19374c305')
         self.print.wait_for_job_completion(job_id)

@@ -1,8 +1,8 @@
 import logging
 from dunetuf.print.print_common_types import MediaSize, MediaType
-from dunetuf.print.output_saver import OutputSaver
+from dunetuf.print.new.output.output_saver import OutputSaver
 from dunetuf.media.media_handling import MediaHandling
-from tests.print.pdl.jpeg_new.print_base import TestWhenPrinting
+from tests.print.pdl.print_base import TestWhenPrinting, setup_output_saver, tear_down_output_saver
 
 
 class TestWhenPrintingJPEGFile(TestWhenPrinting):
@@ -11,6 +11,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         """Initialize shared test resources."""
         super().setup_class()
         cls.outputsaver = OutputSaver()
+        setup_output_saver(cls.outputsaver)
         cls.media_handling = MediaHandling()
 
     @classmethod
@@ -29,6 +30,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
 
         # Reset media configuration to default
         self.media.update_media_configuration(self.default_configuration)
+        tear_down_output_saver(self.outputsaver)
 
     """
     $$$$$_BEGIN_TEST_METADATA_DECLARATION_$$$$$
@@ -43,7 +45,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         +test_framework:TUF
         +external_files:photoimages_panoramaimages_HPR837_1M-2M_SR016231.JPG=0f014240fbd5c018fc18aaf6ed0c8c1d0bc3adfb0a046db1a661008df3a6dccb
         +test_classification:System
-        +name:TestWhenPrintingJPEGFile::test_when_photoimages_panoramaimages_HPR837_1M_2M_SR016231_JPG_then_succeeds
+        +name:TestWhenPrintingJPEGFile::test_when_using_photoimages_panoramaimages_HPR837_1M_2M_SR016231_file_then_succeeds
         +categorization:
             +segment:Platform
             +area:Print
@@ -60,20 +62,13 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
 
     $$$$$_END_TEST_METADATA_DECLARATION_$$$$$
     """
-    def test_when_photoimages_panoramaimages_HPR837_1M_2M_SR016231_JPG_then_succeeds(self):
+    def test_when_using_photoimages_panoramaimages_HPR837_1M_2M_SR016231_file_then_succeeds(self):
 
-        capabilities = self.media.get_media_capabilities()
-        media_width_maximum = capabilities["supportedInputs"][0]["mediaWidthMaximum"]
-        media_length_maximum = capabilities["supportedInputs"][0]["mediaLengthMaximum"]
-        media_width_minimum = capabilities["supportedInputs"][0]["mediaWidthMinimum"]
-        media_length_minimum = capabilities["supportedInputs"][0]["mediaLengthMinimum"]
-
-        default_tray, media_sizes = self.media.get_source_and_media_sizes()
-
-        if 'anycustom' in media_sizes:
-            self.media.tray.configure(default_tray, 'anycustom', 'stationery')
-        elif 'custom' in media_sizes and media_width_maximum >= 41066  and media_length_maximum >= 91200 and  media_width_minimum <= 41066  and media_length_minimum <= 91200:
-            self.media.tray.configure(default_tray, 'custom', 'stationery')
+        self.load_custom_tray(
+            width_max=41066,
+            length_max=91200,
+            width_min=41066,
+            length_min=91200)
 
         job_id = self.print.raw.start('0f014240fbd5c018fc18aaf6ed0c8c1d0bc3adfb0a046db1a661008df3a6dccb')
 

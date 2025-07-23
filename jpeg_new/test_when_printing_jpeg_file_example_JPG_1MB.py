@@ -1,14 +1,14 @@
 import logging
-from dunetuf.print.print_common_types import MediaSize, MediaType
-from dunetuf.print.output_saver import OutputSaver
+from dunetuf.print.print_common_types import MediaType
+from dunetuf.print.new.output.output_saver import OutputSaver
 from dunetuf.metadata import get_ip, get_emulation_ip
 from dunetuf.cdm import get_cdm_instance
 from dunetuf.udw.udw import get_underware_instance
 from dunetuf.udw import TclSocketClient
 from dunetuf.emulation.print import PrintEmulation
-from dunetuf.print.print_common_types import MediaType, MediaOrientation
+from dunetuf.print.print_common_types import MediaType
 from dunetuf.configuration import Configuration
-from tests.print.pdl.jpeg_new.print_base import TestWhenPrinting
+from tests.print.pdl.print_base import TestWhenPrinting, setup_output_saver, tear_down_output_saver
 
 
 class TestWhenPrintingJPEGFile(TestWhenPrinting):
@@ -17,17 +17,11 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         """Initialize shared test resources."""
         super().setup_class()
         cls.outputsaver = OutputSaver()
+        setup_output_saver(cls.outputsaver)
         cls.ip_address = get_ip()
         cls.cdm = get_cdm_instance(cls.ip_address)
-        cls.udw = get_underware_instance(cls.ip_address)
         cls.configuration = Configuration(cls.cdm)
-        engine_simulator_ip = get_emulation_ip()
-        cls.tcl = TclSocketClient(cls.ip_address, 9104)
-        if engine_simulator_ip == 'None':
-            logging.debug('Instantiating PrintEmulation: no engineSimulatorIP specified, was -eip not set to emulator/simulator emulation IP?')
-            engine_simulator_ip = None
-        logging.info('Instantiating PrintEmulation with %s', engine_simulator_ip)
-        cls.print_emulation = PrintEmulation(cls.cdm, cls.udw, cls.tcl, engine_simulator_ip)
+
 
     @classmethod
     def teardown_class(cls):
@@ -45,6 +39,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
 
         # Reset media configuration to default
         self.media.update_media_configuration(self.default_configuration)
+        tear_down_output_saver(self.outputsaver)
     
     """
     $$$$$_BEGIN_TEST_METADATA_DECLARATION_$$$$$
@@ -59,7 +54,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         +test_framework:TUF
         +external_files:file_example_JPG_1MB.jpg=683a8528125ca09d8314435c051331de2b4c981c756721a2d12c103e8603a1d2
         +test_classification:System
-        +name:TestWhenPrintingJPEGFile::test_when_file_example_JPG_1MB_jpg_then_succeeds
+        +name:TestWhenPrintingJPEGFile::test_when_using_file_example_JPG_1MB_file_then_succeeds
         +categorization:
             +segment:Platform
             +area:Print
@@ -85,37 +80,25 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
 
     $$$$$_END_TEST_METADATA_DECLARATION_$$$$$
     """
-    def test_when_file_example_JPG_1MB_jpg_then_succeeds(self):
+    def test_when_using_file_example_JPG_1MB_file_then_succeeds(self):
 
-        if self.print_emulation.print_engine_platform == 'emulator' and self.configuration.familyname == 'enterprise':
-            installed_trays = self.print_emulation.tray.get_installed_trays()
+        if self.get_platform() == 'emulator' and self.configuration.familyname == 'enterprise':
+            installed_trays = self.media.tray.get()
             selected_tray = None
 
             # Check each tray for supported sizes
             for tray_id in installed_trays:
                 system_tray_id = tray_id.lower().replace('tray', 'tray-')
-                tray, media_sizes = self.media.get_source_and_media_sizes(system_tray_id)
-                if 'anycustom' in media_sizes:
+                media_sizes = self.media.get_media_sizes(system_tray_id)
+                if "anycustom" in media_sizes:
                     selected_tray = tray_id
-                    self.print_emulation.tray.open(selected_tray)
-                    self.print_emulation.tray.load(selected_tray, "Custom", MediaType.Plain.name,
-                                            media_orientation="Portrait")
-                    self.print_emulation.tray.close(selected_tray)
+                    self.media.tray.load(selected_tray, self.media.MediaSize.Custom, self.media.MediaType.Plain, media_orientation="Portrait", need_open=True)
                     break
 
             if selected_tray is None:
                 raise ValueError("No tray found supporting anycustom size")
         else:
-            capabilities = self.media.get_media_capabilities()
-            media_width_maximum = capabilities["supportedInputs"][0]["mediaWidthMaximum"]
-            media_length_maximum = capabilities["supportedInputs"][0]["mediaLengthMaximum"]
-            media_width_minimum = capabilities["supportedInputs"][0]["mediaWidthMinimum"]
-            media_length_minimum = capabilities["supportedInputs"][0]["mediaLengthMinimum"]
-            default_tray, media_sizes = self.media.get_source_and_media_sizes()
-            if 'anycustom' in media_sizes:
-                self.media.tray.configure(default_tray, 'anycustom', 'stationery')
-            elif 'custom' in media_sizes and media_width_maximum >= 527777 and media_length_maximum >= 351944 and  media_width_minimum <= 527777 and media_length_minimum <= 351944:
-                self.media.tray.configure(default_tray, 'custom', 'stationery')
+            self.load_custom_tray(527777, 351944, 527777, 351944)
 
         job_id = self.print.raw.start('683a8528125ca09d8314435c051331de2b4c981c756721a2d12c103e8603a1d2')
         self.print.wait_for_job_completion(job_id)

@@ -1,7 +1,7 @@
 import logging
 from dunetuf.print.print_common_types import MediaSize, MediaType
-from dunetuf.print.output_saver import OutputSaver
-from tests.print.pdl.jpeg_new.print_base import TestWhenPrinting
+from dunetuf.print.new.output.output_saver import OutputSaver
+from tests.print.pdl.print_base import TestWhenPrinting, setup_output_saver, tear_down_output_saver
 
 
 class TestWhenPrintingJPEGFile(TestWhenPrinting):
@@ -10,6 +10,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         """Initialize shared test resources."""
         super().setup_class()
         cls.outputsaver = OutputSaver()
+        setup_output_saver(cls.outputsaver)
 
     @classmethod
     def teardown_class(cls):
@@ -27,6 +28,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
 
         # Reset media configuration to default
         self.media.update_media_configuration(self.default_configuration)
+        tear_down_output_saver(self.outputsaver)
 
     """
     $$$$$_BEGIN_TEST_METADATA_DECLARATION_$$$$$
@@ -41,7 +43,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         +test_framework:TUF
         +external_files:broken2.jpg=746e460c805d937276f65426644ccb475358352a1cf5b7184a157650bcf3a9fc
         +test_classification:System
-        +name:TestWhenPrintingJPEGFile::test_when_broken2_jpg_then_succeeds
+        +name:TestWhenPrintingJPEGFile::test_when_using_broken2_file_then_succeeds
         +categorization:
             +segment:Platform
             +area:Print
@@ -58,14 +60,15 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
 
     $$$$$_END_TEST_METADATA_DECLARATION_$$$$$
     """
-    def test_when_broken2_jpg_then_succeeds(self):
+    def test_when_using_broken2_file_then_succeeds(self):
 
-        default_tray, media_sizes = self.media.get_source_and_media_sizes()
-        if 'anycustom' in media_sizes:
-            self.media.tray.configure(default_tray, 'anycustom', 'stationery')
-        elif 'custom' in media_sizes and self.media.get_media_capabilities()["supportedInputs"][0]["mediaLengthMaximum"] >= 150000:
+        default_tray = self.media.get_default_source()
+        media_sizes = self.media.get_media_sizes(default_tray)
+        if "anycustom" in media_sizes:
+            self.media.tray.load(default_tray, self.media.MediaSize.AnyCustom, self.media.MediaType.Stationery)
+        elif "custom" in media_sizes and self.media.get_media_capabilities()["supportedInputs"][0]["mediaLengthMaximum"] >= 150000:
             # the size of print file should in max/min custom size of printer supported, then could set custom size
-            self.media.tray.configure(default_tray, 'custom', 'stationery')
+            self.media.tray.load(default_tray, self.media.MediaSize.Custom, self.media.MediaType.Stationery)
 
         job_id = self.print.raw.start('746e460c805d937276f65426644ccb475358352a1cf5b7184a157650bcf3a9fc')
         self.print.wait_for_job_completion(job_id)

@@ -1,8 +1,8 @@
 from dunetuf.print.print_common_types import MediaSize, MediaType
-from dunetuf.print.output_saver import OutputSaver
+from dunetuf.print.new.output.output_saver import OutputSaver
 from dunetuf.cdm import get_cdm_instance
 from dunetuf.metadata import get_ip
-from tests.print.pdl.jpeg_new.print_base import TestWhenPrinting
+from tests.print.pdl.print_base import TestWhenPrinting, setup_output_saver, tear_down_output_saver
  
  
  
@@ -12,6 +12,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         """Initialize shared test resources."""
         super().setup_class()
         cls.outputsaver = OutputSaver()
+        setup_output_saver(cls.outputsaver)
         cls.ip_address = get_ip()
         cls.cdm = get_cdm_instance(cls.ip_address)
 
@@ -31,6 +32,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
 
         # Reset media configuration to default
         self.media.update_media_configuration(self.default_configuration)
+        tear_down_output_saver(self.outputsaver)
     """
     $$$$$_BEGIN_TEST_METADATA_DECLARATION_$$$$$
         +purpose:Event code via JPEG verysmall.jpg file
@@ -44,7 +46,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         +feature_team:PDLSolns
         +test_framework:TUF
         +external_files:verysmall.jpg=fc878bdbba4f8f6d58eaa76d28459fbbe4ef400a43eb85f43933245c3271a163
-        +name:TestWhenPrintingJPEGFile::test_when_verysmall_jpg_then_succeeds
+        +name:TestWhenPrintingJPEGFile::test_when_using_very_small_file_then_success_and_zero_warning_F0_01_08_1B_code
         +categorization:
             +segment:Platform
             +area:Print
@@ -60,7 +62,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
                 +configuration: DocumentFormat=JPEG & EngineFirmwareFamily=Canon
     $$$$$_END_TEST_METADATA_DECLARATION_$$$$$
     """
-    def test_when_verysmall_jpg_then_succeeds(self):
+    def test_when_using_very_small_file_then_success_and_zero_warning_F0_01_08_1B_code(self):
 
         job_id = self.print.raw.start('fc878bdbba4f8f6d58eaa76d28459fbbe4ef400a43eb85f43933245c3271a163')
         self.print.wait_for_job_completion(job_id)

@@ -1,8 +1,7 @@
-import pytest
 import logging
 from dunetuf.print.print_common_types import MediaSize, MediaType
-from dunetuf.print.output_saver import OutputSaver
-from tests.print.pdl.jpeg_new.print_base import TestWhenPrinting
+from dunetuf.print.new.output.output_saver import OutputSaver
+from tests.print.pdl.print_base import TestWhenPrinting, setup_output_saver, tear_down_output_saver
 
 
 class TestWhenPrintingJPEGFile(TestWhenPrinting):
@@ -11,6 +10,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         """Initialize shared test resources."""
         super().setup_class()
         cls.outputsaver = OutputSaver()
+        setup_output_saver(cls.outputsaver)
 
     @classmethod
     def teardown_class(cls):
@@ -28,6 +28,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
 
         # Reset media configuration to default
         self.media.update_media_configuration(self.default_configuration)
+        tear_down_output_saver(self.outputsaver)
 
     """
     $$$$$_BEGIN_TEST_METADATA_DECLARATION_$$$$$
@@ -42,7 +43,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         +test_framework:TUF
         +external_files:photoimages_resolution_jpg_jpg1760x1168.JPG=bfd5bb0ee2970dbf4280705c8d15cc4c9d839d0ece7f87cb8fffe38fe0fc5c79
         +test_classification:System
-        +name:TestWhenPrintingJPEGFile::test_when_photoimages_resolution_jpg_jpg1760x1168_JPG_then_succeeds
+        +name:TestWhenPrintingJPEGFile::test_when_using_photoimages_resolution_jpg_jpg1760x1168_file_then_succeeds
         +categorization:
             +segment:Platform
             +area:Print
@@ -60,17 +61,16 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
     $$$$$_END_TEST_METADATA_DECLARATION_$$$$$
     """
 
-    #TODO: UPDATE THE TEST
-    def test_when_photoimages_resolution_jpg_jpg1760x1168_JPG_then_succeeds(self):
+    def test_when_using_photoimages_resolution_jpg_jpg1760x1168_file_then_succeeds(self):
 
         self.outputsaver.operation_mode('TIFF')
         self.media.get_media_capabilities()
         selected_media_source = ''
         for tray_capabilities in self.media.get_media_capabilities()["supportedInputs"]:
             selected_media_source = tray_capabilities['mediaSourceId']
-            if tray.is_media_combination_supported(selected_media_source, "custom", "stationery"):
+            if self.media.is_media_supported(selected_media_source) and self.media.is_size_supported(selected_media_source, "custom") and self.media.is_type_supported(selected_media_source, "stationery"):
                 if tray_capabilities['mediaWidthMinimum'] <= 233000 and tray_capabilities['mediaWidthMaximum'] >= 233000 and tray_capabilities['mediaLengthMinimum'] <= 155000 and tray_capabilities['mediaLengthMaximum'] >= 155000:
-                    tray.configure_tray(selected_media_source, "custom", 'stationery',width=233000, length=155000)
+                    self.media.tray.load(selected_media_source, "custom", self.media.MediaType.Stationery,width=233000, length=155000)
                     logging.info(f"media source {selected_media_source} selected")
                     break
                 else:
