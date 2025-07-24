@@ -2,6 +2,8 @@ import logging
 from dunetuf.print.print_common_types import MediaInputIds, MediaSize, MediaType
 from dunetuf.print.new.output.output_saver import OutputSaver
 from tests.print.pdl.print_base import TestWhenPrinting, setup_output_saver, tear_down_output_saver
+from time import sleep
+
 
 class TestWhenPrintingJPEGFile(TestWhenPrinting):
     @classmethod
@@ -30,19 +32,18 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         tear_down_output_saver(self.outputsaver)
     """
     $$$$$_BEGIN_TEST_METADATA_DECLARATION_$$$$$
-        +purpose: pcl5 lowvaluenew using 8Page_gl.obj
-        +test_tier: 1
-        +is_manual: False
-        +test_classification: 1
-        +reqid: DUNE-37356
-        +timeout:600
+        +purpose:Adding new system tests for PCL5 missing coverage
+        +test_tier:1
+        +is_manual:False
+        +test_classification:1
+        +reqid:DUNE-197464
+        +timeout:240
         +asset:PDL_New
         +delivery_team:QualityGuild
         +feature_team:PDLSolns
-        +test_framework: TUF
-        +external_files:8Page-gl.obj=c61e9d843177429bea0da78aa5b48154203ceb6e8eaffd935dd93115d90096a6
-        +test_classification:System
-        +name:TestWhenPrintingJPEGFile::test_when_using_pcl5_lowvaluenew_8page_gl_file_then_succeeds
+        +test_framework:TUF
+        +external_files:R600_pcl_letter_Simplex_43761-Manualfeed_a.prn=1969fa9cbf3b1882b73456c9d013270c534d1938f9ff072268716f8d0499d4cf
+        +name:TestWhenPrintingJPEGFile::test_when_using_pcl5_r600_pcl_letter_simplex_43761_manualfeed_a_prn_file_then_succeeds
         +categorization:
             +segment:Platform
             +area:Print
@@ -51,30 +52,21 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
             +interaction:Headless
             +test_type:Positive
         +test:
-            +title: test_pcl5_lowvaluenew_8page_gl
-            +guid:ed989029-303f-43ff-beec-cc2483221990
+            +title:test_pcl5_r600_pcl_letter_simplex_43761_manualfeed_a_prn
+            +guid:01ecdde0-0438-4bcc-b6f2-6482ddbfebe0
             +dut:
                 +type:Simulator
-                +configuration: DocumentFormat=PCL5
-
-        +overrides:
-            +Enterprise:
-                +is_manual:False
-                +timeout:600
-                +test:
-                    +dut:
-                        +type:Emulator
-
-
+                +configuration:DocumentFormat=PCL5 & MediaInputInstalled=ManualFeed
     $$$$$_END_TEST_METADATA_DECLARATION_$$$$$
     """
-    def test_when_using_pcl5_lowvaluenew_8page_gl_file_then_succeeds(self):
-        self.outputsaver.validate_crc_tiff()
-        job_id = self.print.raw.start('c61e9d843177429bea0da78aa5b48154203ceb6e8eaffd935dd93115d90096a6')
-        self.print.wait_for_job_completion(job_id)
+    def test_when_using_pcl5_r600_pcl_letter_simplex_43761_manualfeed_a_prn_file_then_succeeds(self):
+        default = self.media.get_default_source()
+        jobid = self.print.raw.start("1969fa9cbf3b1882b73456c9d013270c534d1938f9ff072268716f8d0499d4cf")
+
+        media.wait_for_alerts('mediaManualLoadFlow')
+        self.media.tray.configure_tray(default, 'na_letter_8.5x11in', 'stationery')
+        tray.load_media(default)
+        sleep(5)
+        printjob.wait_verify_job_completion(jobid)
         self.outputsaver.save_output()
-        self.outputsaver.operation_mode('NONE')
-        logging.info("Get crc value for the current print job")
-        Current_crc_value = self.outputsaver.get_crc()
-        logging.info("Validate current crc with master crc")
-        assert self.outputsaver.verify_pdl_crc(Current_crc_value), "fail on crc mismatch"
+        self.media.tray.reset_trays()

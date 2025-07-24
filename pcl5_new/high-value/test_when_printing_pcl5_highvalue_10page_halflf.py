@@ -71,7 +71,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
     $$$$$_END_TEST_METADATA_DECLARATION_$$$$$
     """
     def test_when_using_pcl5_highvalue_10page_halflf_file_then_succeeds(self):
-        self.self.outputsaver.validate_crc_tiff()
+        self.outputsaver.validate_crc_tiff()
         if self.get_platform() == 'emulator':
             installed_trays = self.media.tray.get_installed_trays()
             for tray_id in installed_trays:

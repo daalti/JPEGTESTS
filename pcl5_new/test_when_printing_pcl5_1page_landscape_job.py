@@ -2,6 +2,8 @@ import logging
 from dunetuf.print.print_common_types import MediaInputIds, MediaSize, MediaType
 from dunetuf.print.new.output.output_saver import OutputSaver
 from tests.print.pdl.print_base import TestWhenPrinting, setup_output_saver, tear_down_output_saver
+from dunetuf.print.output.intents import Intents, MediaSize, ColorMode, PrintQuality, ColorRenderingType, ContentOrientation, Plex, MediaType, MediaSource, PlexBinding
+
 
 class TestWhenPrintingJPEGFile(TestWhenPrinting):
     @classmethod
@@ -30,51 +32,29 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         tear_down_output_saver(self.outputsaver)
     """
     $$$$$_BEGIN_TEST_METADATA_DECLARATION_$$$$$
-        +purpose: pcl5 lowvaluenew using 8Page_gl.obj
-        +test_tier: 1
+        +purpose: pcl5 job with landscape orientation in late rotation support product
+        +test_tier: 3
         +is_manual: False
         +test_classification: 1
-        +reqid: DUNE-37356
-        +timeout:600
+        +reqid: DUNE-188868
+        +timeout:120
         +asset:PDL_New
         +delivery_team:QualityGuild
-        +feature_team:PDLSolns
+        +feature_team:ENTA4ProductTest
         +test_framework: TUF
-        +external_files:8Page-gl.obj=c61e9d843177429bea0da78aa5b48154203ceb6e8eaffd935dd93115d90096a6
+        +external_files:test_pcl5_orientation_landscape.prn=ecca56a0ced0e36a48c8498f152a1db77f3c3cfc84e47531c731637c39fa943c
         +test_classification:System
-        +name:TestWhenPrintingJPEGFile::test_when_using_pcl5_lowvaluenew_8page_gl_file_then_succeeds
-        +categorization:
-            +segment:Platform
-            +area:Print
-            +feature:PDL
-            +sub_feature:PCL5
-            +interaction:Headless
-            +test_type:Positive
+        +name:TestWhenPrintingJPEGFile::test_when_using_pcl5_1page_landscape_job_file_then_succeeds
         +test:
-            +title: test_pcl5_lowvaluenew_8page_gl
-            +guid:ed989029-303f-43ff-beec-cc2483221990
+            +title: test_pcl5_1page_landscape_job
+            +guid:22ac3b86-0566-4387-b887-51055e729c21
             +dut:
                 +type:Simulator
                 +configuration: DocumentFormat=PCL5
 
-        +overrides:
-            +Enterprise:
-                +is_manual:False
-                +timeout:600
-                +test:
-                    +dut:
-                        +type:Emulator
-
-
     $$$$$_END_TEST_METADATA_DECLARATION_$$$$$
     """
-    def test_when_using_pcl5_lowvaluenew_8page_gl_file_then_succeeds(self):
-        self.outputsaver.validate_crc_tiff()
-        job_id = self.print.raw.start('c61e9d843177429bea0da78aa5b48154203ceb6e8eaffd935dd93115d90096a6')
+    def test_when_using_pcl5_1page_landscape_job_file_then_succeeds(self):
+        job_id = self.print.raw.start('ecca56a0ced0e36a48c8498f152a1db77f3c3cfc84e47531c731637c39fa943c')
         self.print.wait_for_job_completion(job_id)
-        self.outputsaver.save_output()
-        self.outputsaver.operation_mode('NONE')
-        logging.info("Get crc value for the current print job")
-        Current_crc_value = self.outputsaver.get_crc()
-        logging.info("Validate current crc with master crc")
-        assert self.outputsaver.verify_pdl_crc(Current_crc_value), "fail on crc mismatch"
+        outputverifier.verify_content_orientation(Intents.printintent, ContentOrientation.landscape)

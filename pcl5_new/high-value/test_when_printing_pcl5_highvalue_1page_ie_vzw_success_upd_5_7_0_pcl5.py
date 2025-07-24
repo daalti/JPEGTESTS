@@ -70,7 +70,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
     $$$$$_END_TEST_METADATA_DECLARATION_$$$$$
     """
     def test_when_using_pcl5_highvalue_1page_ie_vzw_success_upd_5_7_0_pcl5_file_then_succeeds(self):
-        self.self.outputsaver.validate_crc_tiff()
+        self.outputsaver.validate_crc_tiff()
         job_id = self.print.raw.start('2652a046cd23542a8e92bf5b8bab28761e188a5743184d95280c77492e145489')
         self.print.wait_for_job_completion(job_id)
         self.outputsaver.save_output()

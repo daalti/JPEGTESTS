@@ -3,6 +3,7 @@ from dunetuf.print.print_common_types import MediaInputIds, MediaSize, MediaType
 from dunetuf.print.new.output.output_saver import OutputSaver
 from tests.print.pdl.print_base import TestWhenPrinting, setup_output_saver, tear_down_output_saver
 
+
 class TestWhenPrintingJPEGFile(TestWhenPrinting):
     @classmethod
     def setup_class(cls):
@@ -30,19 +31,18 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         tear_down_output_saver(self.outputsaver)
     """
     $$$$$_BEGIN_TEST_METADATA_DECLARATION_$$$$$
-        +purpose: pcl5 lowvaluenew using 8Page_gl.obj
-        +test_tier: 1
-        +is_manual: False
-        +test_classification: 1
-        +reqid: DUNE-37356
-        +timeout:600
+        +purpose:Adding new system tests for PCL5 missing coverage
+        +test_tier:1
+        +is_manual:False
+        +test_classification:1
+        +reqid:DUNE-197464
+        +timeout:400
         +asset:PDL_New
         +delivery_team:QualityGuild
         +feature_team:PDLSolns
-        +test_framework: TUF
-        +external_files:8Page-gl.obj=c61e9d843177429bea0da78aa5b48154203ceb6e8eaffd935dd93115d90096a6
-        +test_classification:System
-        +name:TestWhenPrintingJPEGFile::test_when_using_pcl5_lowvaluenew_8page_gl_file_then_succeeds
+        +test_framework:TUF
+        +external_files:helv.prn=aab726f824d40df2a9bf1d962e8021c147bf41df4ea5d89175532379f911ee98
+        +name:TestWhenPrintingJPEGFile::test_when_using_pcl5_helv_prn_file_then_succeeds
         +categorization:
             +segment:Platform
             +area:Print
@@ -51,30 +51,15 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
             +interaction:Headless
             +test_type:Positive
         +test:
-            +title: test_pcl5_lowvaluenew_8page_gl
-            +guid:ed989029-303f-43ff-beec-cc2483221990
+            +title:test_pcl5_helv_prn
+            +guid:decd082c-ba73-4745-9e72-49e73aa37b5d
             +dut:
                 +type:Simulator
-                +configuration: DocumentFormat=PCL5
-
-        +overrides:
-            +Enterprise:
-                +is_manual:False
-                +timeout:600
-                +test:
-                    +dut:
-                        +type:Emulator
-
+                +configuration:DocumentFormat=PCL5
 
     $$$$$_END_TEST_METADATA_DECLARATION_$$$$$
     """
-    def test_when_using_pcl5_lowvaluenew_8page_gl_file_then_succeeds(self):
-        self.outputsaver.validate_crc_tiff()
-        job_id = self.print.raw.start('c61e9d843177429bea0da78aa5b48154203ceb6e8eaffd935dd93115d90096a6')
+    def test_when_using_pcl5_helv_prn_file_then_succeeds(self):
+        job_id = self.print.raw.start('aab726f824d40df2a9bf1d962e8021c147bf41df4ea5d89175532379f911ee98')
         self.print.wait_for_job_completion(job_id)
         self.outputsaver.save_output()
-        self.outputsaver.operation_mode('NONE')
-        logging.info("Get crc value for the current print job")
-        Current_crc_value = self.outputsaver.get_crc()
-        logging.info("Validate current crc with master crc")
-        assert self.outputsaver.verify_pdl_crc(Current_crc_value), "fail on crc mismatch"

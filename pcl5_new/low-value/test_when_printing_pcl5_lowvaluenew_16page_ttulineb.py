@@ -69,7 +69,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
     $$$$$_END_TEST_METADATA_DECLARATION_$$$$$
     """
     def test_when_using_pcl5_lowvaluenew_16page_ttulineb_file_then_succeeds(self):
-        self.self.outputsaver.validate_crc_tiff()
+        self.outputsaver.validate_crc_tiff()
         job_id = self.print.raw.start('449f26e9217efb5a25d8052b308d8d14d910ff4b104251b04ce1ecff539bd97e')
         self.print.wait_for_job_completion(job_id)
         self.outputsaver.save_output()
