@@ -68,7 +68,7 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
     $$$$$_END_TEST_METADATA_DECLARATION_$$$$$
     """
     def test_when_using_pcl5_highvalue_2page_mcroexec_file_then_succeeds(self):
-        self.self.outputsaver.validate_crc_tiff()
+        self.outputsaver.validate_crc_tiff()
         job_id = self.print.raw.start('88771a72bf97e33f909901abb64a258bc4c159a19a4f73cf2fdd3847ea123c75')
         self.print.wait_for_job_completion(job_id)
         self.outputsaver.save_output()

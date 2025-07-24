@@ -2,6 +2,8 @@ import logging
 from dunetuf.print.print_common_types import MediaInputIds, MediaSize, MediaType
 from dunetuf.print.new.output.output_saver import OutputSaver
 from tests.print.pdl.print_base import TestWhenPrinting, setup_output_saver, tear_down_output_saver
+from dunetuf.print.output.intents import Intents, MediaSize, MediaType, MediaSource
+
 
 class TestWhenPrintingJPEGFile(TestWhenPrinting):
     @classmethod
@@ -30,19 +32,19 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         tear_down_output_saver(self.outputsaver)
     """
     $$$$$_BEGIN_TEST_METADATA_DECLARATION_$$$$$
-        +purpose: pcl5 lowvaluenew using 8Page_gl.obj
+        +purpose:test for pcl5 for inherit media type from tray functionality
         +test_tier: 1
         +is_manual: False
         +test_classification: 1
-        +reqid: DUNE-37356
-        +timeout:600
+        +reqid: DUNE-13650
+        +timeout:120
         +asset:PDL_New
         +delivery_team:QualityGuild
         +feature_team:PDLSolns
         +test_framework: TUF
-        +external_files:8Page-gl.obj=c61e9d843177429bea0da78aa5b48154203ceb6e8eaffd935dd93115d90096a6
+        +external_files:tray1_a4_notype_pcl5.prn=5ac9906a9fe61f103123109d5b147e5618a7cfd9f7faee8d4a8918849ab98a28
         +test_classification:System
-        +name:TestWhenPrintingJPEGFile::test_when_using_pcl5_lowvaluenew_8page_gl_file_then_succeeds
+        +name:TestWhenPrintingJPEGFile::test_when_using__pcl5_inherit_media_type_file_then_succeeds
         +categorization:
             +segment:Platform
             +area:Print
@@ -51,30 +53,24 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
             +interaction:Headless
             +test_type:Positive
         +test:
-            +title: test_pcl5_lowvaluenew_8page_gl
-            +guid:ed989029-303f-43ff-beec-cc2483221990
+            +title: test_pcl5_inherit_media_type
+            +guid:e14e4bfd-e3ed-4ab4-a3cb-6c978dc6de3d
             +dut:
                 +type:Simulator
-                +configuration: DocumentFormat=PCL5
-
-        +overrides:
-            +Enterprise:
-                +is_manual:False
-                +timeout:600
-                +test:
-                    +dut:
-                        +type:Emulator
-
+                +configuration: DocumentFormat=PCL5 & MediaType=Bond & MediaInputInstalled=Tray1 & MediaSizeSupported=iso_a4_210x297mm
 
     $$$$$_END_TEST_METADATA_DECLARATION_$$$$$
     """
-    def test_when_using_pcl5_lowvaluenew_8page_gl_file_then_succeeds(self):
-        self.outputsaver.validate_crc_tiff()
-        job_id = self.print.raw.start('c61e9d843177429bea0da78aa5b48154203ceb6e8eaffd935dd93115d90096a6')
+    def test_when_using__pcl5_inherit_media_type_file_then_succeeds(self):
+        if self.media.is_size_supported('iso_a4_210x297mm', 'tray-1') and tray.is_type_supported('stationery-bond', 'tray-1'):
+            self.media.tray.configure_tray('tray-1', 'iso_a4_210x297mm', 'stationery-bond')
+
+        job_id = self.print.raw.start('5ac9906a9fe61f103123109d5b147e5618a7cfd9f7faee8d4a8918849ab98a28')
         self.print.wait_for_job_completion(job_id)
+        outputverifier.save_and_parse_output()
+        outputverifier.verify_media_size(Intents.printintent, MediaSize.a4)
+        outputverifier.verify_media_type(Intents.printintent, MediaType.bond)
+        outputverifier.verify_media_source(Intents.printintent, MediaSource.tray1)
+
         self.outputsaver.save_output()
-        self.outputsaver.operation_mode('NONE')
-        logging.info("Get crc value for the current print job")
-        Current_crc_value = self.outputsaver.get_crc()
-        logging.info("Validate current crc with master crc")
-        assert self.outputsaver.verify_pdl_crc(Current_crc_value), "fail on crc mismatch"
+        self.media.tray.reset_trays()

@@ -2,6 +2,8 @@ import logging
 from dunetuf.print.print_common_types import MediaInputIds, MediaSize, MediaType
 from dunetuf.print.new.output.output_saver import OutputSaver
 from tests.print.pdl.print_base import TestWhenPrinting, setup_output_saver, tear_down_output_saver
+from dunetuf.print.output.intents import Intents, MediaSize, ColorMode, PrintQuality, ColorRenderingType, ContentOrientation, Plex, MediaType, MediaSource, PlexBinding
+
 
 class TestWhenPrintingJPEGFile(TestWhenPrinting):
     @classmethod
@@ -30,19 +32,19 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
         tear_down_output_saver(self.outputsaver)
     """
     $$$$$_BEGIN_TEST_METADATA_DECLARATION_$$$$$
-        +purpose: pcl5 lowvaluenew using 8Page_gl.obj
+        +purpose: pcl5 job using pdl configurations from job overidding front panel
         +test_tier: 1
         +is_manual: False
         +test_classification: 1
-        +reqid: DUNE-37356
-        +timeout:600
+        +reqid: DUNE-94044
+        +timeout:120
         +asset:PDL_New
         +delivery_team:QualityGuild
         +feature_team:PDLSolns
         +test_framework: TUF
-        +external_files:8Page-gl.obj=c61e9d843177429bea0da78aa5b48154203ceb6e8eaffd935dd93115d90096a6
+        +external_files:test_pcl5_withPdlConfigurations.prn=edea21fe4183c8973e6d679560175ce675ab259cd7a93810fec0736e3d704293
         +test_classification:System
-        +name:TestWhenPrintingJPEGFile::test_when_using_pcl5_lowvaluenew_8page_gl_file_then_succeeds
+        +name:TestWhenPrintingJPEGFile::test_when_using_pcl5_1page_job_with_pdl_configurations_file_then_succeeds
         +categorization:
             +segment:Platform
             +area:Print
@@ -51,8 +53,8 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
             +interaction:Headless
             +test_type:Positive
         +test:
-            +title: test_pcl5_lowvaluenew_8page_gl
-            +guid:ed989029-303f-43ff-beec-cc2483221990
+            +title: test_pcl5_1page_job_with_pdl_configurations
+            +guid:16ee2ea1-888d-47fe-a9fd-13902d7bb921
             +dut:
                 +type:Simulator
                 +configuration: DocumentFormat=PCL5
@@ -68,12 +70,14 @@ class TestWhenPrintingJPEGFile(TestWhenPrinting):
 
     $$$$$_END_TEST_METADATA_DECLARATION_$$$$$
     """
-    def test_when_using_pcl5_lowvaluenew_8page_gl_file_then_succeeds(self):
+    def test_when_using_pcl5_1page_job_with_pdl_configurations_file_then_succeeds(self):
         self.outputsaver.validate_crc_tiff()
-        job_id = self.print.raw.start('c61e9d843177429bea0da78aa5b48154203ceb6e8eaffd935dd93115d90096a6')
+        job_id = self.print.raw.start('edea21fe4183c8973e6d679560175ce675ab259cd7a93810fec0736e3d704293')
         self.print.wait_for_job_completion(job_id)
+        outputverifier.save_and_parse_output()
         self.outputsaver.save_output()
         self.outputsaver.operation_mode('NONE')
+
         logging.info("Get crc value for the current print job")
         Current_crc_value = self.outputsaver.get_crc()
         logging.info("Validate current crc with master crc")
