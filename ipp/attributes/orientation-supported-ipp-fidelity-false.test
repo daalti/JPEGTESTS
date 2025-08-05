@@ -1,0 +1,87 @@
+## USAGE:  ./ipptool -f filename -t printer-uri orientation.test
+
+## EXAMPLE: ./ipptool -v -f PCLm-file-within-specs -t ipp://10.0.1.24/ipp/print orientation.test
+
+## UPDATED: 01/08/2015
+## UPDATED: 6/4/2015:  Fix a typo, remove a not-recognized atttribute, and add some comments.
+
+#############################################################
+# Wait for printer to be ready
+# Wait until job pool is clear
+{
+    NAME "Wait for printer to be ready"
+    OPERATION Get-Jobs
+
+    GROUP operation-attributes-tag
+    ATTR charset attributes-charset utf-8
+    ATTR naturalLanguage attributes-natural-language en
+    ATTR uri printer-uri $uri
+    ATTR name requesting-user-name $user
+    ATTR keyword which-jobs not-completed
+
+    STATUS successful-ok
+    EXPECT !job-id REPEAT-NO-MATCH
+}
+#############################################################
+# Step 3 : Happy path: print with supported orietation.
+# Print-Job with orientation-requested = 3 (portrait)
+{
+	NAME "Step 3: Print 1 page document, supported orientation, fidelity=false"
+	OPERATION Print-Job
+	GROUP operation-attributes-tag
+	ATTR charset attributes-charset utf-8
+	ATTR naturalLanguage attributes-natural-language en
+	ATTR uri printer-uri $uri	
+	ATTR mimeMediaType document-format application/PCLm
+	ATTR boolean ipp-attribute-fidelity false
+
+    	GROUP job-attributes-tag
+	ATTR enum orientation-requested 3
+
+	FILE $filename
+    
+	STATUS successful-ok
+	EXPECT job-id
+}
+
+#############################################################
+# Wait for step 3 to complete
+# Wait until job pool is clear
+{
+    NAME "	Step 4: Wait for printer to finish"
+    OPERATION Get-Jobs
+
+    GROUP operation-attributes-tag
+    ATTR charset attributes-charset utf-8
+    ATTR naturalLanguage attributes-natural-language en
+    ATTR uri printer-uri $uri
+    ATTR name requesting-user-name $user
+    ATTR keyword which-jobs not-completed
+
+    STATUS successful-ok
+    EXPECT !job-id REPEAT-NO-MATCH
+}
+#############################################################
+# get job attributes, check that orientation-requested ==3
+{
+	NAME "   Step 5: Check orientation-requested==3"
+	OPERATION Get-Job-Attributes
+	GROUP operation-attributes-tag
+	ATTR charset attributes-charset utf-8
+	ATTR naturalLanguage attributes-natural-language en
+	ATTR uri printer-uri $uri
+	ATTR integer job-id $job-id
+	ATTR keyword requested-attributes orientation-requested
+    
+	STATUS successful-ok
+	EXPECT orientation-requested OF-TYPE enum IN-GROUP job-attributes-tag WITH-VALUE 3 #This may not be correct for printers @2012 or older
+	#DISPLAY orientation-requested
+}
+#############################################################
+
+
+## Notes for orientation-requested:
+## Value of 3 is Portrait
+## Value of 4 is Landscape
+## Value of 5 is reverse-landscape
+## Value of 6 is reverse-portrait

@@ -1,0 +1,106 @@
+#   Copyright 2014-2015 by Apple Inc.
+#
+#   These coded instructions, statements, and computer programs are the
+#   property of Apple Inc. and are protected by Federal copyright
+#   law.
+
+  # The version to use
+	VERSION 2.0
+
+# Create job
+{
+	# The name of the test...
+	NAME "Create-Job: DuplexNoTumble no resolution specified, no color model specified, Normal, 4x6, no media type specified, auto-fit"
+
+	# The resource to use for the POST
+	# RESOURCE /admin
+
+	# The operation to use
+	OPERATION create-job
+
+	# Defines that may be passed to ipptest's -d option:
+	#	PRINTER_TAKES_PDF
+
+	# Attributes, starting in the operation group...
+	GROUP operation
+	ATTR charset attributes-charset utf-8
+	ATTR language attributes-natural-language en
+	ATTR uri printer-uri $uri
+	ATTR name requesting-user-name $user
+	ATTR boolean ipp-attribute-fidelity true
+
+	GROUP job
+	ATTR integer copies 1
+	ATTR enum print-quality 4
+	ATTR keyword print-scaling auto-fit
+	ATTR keyword sides two-sided-long-edge
+	ATTR collection media-col { 
+		MEMBER collection media-size {
+			MEMBER integer x-dimension 10160
+			MEMBER integer y-dimension 15240
+		}
+		MEMBER integer media-bottom-margin 423
+		MEMBER integer media-left-margin 423
+		MEMBER integer media-right-margin 423
+		MEMBER integer media-top-margin 423
+	}
+	# What statuses are OK?
+	STATUS successful-ok
+		DEFINE-MATCH JOB_CREATED_1
+	STATUS successful-ok
+	STATUS server-error-busy REPEAT-MATCH
+	STATUS server-error-too-many-jobs REPEAT-MATCH
+	STATUS server-error-not-accepting-jobs REPEAT-MATCH
+	STATUS client-error-attributes-or-values-not-supported
+	STATUS client-error-conflicting-attributes
+	# What attributes do we expect?
+	EXPECT job-id
+		IF-DEFINED JOB_CREATED_1
+	EXPECT job-uri
+		IF-DEFINED JOB_CREATED_1
+}
+# Send-Document
+{
+	# The name of the test...
+	NAME "Print PDF file using Send-Document DuplexNoTumble no resolution specified, no color model specified, Normal, 4x6, no media type specified, auto-fit"
+
+	SKIP-IF-NOT-DEFINED JOB_CREATED_1
+	# The resource to use for the POST
+	# RESOURCE /admin
+
+	# The operation to use
+	OPERATION send-document
+
+	# Defines that may be passed to ipptest's -d option:
+	#	PRINTER_TAKES_PDF
+
+	# Attributes, starting in the operation group...
+	GROUP operation
+	ATTR charset attributes-charset utf-8
+	ATTR language attributes-natural-language en
+	ATTR uri printer-uri $uri
+	ATTR integer job-id $job-id
+	ATTR boolean last-document true
+	ATTR name requesting-user-name $user
+	ATTR mimetype document-format application/pdf
+	ATTR keyword compression none
+
+	FILE $filename
+
+	# What statuses are OK?
+	STATUS successful-ok
+		IF-DEFINED PRINTER_TAKES_PDF
+	STATUS successful-ok
+		DEFINE-MATCH JOB_CREATED_2
+	STATUS client-error-document-format-not-supported
+		IF-NOT-DEFINED PRINTER_TAKES_PDF
+
+	STATUS client-error-conflicting-attributes
+	STATUS server-error-busy REPEAT-MATCH
+	STATUS server-error-not-accepting-jobs REPEAT-MATCH
+	# What attributes do we expect?
+	EXPECT job-id
+		IF-DEFINED JOB_CREATED_2
+	EXPECT job-uri
+		IF-DEFINED JOB_CREATED_2
+}

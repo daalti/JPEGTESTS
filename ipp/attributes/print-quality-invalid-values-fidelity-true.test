@@ -1,0 +1,104 @@
+## Updated By:  Kim Fotheringham
+## Updated On:  01/28/2015
+
+## USAGE:  ./ipptool -f filename -t printer-uri PrintQuality.test
+
+## EXAMPLE: ./ipptool -f fileSupportingPCLm.pdf -vt ipp://10.0.1.2/ipp/print PrintQuality.test
+
+## Printer Supported Print Qualities to Define
+#draft  = 3
+#normal = 4
+#high   = 5
+#############################################################
+# Wait for printer to be ready
+# Wait until job pool is clear
+{
+    NAME "Wait for printer to be ready"
+    OPERATION Get-Jobs
+
+    GROUP operation-attributes-tag
+    ATTR charset attributes-charset utf-8
+    ATTR naturalLanguage attributes-natural-language en
+    ATTR uri printer-uri $uri
+    ATTR name requesting-user-name $user
+    ATTR keyword which-jobs not-completed
+
+    STATUS successful-ok
+    EXPECT !job-id REPEAT-NO-MATCH
+}
+#############################################################
+{
+	NAME "Get Attributes Information"
+	OPERATION Get-Printer-Attributes
+	GROUP operation-attributes-tag
+	ATTR charset attributes-charset utf-8
+	ATTR naturalLanguage attributes-natural-language en
+	ATTR uri printer-uri $uri
+	ATTR mimeMediaType document-format image/pwg-raster
+
+    ATTR keyword requested-attributes printer-firmware-name
+
+	STATUS successful-ok
+    EXPECT printer-firmware-name WITH-VALUE "/.*\..*/" DEFINE-MATCH LINUX DEFINE-NO-MATCH CLASSIC
+}
+#############################################################
+
+#Printer should substitute the Print Quality used as default value.
+{
+	NAME "Step 5: Invalid print-quality"
+	OPERATION Print-Job
+	GROUP operation-attributes-tag
+	ATTR charset attributes-charset utf-8
+	ATTR naturalLanguage attributes-natural-language en
+	ATTR uri printer-uri $uri
+
+	ATTR name job-name $filename
+	ATTR boolean ipp-attribute-fidelity true
+	ATTR name document-name $filename
+	ATTR mimeMediaType document-format application/PCLm
+
+	GROUP job-attributes-tag
+	ATTR enum print-quality 7    #not a valid value
+	# This may be valid for older printers: ATTR resolution pclm-source-resolution 600x600dpi
+        ATTR resolution pclm-source-resolution 600dpi
+
+	FILE $filename
+
+
+	STATUS client-error-bad-request
+	STATUS client-error-attributes-or-values-not-supported	
+	EXPECT !job-uri
+}
+
+#############################################################
+{
+    NAME "	Step 6: Wait for job to finish"
+    OPERATION Get-Jobs
+
+    GROUP operation-attributes-tag
+    ATTR charset attributes-charset utf-8
+    ATTR naturalLanguage attributes-natural-language en
+    ATTR uri printer-uri $uri
+    ATTR name requesting-user-name $user
+    ATTR keyword which-jobs not-completed
+
+    STATUS successful-ok
+    EXPECT !job-id REPEAT-NO-MATCH
+}
+#############################################################
+
+# get job-attributes.  Expect client-error-bad-request or client-error-attributes-or-values-not-supported.
+{
+	NAME "      Step 11: Check Job-Attributes "
+	OPERATION Get-Job-Attributes 
+	GROUP operation-attributes-tag
+	ATTR charset attributes-charset utf-8
+	ATTR naturalLanguage attributes-natural-language en
+	ATTR uri printer-uri $uri
+	ATTR mimeMediaType document-format application/PCLm
+        ATTR keyword requested-attributes orientation-requested
+
+	STATUS client-error-bad-request
+	STATUS client-error-attributes-or-values-not-supported
+	## No EXPECT clause will work since the job is not successfully created.
+}

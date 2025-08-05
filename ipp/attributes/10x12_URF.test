@@ -1,0 +1,62 @@
+#   Copyright 2013-2015 by Apple Inc.
+#
+#   These coded instructions, statements, and computer programs are the
+#   property of Apple Inc. and are protected by Federal copyright
+#   law.
+
+  # The version to use
+	VERSION 2.0
+
+# Print a test page using print-job
+{
+	# The name of the test...
+	NAME "Print URF size test using print-job: single-sided, 600x600dpi, RGB, Normal, 10x12, no media type specified"
+
+	# The resource to use for the POST
+	# RESOURCE /admin
+
+	# The operation to use
+	OPERATION print-job
+
+	# Attributes, starting in the operation group...
+	GROUP operation
+	ATTR charset attributes-charset utf-8
+	ATTR language attributes-natural-language en
+	ATTR uri printer-uri $uri
+	ATTR name requesting-user-name $user
+	ATTR mimetype document-format application/octet-stream
+	ATTR keyword compression none
+	ATTR boolean ipp-attribute-fidelity false
+
+	GROUP job
+	ATTR integer copies 1
+	ATTR resolution printer-resolution 600x600dpi
+	ATTR enum print-quality 4
+	ATTR keyword print-color-mode color
+	ATTR keyword sides one-sided
+	ATTR collection media-col { 
+		MEMBER keyword media-source auto
+		MEMBER collection media-size {
+			MEMBER integer x-dimension 25400
+			MEMBER integer y-dimension 30480
+		}
+		MEMBER integer media-bottom-margin 500
+		MEMBER integer media-left-margin 500
+		MEMBER integer media-right-margin 500
+		MEMBER integer media-top-margin 500
+	}
+
+	FILE $filename
+
+	# What statuses are OK?
+	STATUS successful-ok
+	STATUS server-error-busy REPEAT-MATCH
+
+	STATUS server-error-not-accepting-jobs REPEAT-MATCH
+
+	STATUS successful-ok-ignored-or-substituted-attributes
+
+	# What attributes do we expect?
+	EXPECT job-id
+	EXPECT job-uri
+}

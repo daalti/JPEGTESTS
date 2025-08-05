@@ -1,0 +1,136 @@
+## Updated By:  Kim Fotheringham
+## Updated On:  01/26/2015 
+ 
+## USAGE:  ./ipptool -f filename -t printer-uri output-bin-face-up.test
+
+## EXAMPLE: ./ipptool -f filenameInSpecToTest.pdf ipp://10.0.1.5/ipp/print output-bin-face-up.test     *oldest printers use /ipp/printers instead of /ipp/print
+
+ 
+####################################################################
+# get output-bin-supported.  
+
+#############################################################
+# Wait for printer to be ready
+# Wait until job pool is clear
+{
+    NAME "Wait for printer to be ready"
+    OPERATION Get-Jobs
+
+    GROUP operation-attributes-tag
+    ATTR charset attributes-charset utf-8
+    ATTR naturalLanguage attributes-natural-language en
+    ATTR uri printer-uri $uri
+    ATTR name requesting-user-name $user
+    ATTR keyword which-jobs not-completed
+
+    STATUS successful-ok
+    EXPECT !job-id REPEAT-NO-MATCH
+}
+#############################################################
+##test case to get and define supported output bin
+
+{
+    NAME "Step 2: Get supported output-bin"
+    OPERATION Get-Printer-Attributes
+    
+	GROUP operation-attributes-tag
+	ATTR charset attributes-charset utf-8
+	ATTR naturalLanguage attributes-natural-language en
+	ATTR uri printer-uri $uri
+    ATTR keyword requested-attributes output-bin-supported
+
+    STATUS successful-ok
+    EXPECT output-bin-supported
+    EXPECT output-bin-supported OF-TYPE keyword IN-GROUP printer-attributes-tag COUNT 1 WITH-VALUE face-up DEFINE-MATCH FACEUPOUTPUT
+}
+
+#############################################################
+
+##test case to validate unsupported output bin with IPP Fidelity False changes to the supported output bin
+{
+	NAME "Step 3: Face-up value with IPP Fidelity=False"
+	OPERATION Print-Job
+	GROUP operation-attributes-tag
+	ATTR charset attributes-charset utf-8
+	ATTR naturalLanguage attributes-natural-language en
+	ATTR uri printer-uri $uri
+	ATTR name requesting-user-name $user
+	ATTR mimeMediaType document-format application/PCLm
+	ATTR keyword compression "none"
+	ATTR boolean ipp-attribute-fidelity false
+	ATTR name document-name $filename
+
+	GROUP job-attributes-tag
+	ATTR keyword output-bin face-up
+
+	FILE $filename
+    
+        STATUS successful-ok
+	STATUS successful-ok-ignored-or-substituted-attributes
+
+	EXPECT job-uri OF-TYPE uri COUNT 1 IN-GROUP job-attributes-tag
+	EXPECT job-id OF-TYPE integer COUNT 1 IN-GROUP job-attributes-tag WITH-VALUE >0
+	EXPECT job-state OF-TYPE enum COUNT 1 IN-GROUP job-attributes-tag WITH-VALUE 3,4,5,6,7,8,9
+	EXPECT job-state-reasons OF-TYPE keyword IN-GROUP job-attributes-tag
+	EXPECT ?job-state-message OF-TYPE text IN-GROUP job-attributes-tag
+}
+##test case to validate previous print job has the correct value supported listed.
+
+#############################################################
+{
+    NAME "   Step 4: Wait for job to finish"
+    OPERATION Get-Jobs
+
+    GROUP operation-attributes-tag
+    ATTR charset attributes-charset utf-8
+    ATTR naturalLanguage attributes-natural-language en
+    ATTR uri printer-uri $uri
+    ATTR name requesting-user-name $user
+    ATTR keyword which-jobs not-completed
+
+    STATUS successful-ok
+    EXPECT !job-id REPEAT-NO-MATCH
+}
+#############################################################
+
+{
+	NAME "Step 5: Check that Get-Job-Attributes returns output-bin"
+	OPERATION Get-Job-Attributes
+	GROUP operation-attributes-tag
+	ATTR charset attributes-charset utf-8
+	ATTR naturalLanguage attributes-natural-language en
+	ATTR uri printer-uri $uri
+	ATTR name requesting-user-name $user
+	ATTR integer job-id $job-id
+	ATTR keyword requested-attributes output-bin
+	ATTR keyword requested-attributes job-state
+	ATTR keyword requested-attributes job-state-reasons
+
+	STATUS successful-ok
+ 	EXPECT output-bin
+}
+
+{	
+    SKIP-IF-DEFINED FACEUPOUTPUT
+	NAME "Step 6: Output Bin Face-up IPP fidelity True but face-up not supported"
+	OPERATION Print-Job
+	GROUP operation-attributes-tag
+	ATTR charset attributes-charset utf-8
+	ATTR naturalLanguage attributes-natural-language en
+	ATTR uri printer-uri $uri
+	ATTR name requesting-user-name $user
+	ATTR mimeMediaType document-format application/PCLm
+	ATTR keyword compression "none"
+	ATTR name job-name $filename
+	ATTR boolean ipp-attribute-fidelity true	
+
+	GROUP job-attributes-tag
+	ATTR keyword output-bin face-up
+
+	FILE $filename
+
+	STATUS client-error-attributes-or-values-not-supported
+	STATUS client-error-bad-request
+
+	EXPECT !job-id
+}

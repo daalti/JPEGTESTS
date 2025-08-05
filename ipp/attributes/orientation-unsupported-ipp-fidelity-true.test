@@ -1,0 +1,90 @@
+## USAGE:  ./ipptool -f filename -t printer-uri orientation.test
+
+## EXAMPLE: ./ipptool -v -f PCLm-file-within-specs -t ipp://10.0.1.24/ipp/print orientation.test
+
+## UPDATED: 01/08/2015
+## UPDATED: 6/4/2015:  Fix a typo, remove a not-recognized atttribute, and add some comments.
+
+#############################################################
+# Wait for printer to be ready
+# Wait until job pool is clear
+{
+    NAME "Wait for printer to be ready"
+    OPERATION Get-Jobs
+
+    GROUP operation-attributes-tag
+    ATTR charset attributes-charset utf-8
+    ATTR naturalLanguage attributes-natural-language en
+    ATTR uri printer-uri $uri
+    ATTR name requesting-user-name $user
+    ATTR keyword which-jobs not-completed
+
+    STATUS successful-ok
+    EXPECT !job-id REPEAT-NO-MATCH
+}
+#############################################################
+
+#############################################################
+# No substitution : Print with unsupported orientation.  Do not allow substitute or ignore.  Expect printer to return failure.
+# Print-Job with orientation-requested=4, ipp-fidelity=true.  Expect failure.
+{
+	NAME "Step 9: Print 1 page document, unsupported orientation, fidelity=true"
+	#this test case assumes landscape is not supported.
+	OPERATION Print-Job
+	GROUP operation-attributes-tag
+	ATTR charset attributes-charset utf-8
+	ATTR naturalLanguage attributes-natural-language en
+	ATTR uri printer-uri $uri
+	ATTR mimeMediaType document-format application/PCLm
+	ATTR boolean ipp-attribute-fidelity true
+
+    	GROUP job-attributes-tag
+	ATTR enum orientation-requested 4
+
+	FILE $filename
+    
+	STATUS client-error-bad-request
+	#STATUS client-error-unsupported-attribute
+	STATUS client-error-attributes-or-values-not-supported	
+	EXPECT !job-uri
+}
+
+#############################################################
+# Wait until job queue is clear
+{
+    NAME "	Step 10: Wait for printer to finish"
+    OPERATION Get-Jobs
+
+    GROUP operation-attributes-tag
+    ATTR charset attributes-charset utf-8
+    ATTR naturalLanguage attributes-natural-language en
+    ATTR uri printer-uri $uri
+    ATTR name requesting-user-name $user
+    ATTR keyword which-jobs not-completed
+
+    STATUS successful-ok
+    EXPECT !job-id REPEAT-NO-MATCH
+}
+#############################################################
+# get job-attributes.  Expect client-error-bad-request or client-error-attributes-or-values-not-supported.
+{
+	NAME "      Step 11: Check Job-Attributes "
+	OPERATION Get-Job-Attributes 
+	GROUP operation-attributes-tag
+	ATTR charset attributes-charset utf-8
+	ATTR naturalLanguage attributes-natural-language en
+	ATTR uri printer-uri $uri
+	ATTR mimeMediaType document-format application/PCLm
+        ATTR keyword requested-attributes orientation-requested
+
+	STATUS client-error-bad-request
+	STATUS client-error-attributes-or-values-not-supported
+	## No EXPECT clause will work since the job is not successfully created.
+}
+
+
+## Notes for orientation-requested:
+## Value of 3 is Portrait
+## Value of 4 is Landscape
+## Value of 5 is reverse-landscape
+## Value of 6 is reverse-portrait

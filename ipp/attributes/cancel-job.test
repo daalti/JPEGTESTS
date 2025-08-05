@@ -1,0 +1,80 @@
+# Test Cancel-Job operation
+#
+# Required by: RFC 2911 section 3.3.3
+
+#############################################################
+# Wait for printer to be ready
+# Wait until job pool is clear
+{
+    NAME "Step 1:Wait for printer to be ready"
+    OPERATION Get-Jobs
+
+    GROUP operation-attributes-tag
+    ATTR charset attributes-charset utf-8
+    ATTR naturalLanguage attributes-natural-language en
+    ATTR uri printer-uri $uri
+    ATTR name requesting-user-name $user
+    ATTR keyword which-jobs not-completed
+
+    STATUS successful-ok
+    EXPECT !job-id REPEAT-NO-MATCH
+}
+#############################################################
+
+###################################################################
+##Use text test file for this test.
+###################################################################
+
+{
+	NAME "Step 2:Print job for 3.3.3: Cancel-Job Operation (completed job)"
+	OPERATION Print-Job
+	GROUP operation-attributes-tag
+	ATTR charset attributes-charset utf-8
+	ATTR naturalLanguage attributes-natural-language en
+	ATTR uri printer-uri $uri
+	ATTR name requesting-user-name $user
+	ATTR name job-name $filename
+	ATTR boolean ipp-attribute-fidelity false
+	ATTR name document-name $filename
+	ATTR keyword compression none
+	ATTR mimeMediaType document-format application/PCLm
+
+	FILE $filename
+
+	STATUS successful-ok
+	EXPECT job-uri OF-TYPE uri COUNT 1 IN-GROUP job-attributes-tag
+	EXPECT job-id OF-TYPE integer COUNT 1 IN-GROUP job-attributes-tag
+	       WITH-VALUE >0
+}
+
+{
+	DELAY 60
+
+	NAME "Step 3: Cancel-Job Operation (completed job)"
+	OPERATION Cancel-Job
+	GROUP operation-attributes-tag
+	ATTR charset attributes-charset utf-8
+	ATTR naturalLanguage attributes-natural-language en
+	ATTR uri printer-uri $uri
+	ATTR integer job-id $job-id
+	ATTR name requesting-user-name $user
+
+	STATUS client-error-not-possible
+}
+
+
+{
+	DELAY 10
+
+	NAME "Step 4:Cancel-Job Operation of a Canceled job"
+	OPERATION Cancel-Job
+	GROUP operation-attributes-tag
+	ATTR charset attributes-charset utf-8
+	ATTR naturalLanguage attributes-natural-language en
+	ATTR uri printer-uri $uri
+	ATTR integer job-id $job-id
+	ATTR name requesting-user-name $user
+
+	STATUS client-error-not-possible
+}
+

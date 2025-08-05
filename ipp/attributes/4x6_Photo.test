@@ -1,0 +1,126 @@
+## Developer:   Thomas Griffiths
+## Date:        1/26/2011
+## Modified by: Kim Fotheringham
+## Modified On: 01/29/2015
+## Test:        IPP print 4x6 media size
+## Disclaimer:  File and Contents are HP property.
+
+## USAGE:  ./ipptool -t -d topmargin=VAL -d botmargin=VAL -d edgemargin=VAL -f /PATH/4x6_600_jpeg_32_RGB PRINTER-URI 4x6_Photo_Bordered.test
+
+
+IGNORE-ERRORS    no
+VERSION          2.0
+TRANSFER         auto
+#############################################################
+# Wait for printer to be ready
+# Wait until job pool is clear
+{
+
+    NAME "4x6 Photo: Wait for printer to be ready"
+
+    OPERATION Get-Jobs
+
+    GROUP operation-attributes-tag
+    ATTR charset attributes-charset utf-8
+    ATTR naturalLanguage attributes-natural-language en
+    ATTR uri printer-uri $uri
+    ATTR name requesting-user-name $user
+    ATTR keyword which-jobs not-completed
+
+    STATUS successful-ok
+    EXPECT !job-id REPEAT-NO-MATCH
+}
+#############################################################
+{
+
+    NAME "4x6 Photo: Check IPP Server State"
+
+    OPERATION Get-Printer-Attributes
+    
+	GROUP operation-attributes-tag
+	ATTR charset attributes-charset utf-8
+	ATTR naturalLanguage attributes-natural-language en
+	ATTR uri printer-uri $uri
+
+    ATTR keyword requested-attributes media-left-margin-supported
+    ATTR keyword requested-attributes media-source-supported
+    ATTR keyword requested-attributes media-type-supported
+    ATTR keyword requested-attributes printer-state
+    ATTR keyword requested-attributes printer-is-accepting-jobs
+
+    STATUS successful-ok
+
+    EXPECT media-left-margin-supported WITH-VALUE $edgemargin DEFINE-MATCH MARGIN_SUPPORTED
+
+    EXPECT media-source-supported OF-TYPE keyword IN-GROUP printer-attributes-tag WITH-VALUE "photo" DEFINE-MATCH PHOTO_TRAY_SUPPORTED
+    EXPECT media-source-supported OF-TYPE keyword IN-GROUP printer-attributes-tag WITH-VALUE "main" DEFINE-MATCH MAIN_TRAY_SUPPORTED
+
+    EXPECT media-source-supported OF-TYPE keyword WITH-VALUE "main" DEFINE-VALUE media_source
+    EXPECT media-source-supported OF-TYPE keyword WITH-VALUE "auto" DEFINE-VALUE media_source
+
+    EXPECT media-type-supported OF-TYPE keyword WITH-VALUE "com.hp.advanced-photo" DEFINE-VALUE photo_media
+    EXPECT media-type-supported OF-TYPE keyword WITH-VALUE "photographic-glossy" DEFINE-VALUE photo_media
+
+    EXPECT printer-is-accepting-jobs OF-TYPE boolean IN-GROUP printer-attributes-tag COUNT 1 WITH-VALUE true DEFINE-MATCH ACCEPTING
+    EXPECT printer-state OF-TYPE enum IN-GROUP printer-attributes-tag WITH-VALUE 3 DEFINE-MATCH IDLESTATE
+
+    DISPLAY printer-state
+    DISPLAY printer-state-reasons
+    DISPLAY printer-state-message
+}
+
+#############################################################
+
+## Test assumes the following:
+## User will have loaded 4x6 photo glossy media into the main tray
+## If the device does not support the actual media col and margin values used, IPP Fidelity will cause job rejected.
+{
+    SKIP-IF-NOT-DEFINED ACCEPTING
+    SKIP-IF-NOT-DEFINED IDLESTATE
+    SKIP-IF-NOT-DEFINED MARGIN_SUPPORTED
+
+	NAME "4x6 Photo: Print-Job from main or auto tray"
+
+	OPERATION Print-Job
+
+	GROUP operation-attributes-tag
+	ATTR charset attributes-charset utf-8
+	ATTR naturalLanguage attributes-natural-language en
+	ATTR uri printer-uri $uri
+	ATTR name job-name $filename
+	ATTR boolean ipp-attribute-fidelity true
+	ATTR name document-name $filename
+    ATTR mimeMediaType document-format application/PCLm
+
+    GROUP job-attributes-tag
+    ATTR collection media-col {
+	    MEMBER collection media-size {
+        	#4x6
+			MEMBER integer x-dimension 10160
+            MEMBER integer y-dimension 15240
+        }
+        #Paper Margins
+        MEMBER integer media-top-margin $topmargin
+		MEMBER integer media-bottom-margin $botmargin
+		MEMBER integer media-left-margin $edgemargin
+		MEMBER integer media-right-margin $edgemargin
+		#Media Input Tray Source
+
+        MEMBER keyword media-source $media_source
+
+        MEMBER keyword media-type $photo_media
+
+    }
+         
+	FILE $filename
+
+	STATUS successful-ok
+
+        EXPECT ?media-source OF-TYPE keyword
+        EXPECT ?media-type OF-TYPE keyword
+	EXPECT job-uri OF-TYPE uri IN-GROUP job-attributes-tag COUNT 1
+	EXPECT job-id OF-TYPE integer COUNT 1 IN-GROUP job-attributes-tag WITH-VALUE >0
+
+	EXPECT job-state OF-TYPE enum COUNT 1 IN-GROUP job-attributes-tag WITH-VALUE 3,4,5,6,7,8,9
+}
+

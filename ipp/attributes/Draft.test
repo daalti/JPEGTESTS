@@ -1,0 +1,119 @@
+## Developer:    Thomas Griffiths
+## Date:         1/24/2011
+## Test:         Validate Draft quality for PCLm.
+## Updated By:   Kim Fotheringham
+## Updated On:   01/16/2015
+## Disclaimer:   File and Contents are HP property.
+## Assumptions:  This test assumes letter media size, sRGB, 32 strip height files are given.
+
+## USAGE:  ./ipptool -f filename -t printer-uri Draft.test
+## EXAMPLE: ./ipptool -f PCLm_letter_300_cjpeg_H32_PgCnt1_RGB__JPG_Source.pdf -t ipp://10.0.1.27/ipp/print Draft.test
+
+IGNORE-ERRORS    no
+VERSION          2.0
+TRANSFER         auto
+#############################################################
+# Wait for printer to be ready
+# Wait until job pool is clear
+{
+    NAME "Wait for printer to be ready"
+    OPERATION Get-Jobs
+
+    GROUP operation-attributes-tag
+    ATTR charset attributes-charset utf-8
+    ATTR naturalLanguage attributes-natural-language en
+    ATTR uri printer-uri $uri
+    ATTR name requesting-user-name $user
+    ATTR keyword which-jobs not-completed
+
+    STATUS successful-ok
+    EXPECT !job-id REPEAT-NO-MATCH
+}
+#############################################################
+{
+    NAME "Check IPP Server State"
+    OPERATION Get-Printer-Attributes
+    
+    GROUP operation-attributes-tag
+    ATTR charset attributes-charset utf-8
+    ATTR naturalLanguage attributes-natural-language en
+    ATTR uri printer-uri $uri
+    ATTR keyword requested-attributes printer-state
+    ATTR keyword requested-attributes printer-is-accepting-jobs
+
+    STATUS successful-ok
+    EXPECT printer-is-accepting-jobs OF-TYPE boolean IN-GROUP printer-attributes-tag COUNT 1 WITH-VALUE true DEFINE-MATCH ACCEPTING   
+    EXPECT printer-state OF-TYPE enum IN-GROUP printer-attributes-tag WITH-VALUE 3 DEFINE-MATCH IDLESTATE
+}
+
+{
+    SKIP-IF-NOT-DEFINED ACCEPTING
+    SKIP-IF-NOT-DEFINED IDLESTATE
+
+    NAME "Draft Print Quality Job Validation"
+    OPERATION Print-Job
+    GROUP operation-attributes-tag
+    ATTR charset attributes-charset utf-8
+    ATTR naturalLanguage attributes-natural-language en
+    ATTR uri printer-uri $uri
+    ATTR mimeMediaType document-format application/PCLm
+    ATTR name job-name $filename
+    ATTR boolean ipp-attribute-fidelity false
+    ATTR name document-name $filename
+
+    GROUP job-attributes-tag
+    ATTR enum print-quality 3
+    ATTR resolution printer-resolution 300dpi
+    ATTR resolution pclm-source-resolution 300dpi
+    # older printers (2012 or earlier) may have printer-resolution and pclm-source-resolution of 300x300dpi
+    FILE $filename
+
+    STATUS successful-ok
+    EXPECT job-uri OF-TYPE uri COUNT 1 IN-GROUP job-attributes-tag
+    EXPECT job-id OF-TYPE integer COUNT 1 IN-GROUP job-attributes-tag WITH-VALUE >0
+    EXPECT job-state OF-TYPE enum COUNT 1 IN-GROUP job-attributes-tag WITH-VALUE 3,4,5,6,7,8,9
+    EXPECT job-state-reasons OF-TYPE keyword IN-GROUP job-attributes-tag
+}
+
+#############################################################
+{
+    NAME "Get jobs to check until job pool is clear"
+    OPERATION Get-Jobs
+
+    GROUP operation-attributes-tag
+    ATTR charset attributes-charset utf-8
+    ATTR naturalLanguage attributes-natural-language en
+    ATTR uri printer-uri $uri
+    ATTR name requesting-user-name $user
+    ATTR keyword which-jobs not-completed
+
+    STATUS successful-ok
+    EXPECT !job-id REPEAT-NO-MATCH
+}
+#############################################################
+
+{
+	NAME "Check the previous print job request job state and attributes"
+	OPERATION Get-Job-Attributes
+	GROUP operation-attributes-tag
+	ATTR charset attributes-charset utf-8
+	ATTR naturalLanguage attributes-natural-language en
+	ATTR uri printer-uri $uri
+	ATTR name requesting-user-name $user
+	ATTR integer job-id $job-id
+	ATTR keyword requested-attributes print-quality
+	ATTR keyword requested-attributes printer-resolution
+	ATTR keyword requested-attributes pclm-source-resolution
+        ATTR keyword requested-attributes job-state
+        ATTR keyword requested-attributes job-state-reasons
+
+	STATUS successful-ok
+        EXPECT print-quality OF-TYPE enum COUNT 1 IN-GROUP job-attributes-tag WITH-VALUE 3
+        EXPECT printer-resolution OF-TYPE resolution COUNT 1 IN-GROUP job-attributes-tag WITH-VALUE 300dpi
+        EXPECT pclm-source-resolution OF-TYPE resolution COUNT 1 IN-GROUP job-attributes-tag WITH-VALUE 300dpi
+        # older printers (2012 or earlier) may have printer-resolution and pclm-source-resolution of 300x300dpi
+
+	EXPECT job-state OF-TYPE enum
+	EXPECT job-state-reasons OF-TYPE keyword
+}
+
