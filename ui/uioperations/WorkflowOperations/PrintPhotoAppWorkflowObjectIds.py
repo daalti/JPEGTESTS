@@ -1,0 +1,102 @@
+class PrintPhotoAppWorkflowObjectIds:
+    
+    
+    icon_print_photo_app = "#52cdde47-6bc9-4609-a5cb-42afca8706ecMenuApp"
+    print_app = "#02FECD9A-7FE7-4797-AD15-8127DF2CFAADMenuApp"
+    home_screen_view = "#HomeScreenView"
+    no_usb_inserted = "#noUSBPhoto"
+    usb_photo_cancel_button = "#noUSBPhotoCancelBtn"
+    no_file_or_folder_found_screen = "#noFileFoundUsbPhoto"
+    no_file_or_folder_found_screen_OK_button = "#noFileFoundUsbPhotoOkBtn"
+    files_after_usb_inserted = "#fileListsObject"
+    photo_print_usb_search_view = "#printPhotoSearchViewPhoto"
+    photo_print_usb_folder_landing_view = "#printPhotoUsbFolderLandingView"
+    photo_print_usb_folder_list_view = "#printPhotoUsbFolderListView"
+    photo_print_usb_folder_list_view_scroll = "#SpiceListViewViewScrollBar" 
+    photo_print_button_locator = "#printUsbBtn"
+    expand_button_locator = "#_ExpandButton"
+    collapse_button_locator = "#_CollapseButton"
+    footer_detail_photo_print_button_locator = "#printUsbBtnFD"
+    toast_message_text = "#infoTextToastMessage"
+    no_file_selected_screen = "#fileNotSelectedUsbPhoto" "#fileNotSelectedGrid"
+    no_file_selected_screen_ok_button = "#okButton"
+    search_sort_ellipse = "#printPhotoUsbFolderLandingViewMoreOptions"    
+        
+    paper_type = "#printFromPhoto_paperTypeISettingsComboBox"
+    search_result_message_locator = "#searchResult #contentItem"
+    search_results_reset_screen = "#resetButton"
+    
+    photo_search_option = "#Search"
+    search_screen = "#printPhotoSearchViewPhoto"
+    search_field = "#searchTextFieldPhoto"
+    search_button = "#arrowBtnPhoto"
+    text_view_empty_files = "#SpiceListViewView #TextView"
+    
+    sort_option_a_to_z = "#AtoZ"
+    sort_option_z_to_a = "#ZtoA"
+    sort_option_old_to_new = "#OldToNew"
+    sort_option_new_to_old = "#NewToOld"
+    
+    save_button_sort_screen= "#printPhotoSortSave"
+    
+    photo_print_cancel_job_button_locator = "#cancelUsbJobBtn"  
+
+    reading_progess = "#readingProgressPhoto"
+
+    number_of_copies = "#printFromPhoto_numberOfCopiesMenuSpinBox"
+    numberOfCopies_plus_locator = "#upBtn"
+    numberOfCopies_minus_locator = "#downBtn"
+    numberOfCopies_textArea_locator = "#SpinBoxTextInput"
+
+    option_view = "#printPhotoSettingsPage"
+    back_button_option_list = "#DetailPanel #BackButton"
+
+    layout_menu_locator= "#printFromPhoto_layoutISettingsComboBox"  
+    option_layout_button_locator = "#printFromPhoto_layoutIComboBox"
+    option_layout_set_4X6 = "#ComboBoxOptionslayout4X6InchesRadioButtonModel"
+    option_layout_set_5X7 = "#ComboBoxOptionslayout5X7InchesRadioButtonModel"
+    option_layout_set_8Dot5X11 = "#ComboBoxOptionslayoutLetter8Dot5X11InchesRadioButtonModel"
+
+    option_paperType_menu_locator = "#printFromPhoto_paperTypeISettingsComboBox"
+    view_option_paperSelection_paperType = "#printFromPhoto_paperTypeIComboBox"
+    paper_type_list_view_scroll_bar = "#printFromPhoto_paperTypeIMenuSelectionListScrollBar"
+    paper_type_item_radio_button = "#SpiceRadioButton"
+    view_option_paperSelection = "#printFromPhoto_paperTypeISettingsComboBox"
+    option_other_matte_inkjet_paper = "#ComboBoxOptionscom_dot_hp_dash_matte_dash_inkjet"
+    option_HP_matte_presentation_paper = "#ComboBoxOptionscom_dot_hp_dash_matte_dash_presentation"
+    option_HP_matte_brochure_or_professional_paper = "#ComboBoxOptionscom_dot_hp_dash_matte_dash_brochure"
+    option_HP_photo_papers = "#ComboBoxOptionscom_dot_hp_dash_photographic_dash_glossy"
+    option_other_photo_inkjet_papers = "#ComboBoxOptionscom_dot_hp_dash_photographic_dash_inkjet"
+    option_HP_glossy_brochure_or_professional_paper = "#ComboBoxOptionscom_dot_hp_dash_specialty_dash_glossy"
+    option_other_glossy_inkjet_papers = "#ComboBoxOptionscom_dot_hp_dash_specialty_dash_glossy_dash_inkjet"
+    option_inkjet_hagaki = "#ComboBoxOptionscom_dot_hp_dash_specialty_dash_hagaki"
+    option_HP_trifold_brochure_glossy = "#ComboBoxOptionscom_dot_hp_dash_trifold_dash_brochure_dash_glossy_dash_180gsm"
+    option_plain_paper = "#ComboBoxOptionsstationery"
+    option_thick_plain_paper ="#ComboBoxOptionsstationery_dash_heavyweight"
+    option_letterhead = "#ComboBoxOptionsstationery_dash_letterhead"
+    option_lightweight = "#ComboBoxOptionsstationery_dash_lightweight"  
+
+    # search_result_message_locator = "#section1 SpiceText"
+    photo_sort_screen_landing = "#Sort"
+    sort_screen = "#printPhotoSortViewPhoto"
+
+    usb_cancel_button_str_id = "cCancel"
+    usb_no_file_str_id = "cUnableFindFilesFoldersUsb"
+
+    header_print_photos_str_id= "cPrintPhotos"
+    usb_defect_header_str_id = "cInsertUsbDeviceTitle"
+    usb_ok_button_str_id = "cOKButton"
+    usb_defect_locator = "#noFileFoundColumn"
+
+    media_mismatch_screen = "#mediaMismatchTypeFlowWindow"
+    media_mismatch_screen_print_bttn = "#Print"
+    print_button_str_id = "cPrint"
+    
+    usb_disconnected_button = "#disconnectedUSBPhotoOkBtn"
+    cartridge_very_low_str_id = "cCartridgesVeryLow"
+    cartridge_very_low_locator = "#titleObject"
+
+    active_print_job_view = "#ActiveJobModalView #titleSmallItem" 
+    cancel_print_job_button = "#cancelButton"
+    print_job_completed_str_id = "cPlotSuccessfullyPrinted"
+    print_job_canceled_str_id = "cParameterCancelMessage"

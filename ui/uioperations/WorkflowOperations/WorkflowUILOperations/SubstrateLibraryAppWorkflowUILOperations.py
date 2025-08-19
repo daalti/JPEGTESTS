@@ -1,0 +1,4 @@
+from dunetuf.ui.uioperations.WorkflowOperations.SubstrateLibraryAppWorkflowUICommonOperations import SubstrateLibraryAppWorkflowUICommonOperations
+
+class SubstrateLibraryAppWorkflowUILOperations(SubstrateLibraryAppWorkflowUICommonOperations):
+    pass

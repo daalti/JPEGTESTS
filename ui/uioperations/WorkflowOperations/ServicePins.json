@@ -1,0 +1,21 @@
+{
+    "beam/beamsfp": "3989",
+    "beam/beamsfp_24": "3989",
+    "beam/beamsfp_power": "3989",
+    "beam/beammfp": "3989",
+    "beam/beammfp_power": "3989",
+    "beam/beamciss": "3989",
+    "beam/beamciss_mfp_power": "3989",
+    "beam/beamciss_mfp_power_prem": "3989",
+    "flare/doer": "5291",
+    "flare/humanist": "5291",
+    "sunspot": "7429",
+    "jupiter": "3989",
+    "marconi/marconihipdl": "9100",
+    "eddington": "9700",
+    "elion" : "9700",
+    "moretohi" : "8100",
+    "moreto" : "8100",
+    "busch" : "12043020",
+    "curie" : "10580022"
+}
