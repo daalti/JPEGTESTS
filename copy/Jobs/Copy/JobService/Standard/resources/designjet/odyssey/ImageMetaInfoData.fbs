@@ -1,0 +1,10 @@
+include "ColorMode.fbs";
+include "Resolution.fbs";
+
+namespace dune.imaging.types;
+
+// Add properties here, for example resolution and colorMode
+table ImageMetaInfoData {
+  resolution:Resolution;
+  colorMode:ColorMode;
+}

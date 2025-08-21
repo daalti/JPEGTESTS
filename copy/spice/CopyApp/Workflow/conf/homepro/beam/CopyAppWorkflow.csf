@@ -1,0 +1,142 @@
+{
+    "instances":[
+        {
+            "name":"CopyApp",
+            "inherits": "family",
+            "patch": [
+                { "op": "add", "path": "/interactive/list/-", "value": "scan_colorMode"},
+                { "op": "add", "path": "/interactive/list/-", "value": "copy_quality"},
+                { "op": "add", "path": "/interactive/list/-", "value": "scan_contentType"},
+                { "op": "add", "path": "/interactive/list/-", "value": "copy_paperSource" },
+                { "op": "add", "path": "/copySettings/list/0/children/5", "value": "scan_colorMode"},
+                { "op": "remove", "path": "/copySettings/list/0/children/2"},
+                { "op": "remove", "path": "/copySettings/list/0/children/3"},
+                { "op": "add", "path": "/copySettings/list/0/children/5", "value": "scan_originalMediaType"},
+                { "op": "add", "path": "/copySettings/list/0/children/-", "value": "scan_lighterDarker"},
+                { "op": "add", "path": "/copySettings/list/0/children/-", "value": "scan_backgroundColorRemoval"},
+                { "op": "add", "path": "/copySettings/list/0/children/-", "value": "scan_backgroundNoiseRemoval"},
+                { "op": "add", "path": "/copySettings/list/0/children/-", "value": "scan_edgeToEdgeScan"},
+                { "op": "add", "path": "/copySettings/list/0/children/-", "value": "scan_autoStraighten"},
+                { "op": "add", "path": "/copySettings/list/0/children/-", "value": "copy_resize"},
+                { "op": "add", "path": "/copySettings/list/0/children/-", "value": "copy_margins"},
+                { "op": "add", "path": "/copySettings/list/0/children/-", "value": "copy_paperSource"},
+                { "op": "add", "path": "/copySettings/list/-", "value":
+                    {
+                        "id": "scan_lighterDarker",
+                        "titleId": "StringIds.cLighterDarker",
+                        "priority": 17,
+                        "delegate": "qrc:/menu/MenuSlider.qml"
+                    }
+                },
+                { "op": "add", "path": "/copySettings/list/-", "value": 
+                    {
+                        "id": "scan_backgroundColorRemoval",
+                        "titleId": "StringIds.cBackgroundColorRemoval",
+                        "priority": 18,
+                        "delegate": "qrc:/menu/MenuSwitch.qml"
+                    }
+                },
+                { "op": "add", "path": "/copySettings/list/-", "value": 
+                    {
+                        "id": "scan_backgroundNoiseRemoval",
+                        "titleId": "StringIds.cBackgroundNoiseRemoval",
+                        "priority": 19,
+                        "delegate": "qrc:/menu/MenuSwitch.qml"
+                    }
+                },
+                { "op": "add", "path": "/copySettings/list/-", "value": 
+                    {
+                        "id": "scan_edgeToEdgeScan",
+                        "titleId": "StringIds.cEdgeToEdgeOutput",
+                        "priority": 24,
+                        "delegate": "qrc:/menu/MenuSwitch.qml"
+                    }
+                },
+                { "op": "add", "path": "/copySettings/list/-", "value": 
+                    {
+                        "id": "copy_paperSource",
+                        "titleId": "StringIds.cPaperSource",
+                        "priority": 49,
+                        "delegate": "qrc:/menu/MenuComboBox.qml"
+                    }
+                },
+                { "op": "add", "path": "/copySettings/list/-", "value": 
+                    {
+                        "id": "scan_colorMode",
+                        "titleId": "StringIds.cColorMode",
+                        "priority": 4,
+                        "permissionId": "af9ca74f-ce78-4a06-89b5-dd7094fbac42",
+                        "delegate": "qrc:/menu/MenuComboBox.qml"
+                    }
+                },
+                { "op": "add", "path": "/copySettings/list/-", "value": 
+                    {
+                        "id": "copy_margins",
+                        "titleId": "StringIds.cPrintMargins",
+                        "priority": 48,
+                        "delegate": "qrc:/menu/MenuComboBox.qml"
+                    }
+                },
+                { "op": "add", "path": "/copySettings/list/-", "value": 
+                    {
+                        "id": "scan_originalMediaType",
+                        "titleId": "StringIds.cOriginalPaperType",
+                        "priority": 3,
+                        "delegate": "qrc:/menu/MenuComboBox.qml"
+                    }
+                },
+                { "op": "add", "path": "/copySettings/list/-", "value": 
+                    {
+                        "id": "scan_autoStraighten",
+                        "titleId": "StringIds.cAutomaticallyStraighten",
+                        "priority": 22,
+                        "delegate": "qrc:/menu/MenuSwitch.qml",
+                        "displayDependencies": "qrc:/CopyApp/CopySettingsHelper.qml::isMdf()"
+                    }
+                },
+                { "op": "add", "path": "/quicksetList/-", "value" : 
+                    {
+                        "icon": "qrc:/+darkTheme/images/ColorModeBlueprint.json",
+                        "uuid": "b6adef85-d8cb-4829-8494-841ba3fd2d7d"
+                    }
+                },
+                { "op": "add", "path": "/quicksetList/-", "value" : 
+                   {
+                        "icon": "qrc:/+darkTheme/images/ColorModeLinesColor.json",
+                        "uuid": "f10c9a2b-9659-462a-8a7d-904c91754d59"
+                    }
+                },
+                { "op": "add", "path": "/quicksetList/-", "value" : 
+                    {
+                        "icon": "qrc:/images/Graphics/ColorModeMixedColor.json",
+                        "uuid": "27e32212-edb1-4b75-9e7f-d09a054e0f12"
+                    }
+                },
+                { "op": "add", "path": "/quicksetList/-", "value" : 
+                    {
+                        "icon": "qrc:/+darkTheme/images/ColorModeLinesColor.json",
+                        "uuid": "d552a01d-17c4-480f-b3af-bf21969c66fd"
+                    }
+                },
+                { "op": "add", "path": "/quicksetList/-", "value" : 
+                    {
+                        "icon": "qrc:/+darkTheme/images/ColorModeLinesColor.json",
+                        "uuid": "a1c915d7-40e6-424b-ae8d-ebc046d3f7fb"
+                    }
+                },
+                { "op": "add", "path": "/copySettings/list/-", "value": 
+                    {
+                        "id": "copy_resize",
+                        "titleId": "StringIds.cOutputScale",
+                        "priority": 34,
+                        "enabled": "qrc:/CopyApp/CopySettingsHelper.qml::isOutputScaleEnabled()",
+                        "module": "qrc:/CopyApp/CopySettingsResizeView.qml",
+                        "delegate": "qrc:/CopyApp/CopySettingsResize.qml",
+                        "enabledError":"StringIds.cFeatureCurrentNotAvailable"
+                    }
+                }
+            ],
+            "overrides":[]
+        }
+    ]
+}

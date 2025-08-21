@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/IDCardCopyApp">
+        <file>main.qml</file>
+        <file>IDCardCopyAppLandingView.qml</file>
+        <file>IDCardCopySettings.qml</file>
+        <file>IDCardCopyController.qml</file>
+        <file>IDCardCopyApp.scxml</file>
+        <file>IDCardCopyAppStartingView.qml</file>
+        <file>CancelJobController.qml</file>
+    </qresource>
+</RCC>

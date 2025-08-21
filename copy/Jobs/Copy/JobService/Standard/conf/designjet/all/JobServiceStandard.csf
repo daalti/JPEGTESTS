@@ -1,0 +1,153 @@
+{
+    "instances": [
+        {
+            "name": "CopyJobService",
+            "data": {
+                "jobRetryCount": 0,
+                "hasSharedPaperPath": false,
+                "prePrintConfiguration": "LFP",
+
+                "jobIntentConfiguration": {
+                    "defaultValues": {
+                        "scanJobIntent": {
+                            "outputXResolution": "E300DPI",
+                            "outputYResolution": "E300DPI",
+                            "scanXResolution": "E300DPI",
+                            "scanYResolution": "E300DPI",
+                            "originalContentType": "MIXED",
+                            "colorMode": "COLOR",
+                            "inputPlexMode": "SIMPLEX",
+                            "scanSource":"MDF",
+                            "inputMediaSizeId": "ANY",
+                            "longPlotScan":false,
+                            "invertColors": "false",
+                            "autoRelease":"false",
+                            "scanAcquisitionsSpeed":"AUTO",
+                            "autoDeskew":"false",
+                            "backgroundColorRemoval":"false",
+                            "backgroundColorRemovalLevel":0,
+                            "blackEnhancementLevel":60,
+                            "outputCanvas":
+                            {
+                                "outputCanvasMediaSize":"ANY",
+                                "outputCanvasMediaId":"AUTOSELECT",
+                                "outputCanvasXExtent":"2.6",
+                                "outputCanvasYExtent":"2.6",
+                                "outputCanvasAnchor":"TOPCENTER",
+                                "outputCanvasOrientation":"LANDSCAPE"
+                            },
+                            "xScalePercent":100,
+                            "yScalePercent":100,
+                            "scaleToFitEnabled":"false",
+                            "scaleToFit":"false",
+                            "scaleSelection": "CUSTOM",
+                            "scaleToSize": "ANY",
+                            "scaleToOutput": "ROLL1",
+                            "scanCaptureMode":"JOBBUILD",
+                            "generatePreview":"true",
+                            "scanImagePreview": "Enable"
+                        },
+                        "outputMediaSizeId": "ANY",
+                        "outputMediaIdType": "ANY",
+                        "outputMediaSource": "AUTOSELECT",
+                        "outputMediaDestination":"STACKER",
+                        "outputPlexMode": "SIMPLEX",
+                        "outputPlexBinding": "ONE_SIDED",
+                        "copies": 1,
+                        "copyQuality":"DRAFT",
+                        "resize": 100,
+                        "copyMargins":"CLIPCONTENT",
+                        "collate":"Collate",
+                        "autoRotate": true,
+                        "printingOrder": "LAST_PAGE_ON_TOP",
+                        "mediaFamily": "UNKNOWN"
+                    }
+                },
+                "scanPipelineCfg": {
+                    "maxSupportedSizes": {
+                        "scanMaxCm":951
+                    }
+                },
+                "stringIds": [
+                    {
+                        "type": "COPY",
+                        "stringId": "StringIds.cCopyAppHeading"
+                    },
+                    {
+                        "type": "scanning",
+                        "stringId": "StringIds.cScanning"
+                    },
+                    {
+                        "type": "copying",
+                        "stringId": "StringIds.cCopying"
+                    },
+                    {
+                        "type": "copyCanceled",
+                        "stringId": "StringIds.cCopyCanceledMessage"
+                    },
+                    {
+                        "type": "copySuccess",
+                        "stringId": "StringIds.cCopyComplete"
+                    },
+                    {
+                        "type": "preparingToPrint",
+                        "stringId": "StringIds.cPreparingToPrintProgress"
+                    }
+                ],
+                "isSupportedIdCardCopy": false,
+                "copyQuicksets": [
+                    {
+                        "fileName": "ColorLines.json",
+                        "uuid": "34cc69d4-194f-11ed-89dc-4be3ffadc2eb",
+                        "titleStringID": "StringIds.cColorLines"
+                    },
+                    {
+                        "fileName": "MixedContent.json",
+                        "uuid": "61b72f38-1945-11ed-bf29-87d40f139a32",
+                        "titleStringID": "StringIds.cMixedContent"
+                    },
+                    {
+                        "fileName": "GrayScaleLines.json",
+                        "uuid": "ccf3c448-250a-11ed-851e-d37653ac82ab",
+                        "titleStringID": "StringIds.cGrayscaleLines"
+                    },
+                    {
+                        "fileName": "Image.json",
+                        "uuid": "dba2ec94-250a-11ed-b62b-eb3183c3f17f",
+                        "titleStringID": "StringIds.cImage"
+                    },
+                    {
+                        "fileName": "Blueprint.json",
+                        "uuid": "eba1f540-239d-11ed-83d5-0b139473ea60",
+                        "titleStringID": "StringIds.cBlueprint"
+                    },
+                    {
+                        "fileName": "BlueprintRedStamp.json",
+                        "uuid": "c2306e7e-c4b7-11ed-a0a1-8776890b7239",
+                        "titleStringID": "StringIds.cMediaTypeIdBlueprintWithRedStamp"
+                    }
+                ],
+                "isPrintService": true,
+                "renderIntent": "RELATIVE_COLORIMETRIC",
+                "validateTicketsOnInitialization":true,
+                "staticConstrainsAreCached":true,
+                "currentTicketVersion":3,
+                "ticketUpgradeFunctionality":[
+                    {
+                        "version":1,
+                        "listOfSettingsToBeForced":["MEDIA_FAMILY","AUTO_ROTATE"]
+                    },
+                    {
+                        "version":2,
+                        "listOfSettingsToBeForced":["SCALE_TO_OUTPUT"]
+                    },
+                    {
+                        "version":3,
+                        "listOfSettingsToBeForced":["IMAGE_PREVIEW_CONFIGURATION"]
+                    }
+                ]
+            },
+            "overrides": []
+        }
+    ]
+}

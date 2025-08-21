@@ -1,0 +1,454 @@
+{
+    "instances":[
+        {
+            "name":"CopyApp",
+            "data":{
+                "interactive":{
+                    "list":[
+                        "copy_numberOfCopies",
+                        "copy_sides",
+                        "scan_colorMode",
+                        "scan_originalSizeForInteractive",
+                        "copy_paperSource"
+                    ]
+                },
+                "copyPreviewInteractiveEnabled": true,
+                "isCopyPermissionsConfigurable": true,
+                "listOfMoreOptionSettings":[
+                    "copy_numberOfCopies",
+                    "copy_resize",
+                    "copy_paperSelection",
+                    "copy_mediaSize",
+                    "copy_paperType",
+                    "copy_paperSource",
+                    "copy_sides",
+                    "copy_pagesPerSheet",
+                    "copy_collateToggle",
+                    "scan_watermark",
+                    "copy_booklet",
+                    "copy_staple",
+                    "copy_punch"
+                ],
+                "copySettings":{
+                    "list": [
+                        {
+                            "id": "copySettingsPage_",
+                            "titleId": "StringIds.cOptions",
+                            "priority": 1,
+                            "module": "qrc:/menu/MenuList.qml",
+                            "children": [
+                                "scan_scanOptions",
+                                "scan_contentType",
+                                "scan_colorMode",
+                                "scan_scanMode",
+                                "scan_pageFlipUpEnabled",
+                                "scan_contentOrientation",
+                                "scan_originalSize",
+                                "scan_sharpness",
+                                "scan_lighterDarker",
+                                "scan_contrast",
+                                "scan_autoTone",
+                                "scan_backGroundCleanUp", 
+                                "scan_autoPaperColorRemoval",
+                                "scan_autoStraighten",
+                                "scan_blankPageSuppression",
+                                "scan_watermark",
+                                "scan_stamps",
+                                "copy_printOptions",
+                                "copy_numberOfCopies",
+                                "copy_resize",
+                                "copy_paperSelection",
+                                "copy_sides",
+                                "copy_pagesPerSheet",
+                                "copy_collateToggle",
+                                "copy_booklet",
+                                "copy_staple",
+                                "copy_punch"
+                            ]
+                        },
+                        {
+                            "id": "scan_scanOptions",
+                            "titleId": "StringIds.cScanOptions",
+                            "priority": 1,
+                            "delegate": "MenuSection.qml"
+                        },
+                        {
+                            "id": "scan_contentType",
+                            "titleId": "StringIds.cContentType",
+                            "priority": 2,
+                            "delegate": "qrc:/menu/MenuComboBox.qml",
+                            "displayDependencies": "qrc:/ScanApp/CheckScanMoreOptionAvailability.qml::checkAvailability(\"scan_contentType\")"
+                        },
+                        {
+                            "id": "scan_blankPageSuppression",
+                            "titleId":"StringIds.cBlankPageSuppressionTitle",
+                            "priority": 3,
+                            "delegate": "qrc:/menu/MenuComboBox.qml"
+                        },
+                        {
+                            "id": "scan_colorMode",
+                            "titleId": "StringIds.cColorMode",
+                            "priority": 4,
+                            "permissionId": "af9ca74f-ce78-4a06-89b5-dd7094fbac42",
+                            "delegate": "qrc:/menu/MenuComboBox.qml",
+                            "displayDependencies": "qrc:/CopyApp/CopySettingsHelper.qml::isCopyColorPrintSupported() && (qrc:/ScanApp/CheckScanMoreOptionAvailability.qml::checkAvailability(\"scan_colorMode\") || qrc:/ScanApp/CheckScanMoreOptionAvailability.qml::checkAvailability(\"scan_colorModeWithAutoDetect\"))"
+                        },
+                        {
+                            "id": "copy_sides",
+                            "titleId": "StringIds.cSides",
+                            "priority": 5,
+                            "delegate": "qrc:/CopyApp/CopySettingsSidesView.qml",
+                            "displayDependencies": "qrc:/CopyApp/CheckCopyMoreOptionAvailability.qml::checkAvailability(\"copy_sides\")"
+                        },
+                        {
+                            "id": "scan_scanMode",
+                            "titleId": "StringIds.cScanMode",
+                            "priority": 6,
+                            "delegate": "qrc:/menu/MenuTextImageBranch.qml",
+                            "module": "qrc:/ScanApp/ScanSettingsScanModeView.qml"
+                        },
+                        {
+                            "id": "scan_pageFlipUpEnabled",
+                            "titleId": "StringIds.c2SidedPages",
+                            "priority": 11,
+                            "delegate": "qrc:/CopyApp/CopyPageFlipUpSwitch.qml",
+                            "displayDependencies": "qrc:/CopyApp/CopySettingsHelper.qml::isDuplexing()",
+                            "enabled": "qrc:/CopyApp/CopySettingsHelper.qml::isSettingEnabled(\"src/scan/pagesFlipUpEnabled\")",
+                            "enabledError":"StringIds.cFeatureCurrentNotAvailable"
+                        },
+                        {
+                            "id": "scan_contentOrientation",
+                            "titleId": "StringIds.cContentOrientation",
+                            "priority": 13,
+                            "delegate": "qrc:/menu/MenuComboBox.qml"
+                        },
+                        {
+                            "id": "scan_originalSize",
+                            "titleId": "StringIds.cOriginalSize",
+                            "priority": 14,
+                            "delegate": "qrc:/menu/MenuTextImageBranch.qml",
+                            "module": "qrc:/menu/MenuSelectionList.qml",
+                            "displayDependencies": "qrc:/ScanApp/CheckScanMoreOptionAvailability.qml::checkAvailability(\"scan_originalSize\")"
+                        },
+                        {
+                            "id": "scan_originalSizeForInteractive",
+                            "titleId": "StringIds.cOriginalSize",
+                            "priority": 14,
+                            "delegate": "qrc:/menu/MenuComboBox.qml",
+                            "displayDependencies": "qrc:/ScanApp/CheckScanMoreOptionAvailability.qml::checkAvailability(\"scan_originalSizeForInteractive\")"
+                        },
+                        {
+                            "id": "scan_sharpness",
+                            "titleId": "StringIds.cSharpness",
+                            "priority": 16,
+                            "delegate": "qrc:/menu/MenuSlider.qml"
+                        },
+                        {
+                            "id": "scan_lighterDarker",
+                            "titleId": "StringIds.cLighterDarker",
+                            "priority": 17,
+                            "delegate": "qrc:/menu/MenuSlider.qml"
+                        },
+                        {
+                            "id": "scan_contrast",
+                            "titleId": "StringIds.cContrast",
+                            "priority": 18,
+                            "delegate": "qrc:/menu/MenuSlider.qml"
+                        },
+                        {
+                            "id": "scan_autoTone",
+                            "titleId": "StringIds.cAutomaticTone",
+                            "priority": 19,
+                            "delegate": "qrc:/ScanApp/ScanSettingsAutoTone.qml",
+                            "enabled": "qrc:/CopyApp/CopySettingsHelper.qml::isSettingEnabled(\"pipelineOptions/imageModifications/autoTone\")",
+                            "displayDependencies": "qrc:/CopyApp/CopySettingsHelper.qml::isFlow20Supported()"
+                        },
+                        {
+                            "id": "scan_backGroundCleanUp",
+                            "titleId": "StringIds.cBackgroundCleanup",
+                            "priority": 20,
+                            "delegate": "qrc:/menu/MenuSlider.qml"
+                        },
+                        {
+                            "id": "scan_autoPaperColorRemoval",
+                            "titleId": "StringIds.cAutoPaperColorRemoval",
+                            "priority": 21,
+                            "delegate": "qrc:/ScanApp/ScanSettingsAutoPaperColorRemoval.qml",
+                            "displayDependencies": "qrc:/CopyApp/CopySettingsHelper.qml::isFlow20Supported()"
+                        },
+                        {
+                            "id": "scan_autoStraighten",
+                            "titleId": "StringIds.cAutomaticallyStraighten",
+                            "priority": 22,
+                            "delegate": "qrc:/menu/MenuSwitch.qml"
+                        },
+                        {
+                            "id": "copy_printOptions",
+                            "titleId": "StringIds.cPrintOptions",
+                            "priority": 28,
+                            "delegate": "MenuSection.qml"
+                        },
+                        {
+                            "id": "copy_numberOfCopies",
+                            "titleId": "StringIds.cNumberOfCopies",
+                            "priority": 29,
+                            "delegate": "qrc:/menu/MenuSpinBox.qml"
+                        },
+                        {
+                            "id": "copy_resize",
+                            "titleId": "StringIds.cOutputScale",
+                            "priority": 34,
+                            "module": "qrc:/CopyApp/CopySettingsResizeView.qml",
+                            "delegate": "qrc:/CopyApp/CopySettingsResize.qml"
+                        },
+                        {
+                            "id": "copy_paperSelection",
+                            "titleId": "StringIds.cPaperSelectTitle",
+                            "priority": 35,
+                            "module": "qrc:/menu/MenuList.qml",
+                            "delegate": "qrc:/CopyApp/CopySettingsPaperSelectionUserDefined.qml",
+                            "displayDependencies": "qrc:/CopyApp/CheckCopyMoreOptionAvailability.qml::checkAvailability(\"copy_paperSelection\")",
+                            "children": [
+                                "copy_mediaSize",
+                                "copy_paperType",
+                                "copy_paperSource"
+                            ]
+                        },
+                        {
+                            "id": "copy_mediaSize",
+                            "titleId": "StringIds.cMediaSize",
+                            "priority": 1,
+                            "delegate": "qrc:/CopyApp/CopySettingsPaperSizeSelection.qml",
+                            "module": "qrc:/CopyApp/CopySettingsPaperSizeView.qml",
+                            "displayDependencies": "qrc:/CopyApp/CheckCopyMoreOptionAvailability.qml::checkAvailability(\"copy_mediaSize\")",
+                            "children": [
+                                "copy_mediaSizeCustom"
+                            ]
+                        },
+                        {
+                            "id": "copy_mediaSizeCustom",
+                            "titleId": "StringIds.cCustomPaperSize",
+                            "priority": 1,
+                            "delegate": "qrc:/CopyApp/CopySettingsPaperSizeCustom.qml",
+                            "module": "qrc:/CopyApp/CopySettingsPaperSizeCustomView.qml",
+                            "enabled": "qrc:/CopyApp/CopySettingsHelper.qml::isSettingEnabled(\"dest/print/mediaSize\")",
+                            "displayDependencies": "qrc:/CopyApp/CheckCopyMoreOptionAvailability.qml::checkAvailability(\"copy_mediaSize\")"
+                        },
+                        {
+                            "id": "copy_paperType",
+                            "titleId": "StringIds.cPaperType",
+                            "priority": 3,
+                            "delegate": "qrc:/CopyApp/UserDefinedMediaTypeMenuTextImageBranch.qml",
+                            "module": "qrc:/CopyApp/UserDefinedMenuSelectionList.qml", 
+                            "displayDependencies": "qrc:/CopyApp/CheckCopyMoreOptionAvailability.qml::checkAvailability(\"copy_paperType\")"
+                        },
+                        {
+                            "id": "copy_paperSource",
+                            "titleId": "StringIds.cPaperTray",
+                            "priority": 4,
+                            "delegate": "qrc:/menu/MenuComboBox.qml",
+                            "displayDependencies": "qrc:/CopyApp/CheckCopyMoreOptionAvailability.qml::checkAvailability(\"copy_paperSource\")"
+                        },
+                        {
+                            "id": "scan_watermark",
+                            "titleId": "StringIds.cWatermarkTitle",
+                            "priority": 42,
+                            "delegate": "qrc:/ScanApp/ScanSettingsWatermark.qml",
+                            "module": "qrc:/ScanApp/ScanSettingsWatermarkView.qml",
+                            "children": [
+                                "scan_watermarkType",
+                                "scan_watermarkText",
+                                "scan_firstPageOnly",
+                                "scan_watermarkTextFont",
+                                "scan_watermarkTextSize",
+                                "scan_watermarkTextColor",
+                                "scan_watermarkDarkness"
+                            ]
+                        },
+                        {
+                            "id": "scan_watermarkType",
+                            "titleId": "StringIds.cWatermarkType",
+                            "priority": 1,
+                            "delegate": "qrc:/menu/MenuComboBox.qml"
+                        },
+                        {
+                            "id": "scan_watermarkText",
+                            "titleId": "StringIds.cWatermarkText",
+                            "priority": 2,
+                            "delegate": "qrc:/ScanApp/ScanSettingsWatermarkText.qml"
+                        },
+                        {
+                            "id": "scan_firstPageOnly",
+                            "titleId": "StringIds.cFirstPageOnly",
+                            "priority": 3,
+                            "delegate": "qrc:/ScanApp/ScanSettingsWatermarkFirstPageOnly.qml",
+                            "displayDependencies": "qrc:/ScanApp/CheckScanMoreOptionAvailability.qml::isTextWatermark()"
+                        },
+                        {
+                            "id": "scan_rotate45",
+                            "titleId": "StringIds.cRotateText45Degrees",
+                            "priority": 4,
+                            "delegate": "qrc:/menu/MenuCheckBox.qml",
+                            "displayDependencies": "qrc:/ScanApp/CheckScanMoreOptionAvailability.qml::isTextWatermark()"
+                        },
+                        {
+                            "id": "scan_watermarkTextFont",
+                            "titleId": "StringIds.cTextFont",
+                            "priority": 5,
+                            "delegate": "qrc:/menu/MenuComboBox.qml",
+                            "displayDependencies": "qrc:/ScanApp/CheckScanMoreOptionAvailability.qml::isTextWatermark()"
+                        },
+                        {
+                            "id": "scan_watermarkTextSize",
+                            "titleId": "StringIds.cTextSize",
+                            "priority": 6,
+                            "delegate": "qrc:/menu/MenuComboBox.qml",
+                            "displayDependencies": "qrc:/ScanApp/CheckScanMoreOptionAvailability.qml::isTextWatermark()"
+                        },
+                        {
+                            "id": "scan_watermarkTextColor",
+                            "titleId": "StringIds.cTextColor",
+                            "priority": 7,
+                            "delegate": "qrc:/ScanApp/ScanSettingsStampWatermarkTextColor.qml",
+                            "module": "qrc:/ScanApp/ScanSettingsStampWatermarkTextColorView.qml",
+                            "displayDependencies": "qrc:/ScanApp/CheckScanMoreOptionAvailability.qml::isTextWatermark()"
+                        },
+                        {
+                            "id": "scan_watermarkDarkness",
+                            "titleId": "StringIds.cDarkness",
+                            "priority": 8,
+                            "delegate": "qrc:/menu/MenuSlider.qml",
+                            "displayDependencies": "qrc:/ScanApp/CheckScanMoreOptionAvailability.qml::isTextWatermark()"
+                        },
+                        {
+                            "id": "scan_stamps",
+                            "titleId": "StringIds.cStamps",
+                            "priority": 43,
+                            "module": "qrc:/menu/MenuList.qml",
+                            "delegate": "qrc:/ScanApp/ScanSettingsStampsMenu.qml",
+                            "children": [
+                                "scan_stampInfoText",
+                                "scan_stampTopLeft",
+                                "scan_stampTopCenter",
+                                "scan_stampTopRight",
+                                "scan_stampBottomLeft",
+                                "scan_stampBottomCenter",
+                                "scan_stampBottomRight"
+                            ]
+                        },
+                        {
+                            "id": "scan_stampInfoText",
+                            "titleId": "StringIds.cStampsText",
+                            "priority": 1,
+                            "delegate": "qrc:/menu/MenuTitleText.qml"
+                        },
+                        {
+                            "id": "scan_stampTopLeft",
+                            "titleId": "StringIds.cTopLeft",
+                            "priority": 2,
+                            "delegate": "qrc:/ScanApp/ScanSettingsStampsList.qml"
+                        },
+                        {
+                            "id": "scan_stampTopCenter",
+                            "titleId": "StringIds.cTopCenter",
+                            "priority": 3,
+                            "delegate": "qrc:/ScanApp/ScanSettingsStampsList.qml"
+                        },
+                        {
+                            "id": "scan_stampTopRight",
+                            "titleId": "StringIds.cTopRight",
+                            "priority": 4,
+                            "delegate": "qrc:/ScanApp/ScanSettingsStampsList.qml"
+                        },
+                        {
+                            "id": "scan_stampBottomLeft",
+                            "titleId": "StringIds.cBottomLeft",
+                            "priority": 5,
+                            "delegate": "qrc:/ScanApp/ScanSettingsStampsList.qml"
+                        },
+                        {
+                            "id": "scan_stampBottomCenter",
+                            "titleId": "StringIds.cBottomCenter",
+                            "priority": 6,
+                            "delegate": "qrc:/ScanApp/ScanSettingsStampsList.qml"
+                        },
+                        {
+                            "id": "scan_stampBottomRight",
+                            "titleId": "StringIds.cBottomRight",
+                            "priority": 7,
+                            "delegate": "qrc:/ScanApp/ScanSettingsStampsList.qml"
+                        },
+                        {
+                            "id": "copy_booklet",
+                            "titleId": "StringIds.cBooklet",
+                            "priority": 44,
+                            "delegate": "qrc:/CopyApp/CopySettingsBooklet.qml",
+                            "module": "qrc:/CopyApp/CopySettingsBookletView.qml"
+                        },
+                        {
+                            "id": "copy_pagesPerSheet",
+                            "titleId": "StringIds.cPagesPerSheet",
+                            "priority": 45,
+                            "delegate": "qrc:/CopyApp/CopySettingsPagesPerSheet.qml",
+                            "module": "qrc:/CopyApp/CopySettingsPagesPerSheetView.qml",
+                            "enabledError":"StringIds.cFeatureCurrentNotAvailable",
+                            "enabled": "qrc:/CopyApp/CopySettingsHelper.qml::isPagesPerSheetEnabled() && qrc:/CopyApp/CopySettingsHelper.qml::isSettingEnabled(\"pipelineOptions/imageModifications/pagesPerSheet\")",
+                            "displayDependencies": "qrc:/CopyApp/CheckCopyMoreOptionAvailability.qml::checkAvailability(\"copy_pagesPerSheet\")"
+                        },
+                        {
+                            "id": "copy_collateToggle",
+                            "titleId": "StringIds.cCollate",
+                            "priority": 52,
+                            "delegate": "qrc:/menu/MenuSwitch.qml",
+                            "displayDependencies": "qrc:/CopyApp/CheckCopyMoreOptionAvailability.qml::checkAvailability(\"copy_collateToggle\")"
+                        },
+                        {
+                            "id": "copy_staple",
+                            "titleId": "StringIds.cStaple",
+                            "priority": 58,
+                            "delegate": "qrc:/menu/MenuTextImageBranch.qml",
+                            "module": "qrc:/menu/MenuSelectionList.qml",
+                            "displayDependencies": "qrc:/CopyApp/CopySettingsHelper.qml::isStapleMounted()"
+                        },
+                        {
+                            "id": "copy_punch",
+                            "titleId": "StringIds.cHolePunch",
+                            "priority": 59,
+                            "delegate": "qrc:/menu/MenuTextImageBranch.qml",
+                            "module": "qrc:/menu/MenuSelectionList.qml",
+                            "displayDependencies": "qrc:/CopyApp/CopySettingsHelper.qml::isPunchMounted()"
+                        }
+                    ]
+                }
+            },
+            "overrides": [
+                {
+                    "runtimeProducts": ["Camden", "Bowie"],
+                    "protos": [],
+                    "patch": [
+                        { "op": "remove", "path": "/copySettings/list/0/children/[scan_autoTone]"},
+                        { "op": "remove", "path": "/copySettings/list/0/children/[scan_autoPaperColorRemoval]"}
+                    ]
+                },
+                {
+                    "runtimeProducts": ["Dagger", "Busch"],
+                    "protos": [],
+                    "patch": [
+                        { "op": "remove", "path": "/interactive/list/[scan_colorMode]"},
+                        { "op": "remove", "path": "/copySettings/list/0/children/[scan_colorMode]"},
+                        { "op": "remove", "path": "/copySettings/list/0/children/[scan_autoTone]"},
+                        { "op": "remove", "path": "/copySettings/list/0/children/[scan_autoPaperColorRemoval]"},
+                        { "op": "remove", "path": "/copySettings/list/[id:scan_watermark]/children/[scan_watermarkTextColor]"}
+                    ]
+                },
+                {
+                    "runtimeProducts": ["Bell", "Curie"],
+                    "protos": [],
+                    "patch": [
+                        { "op": "add", "path": "/interactive/list/-", "value": "scan_contentType"}
+                    ]                 
+                }
+            ]
+        }
+    ]
+}

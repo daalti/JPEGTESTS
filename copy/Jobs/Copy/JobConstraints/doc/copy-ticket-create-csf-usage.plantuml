@@ -1,0 +1,27 @@
+@startuml
+title
+<size:20><b>Copy Job csf configuration usage</b></size>
+end title
+header HP Confidential
+left footer \t(C) Copyright 2022 HP Development Company, L.P.\l\tAll rights reserved
+
+'use of the CSF configuration
+
+activate JobTicketResourceManager
+JobTicketResourceManager -> CopyJobServiceStandard : createTicket()
+activate CopyJobServiceStandard
+CopyJobServiceStandard -> CopyJobTicket: new
+activate CopyJobTicket
+CopyJobTicket -> CopyJobTicket: setTicketCsf
+CopyJobTicket -> JobConstraintsStandard: getCsfConstraints()
+activate JobConstraintsStandard
+JobConstraintsStandard -> JobConstraintsStandard : loadConstraintsCsf () ???
+CopyJobTicket <-- JobConstraintsStandard: csf constraints 
+
+deactivate JobConstraintsStandard
+CopyJobServiceStandard <-- CopyJobTicket: new ticket
+deactivate CopyJobTicket
+JobTicketResourceManager <-- CopyJobServiceStandard: new ticket
+
+
+@enduml

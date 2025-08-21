@@ -1,0 +1,28 @@
+include "MediaSizeId.fbs";
+include "MediaSource.fbs";
+include "ContentOrientation.fbs";
+
+namespace dune.imaging.types;
+
+enum OutputCanvasAnchorType:byte
+{
+    TOPLEFT,
+    TOPCENTER,
+    TOPRIGHT,
+    MIDDLELEFT,
+    MIDDLECENTER,
+    MIDDLERIGHT,
+    BOTTOMLEFT,
+    BOTTOMCENTER,
+    BOTTOMRIGHT
+}
+
+table OutputCanvas
+{
+    outputCanvasMediaSize:dune.imaging.types.MediaSizeId;
+    outputCanvasMediaId:dune.imaging.types.MediaSource;
+    outputCanvasXExtent:double;                                     // Unit is in inches
+    outputCanvasYExtent:double;                                     // Unit is in inches
+    outputCanvasAnchor:dune.imaging.types.OutputCanvasAnchorType;
+    outputCanvasOrientation:dune.imaging.types.ContentOrientation;
+}

@@ -1,0 +1,90 @@
+{
+    "instances":[
+        {
+            "name":"CopyApp",
+            "inherits": "family",
+            "patch": [
+                { "op": "add", "path": "/interactive/list/-", "value": "copy_sides"},
+                { "op": "add", "path": "/interactive/list/-", "value":  "scan_colorMode"  },
+                { "op": "add", "path": "/interactive/list/-", "value": "copy_quality" },
+                { "op": "add", "path": "/interactive/list/-", "value": "copy_paperSource" },
+                { "op": "add", "path": "/copySettings/list/0/children/2", "value": "copy_sides" },
+                { "op": "add", "path": "/copySettings/list/0/children/3", "value": "scan_colorMode" },
+                { "op": "add", "path": "/copySettings/list/0/children/-", "value": "copy_resize" },
+                { "op": "add", "path": "/copySettings/list/0/children/-", "value": "copy_paperSelection" },
+                { "op": "add", "path": "/copySettings/list/0/children/-", "value": "copy_pagesPerSheet" },
+                { "op": "add", "path": "/copySettings/list/0/children/-", "value": "copy_collateToggle" },
+                { "op": "add", "path": "/copySettings/list/-", "value": 
+                    {
+                        "id": "scan_colorMode",
+                        "titleId": "StringIds.cColorMode",
+                        "priority": 4,
+                        "permissionId": "af9ca74f-ce78-4a06-89b5-dd7094fbac42",
+                        "delegate": "qrc:/menu/MenuComboBox.qml"
+                    }
+                },
+                { "op": "add", "path": "/copySettings/list/-", "value": 
+                    {
+                        "id": "copy_pagesPerSheet",
+                        "titleId": "StringIds.cPagesPerSheet",
+                        "priority": 45,
+                        "delegate": "qrc:/menu/MenuComboBox.qml",
+                        "enabledError":"StringIds.cFeatureCurrentNotAvailable",
+                        "enabled": "qrc:/CopyApp/CopySettingsHelper.qml::isPagesPerSheetEnabled()"
+                    }
+                },
+                { "op": "add", "path": "/copySettings/list/-", "value": 
+                    {
+                        "id": "copy_collateToggle",
+                        "titleId": "StringIds.cCollate",
+                        "priority": 52,
+                        "delegate": "qrc:/menu/MenuSwitch.qml",
+                        "enabledError":"StringIds.cFeatureCurrentNotAvailable",
+                        "enabled": "qrc:/CopyApp/CopySettingsHelper.qml::isCollateEnabled()"
+                    }
+                },
+                { "op": "add", "path": "/copySettings/list/-", "value": 
+                        {
+                            "id": "copy_paperSelection",
+                            "titleId": "StringIds.cPaperSelectTitle",
+                            "priority": 35,
+                            "module": "qrc:/menu/MenuList.qml",
+                            "delegate": "qrc:/CopyApp/CopySettingsPaperSelection.qml",
+                            "children": [
+                                "copy_mediaSize",
+                                "copy_paperType",
+                                "copy_paperSource"
+                            ]
+                        }
+                },
+                { "op": "add", "path": "/copySettings/list/-", "value": 
+                    {
+                        "id": "copy_mediaSize",
+                        "titleId": "StringIds.cMediaSize",
+                        "priority": 1,
+                        "delegate": "qrc:/menu/MenuTextImageBranch.qml",
+                        "module": "qrc:/menu/MenuSelectionList.qml"
+                    } 
+                },
+                { "op": "add", "path": "/copySettings/list/-", "value":
+                    {
+                        "id": "copy_paperType",
+                        "titleId": "StringIds.cPaperType",
+                        "priority": 3,
+                        "delegate": "qrc:/menu/MenuTextImageBranch.qml",
+                        "module": "qrc:/menu/MenuSelectionList.qml"
+                    }
+                },
+                { "op": "add", "path": "/copySettings/list/-", "value": 
+                    {
+                        "id": "copy_paperSource",
+                        "titleId": "StringIds.cPaperTray",
+                        "priority": 4,
+                        "delegate": "qrc:/menu/MenuComboBox.qml"
+                    }
+                }
+            ],
+            "overrides":[]
+        }
+    ]
+}

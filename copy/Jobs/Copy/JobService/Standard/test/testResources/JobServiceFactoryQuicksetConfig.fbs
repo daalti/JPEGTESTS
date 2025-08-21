@@ -1,0 +1,9 @@
+include "CopyJobTicket.fbs";
+include "Shortcut.fbs";
+
+namespace dune.copy.Jobs.Copy;
+
+table CopyQuicksetFb {
+    ticketSettings: CopyJobIntentFb(cpp_ptr_type:"std::shared_ptr");
+    metadata: dune.admin.shortcuts.ShortcutMetadata;
+}

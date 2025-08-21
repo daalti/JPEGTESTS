@@ -1,0 +1,123 @@
+{
+    "instances": [
+        {
+            "name": "CopyJobDynamicConstraintRules",
+            "data": {
+                "blockedSettingsBetweenPages": [
+                    "dest/print/stapleOption",
+                    "dest/print/punchOption",
+                    "dest/print/foldOption",
+                    "dest/print/mediaDestination",
+                    "pipelineOptions/imageModifications/pagesPerSheet",
+                    "pipelineOptions/imageModifications/bookletFormat",
+                    "dest/print/mediaType",
+                    "dest/print/mediaSource",
+                    "dest/print/mediaSize",
+                    "dest/print/plexMode"
+                ],
+                "stringIdForModifySetting" : "StringIds.cMessageNotAllowModifySettings",
+                "vectorMapStringIdForSettings":[
+                    {
+                        "settingName":"dest/print/stapleOption",
+                        "vectorStringId":["StringIds.cStaple"]
+                    },
+                    {
+                        "settingName":"dest/print/punchOption",
+                        "vectorStringId":["StringIds.cHolePunch"]
+                    },
+                    {
+                        "settingName":"dest/print/foldOption",
+                        "vectorStringId":["StringIds.cFold"]
+                    },
+                    {
+                        "settingName":"dest/print/mediaDestination",
+                        "vectorStringId":["StringIds.cOutputDestination"]
+                    },
+                    {
+                        "settingName":"pipelineOptions/imageModifications/pagesPerSheet",
+                        "vectorStringId":["StringIds.cPagesPerSheet"]
+                    },
+                    {
+                        "settingName":"pipelineOptions/imageModifications/bookletFormat",
+                        "vectorStringId":["StringIds.cBooklet"]
+                    },
+                    {
+                        "settingName":"dest/print/mediaType",
+                        "vectorStringId":["StringIds.cPaperType"]
+                    },
+                    {
+                        "settingName":"dest/print/mediaSource",
+                        "vectorStringId":["StringIds.cPaperSource"]
+                    },
+                    {
+                        "settingName":"dest/print/mediaSize",
+                        "vectorStringId":["StringIds.cMediaSize"]
+                    }
+                ]
+            },
+            "overrides": [
+                {
+                    "runtimeProducts": ["Citrine", "Jasper", "Moonstone", "Pearl"],
+                    "protos": [],
+                    "data": {
+                        "blockedSettingsBetweenPages": [
+                                    "dest/print/stapleOption",
+                                    "dest/print/punchOption",
+                                    "dest/print/foldOption",
+                                    "dest/print/mediaDestination",
+                                    "pipelineOptions/imageModifications/pagesPerSheet",
+                                    "pipelineOptions/imageModifications/bookletFormat",
+                                    "dest/print/mediaType",
+                                    "dest/print/mediaSource",
+                                    "dest/print/mediaSize",
+                                    "dest/print/plexMode"
+                                ],
+                        "vectorMapStringIdForSettings":[
+                            {
+                                "settingName":"dest/print/stapleOption",
+                                "vectorStringId":["StringIds.cStaple"]
+                            },
+                            {
+                                "settingName":"dest/print/punchOption",
+                                "vectorStringId":["StringIds.cHolePunch"]
+                            },
+                            {
+                                "settingName":"dest/print/foldOption",
+                                "vectorStringId":["StringIds.cFold"]
+                            },
+                            {
+                                "settingName":"dest/print/mediaDestination",
+                                "vectorStringId":["StringIds.cOutputDestination"]
+                            },
+                            {
+                                "settingName":"pipelineOptions/imageModifications/pagesPerSheet",
+                                "vectorStringId":["StringIds.cPagesPerSheet"]
+                            },
+                            {
+                                "settingName":"pipelineOptions/imageModifications/bookletFormat",
+                                "vectorStringId":["StringIds.cBooklet"]
+                            },
+                            {
+                                "settingName":"dest/print/mediaType",
+                                "vectorStringId":["StringIds.cPaperType"]
+                            },
+                            {
+                                "settingName":"dest/print/mediaSource",
+                                "vectorStringId":["StringIds.cPaperSource"]
+                            },
+                            {
+                                "settingName":"dest/print/mediaSize",
+                                "vectorStringId":["StringIds.cMediaSize"]
+                            },
+                            {
+                                "settingName":"dest/print/plexMode",
+                                "vectorStringId":["StringIds.cSides"]
+                            }
+                        ]
+                        
+                    }
+                }
+            ]
+        }
+    ]
+}

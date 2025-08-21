@@ -1,0 +1,7 @@
+namespace dune.job;
+
+table PixelCountsFb {
+    nonWhitePixelCount:uint32;
+    colorPixelCount:uint32;
+    totalPixelCount:uint32;
+}

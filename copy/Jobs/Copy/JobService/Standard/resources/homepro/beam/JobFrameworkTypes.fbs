@@ -1,0 +1,606 @@
+namespace dune.job;
+
+///< @enum JobServiceId List of job service IDs
+enum JobServiceId:ubyte 
+{
+    UNDEFINED,
+    PRINT,
+    COPY,
+    RECEIVE_FAX,
+    SEND_TO_FAX,
+    SEND_TO_EMAIL,
+    SEND_TO_FOLDER,
+    SEND_TO_HTTP,
+    SEND_TO_SHAREPOINT,
+    SEND_TO_USB,
+    FAX_ARCHIVE,
+    SEND_TO_DISK,
+    IMAGEEDIT,
+    THUMBNAILER,
+    SCAN_TO_PIPE
+}
+
+/// State values for Job Services
+///
+/// The last bit is used to make the service available and unavailable, so:
+///     - States that make the Job Service available (AVAILABLE, CONFIGURED, NOT_BROKEN...) must have even values (0, 2, 4...)
+///     - States that make the Job Service unavailable (UNAVAILABLE, NOT_CONFIGURED, BROKEN...) must have odd values (1, 3, 5...)
+enum JobServiceStateType:ubyte
+{
+    /// The Job Service is currently available to create new job requests.
+    AVAILABLE = 0,
+    /// The Job Service is currently unavailable to handle job creation
+    UNAVAILABLE,
+    // CONFIGURED,
+    // NOT_CONFIGURED,
+    // NOT_BROKEN,
+    // BROKEN
+}
+
+///< @enum ResourceServiceType List of all Resource service IDs
+enum ResourceServiceType:ubyte 
+{
+    UNDEFINED = 0,
+    TEST = 1,
+    SAMPLE_UPSTREAM_DEVICE_SERVICE = 2,
+    SAMPLE_DOWNSTREAM_DEVICE_SERVICE = 3,
+    PDL_FILTER_SERVICE = 4,
+    PRINT_DEVICE_SERVICE = 5,
+    RTP_FILTER_SERVICE = 6,
+    JOB_STREAM_PERSISTER_SERVICE = 7,
+    FAX_ADAPTER_SERVICE = 8,
+    RECEIVE_FAX_FILTER_SERVICE = 9,
+    SCAN_DEVICE_SERVICE = 10,
+    ANALOG_FAX_DEVICE_SERVICE = 11,
+    EMAIL_DEVICE_SERVICE = 12,
+    FAX_PDL_SERVICE = 13,
+    FOLDER_DEVICE_SERVICE = 14,
+    HTTP_DEVICE_SERVICE = 15,
+    SEND_FAX_FILTER_SERVICE = 16,
+    SHAREPOINT_DEVICE_SERVICE = 17,
+    USB_DEVICE_SERVICE = 18,
+    DOCUMENT_BUILDER = 19,
+    DOCUMENT_PROCESSOR = 20,
+    IMAGE_PERSISTER = 21,
+    IMAGE_PROCESSOR = 22,
+    IMAGE_RETRIEVER = 23,
+    MARKING_FILTER = 24,
+    PAGE_ASSEMBLER_SERVICE = 25,
+    JOB_STREAM_DECRYPTOR_SERVICE = 26,
+    LAYOUT_FILTER = 27,
+    FILE_THUMBNAILER = 28,
+    IPA_DEVICE = 29,
+    IMAGE_IMPORTER = 30,
+    IMAGE_EXPORTER = 31,
+    SAMPLE_MIDSTREAM_DEVICE_SERVICE = 32
+
+    // Add any new resource service type above this line.
+}
+
+///< @enum JobType List of all different types of jobs that can be registered in the Job Management framwork
+enum JobType:ubyte 
+{
+    UNDEFINED,
+    ///< Job is undefined
+    PRINT,
+    ///< Print Job: it can come through 9100, IPP, and other printing protocols
+
+    ////////////////////////////////////////////////////////////////////////
+    // EWP: We will enable these as we turn on the job framework for Dune //
+    ////////////////////////////////////////////////////////////////////////
+    USB_PRINT,
+    // ///< Print from USB 
+    COPY,
+    ///< Copy Job (only available on MFP devices)
+    RECEIVE_FAX,
+    // ///< Print a Fax Job (only available on devices with fax and print engine)
+    // CALIBRATION,
+    // ///< Print Engine calibration Job 
+    SCAN_TO_USB,
+    // ///< Scan to USB (only available on MFP or Scan devices)
+    SCAN_TO_HTTP,
+    // ///< Scan to HTTP (only available on MFP or Scan devices)
+    SCAN_TO_FOLDER,
+    // ///< Scan to Network folder?? or internal folder??? (only available on MFP or Scan devices)
+    SCAN_TO_SHAREPOINT,
+    // ///< Scan to SharePoint (only available on MFP or Scan devices)
+    SCAN_TO_EMAIL,
+    // ///< Scan to email (only available on MFP or Scan devices)   
+    // DIAGNOSTIC_SCAN,
+    // ///< Diagnostic Scan Job (only available on MFP or Scan devices)
+    SEND_FAX,
+    // ///< Send Analog fax, lan fax, internet fax (only available on devices with fax)
+    FAX_ARCHIVE,
+    // ///< Send Analog fax to Email, Folder and FTP (only available on devices with fax)
+    SCAN_TO_DISK,
+    // ///< Scan to disk (only available on MFP or Scan devices)   
+    FOLDER_PRINT,
+    // ///< Print from NetworkFolder
+    CALIBRATION,
+    // ///< Print Engine semiauto calibration Job
+    LDAP_PRINT,
+    // ///< Print from LDAP Home Folder
+    IMAGEEDIT,
+    // ///< Image Editing job from the Image Editor
+    USB_PHOTO_PRINT,
+    // ///< Print a Photo Job
+    FILE_THUMBNAIL,
+    // ///< Documents' thumbnail generator Job
+    SCAN_TO_PIPE,
+    // ///< Scan to Job Storage
+}
+
+///< @enum JobSourceDestinationType List of source and destination for various jobs
+/// TODO - Review the source/desination list
+enum JobSourceDestinationType:ubyte 
+{
+    UNKNOWN,
+    SCAN,
+    USB,
+    JOBSTORAGE,
+    PRINT,
+    EMAIL,
+    NETWORKFOLDER,
+    FAX,
+    SHAREPOINT,
+    NETWORK,
+    ARCHIVE,
+    DISK,
+    LDAP,
+    USBPHOTO,
+    HTTP
+}
+
+///< @enum JobTicketType List of all Job ticket types.
+/// TODO - Review the Job ticket types list.
+enum JobTicketType:ubyte
+{
+    UNKNOWN,
+    DEFAULT,
+    QUICKSET,
+}
+
+/// general state values for PJA Jobs
+enum JobStateType:byte 
+{
+    UNDEFINED,
+
+    ////////////////////////////////////////////////////////////////////////
+    // EWP: We will enable these as we turn on the job framework for Dune //
+    ////////////////////////////////////////////////////////////////////////
+    CREATED,
+    /// The job has been created.
+    // RECREATED,
+    // /// The job has been Recreated.  This is primarily used for job recovery and scheduled jobs.
+    SCHEDULED,
+    // /// The job has been scheduled to be started at a future time.
+    INITIALIZING,
+    /// The job is currently initializing itself.
+    READY,
+    /// The job is ready to be started.
+    PROCESSING,
+    /// The job is processing.
+    // PENDING,
+    // /// The job currently waiting for a resource to be allocated before it can resume.
+    CANCELING,
+    /// The job is being cancelled.
+    // ABORTING,
+    // /// The job is being aborted.
+    COMPLETED,
+    /// The job has Completed.  The CompletionType attribute of the ticket will provide information how the job completed.
+    // CONTACTING_QUOTA_SERVER,
+    // /// The job is currently contacting the Quota Server to get a Transaction ticket.
+    PAUSING,
+    /// The job is being paused.
+    PAUSED,
+    /// The job has been paused.
+    INTERRUPTING,
+    /// The job is being interrupted.
+    INTERRUPTED,
+    /// The job has been interrupted.
+}
+
+
+/// Priority categories values for PJA Jobs
+enum JobPriorityType:byte 
+{
+    REGULAR,
+    /// Normal priority for jobs with no especial needs. Port 9100 jobs, for instance.
+    HIGH,
+    /// Priority for above normal jobs. This is primarily used for walkup jobs that need to be processed with higher priority: print from usb, copy.
+    URGENT,
+    //  Priority for jobs that the user wants to be more urgent than high jobs. For instance, a direct copy with the interrupt setting enabled.
+    CRITICAL,
+    /// The job needs to be processed ASAP in a critical way. For instance, a critical service or calibration.
+}
+
+/// General completion-type values for PJA jobs/resources
+enum CompletionStateType:byte 
+{
+    UNDEFINED,
+
+    ////////////////////////////////////////////////////////////////////////
+    // EWP: We will enable these as we turn on the job framework for Dune //
+    ////////////////////////////////////////////////////////////////////////
+    INCOMPLETE,
+    /// The job/resource was not able to complete its operation.
+    SUCCESS,
+    /// The job/resource has completed successfully.
+    PARTIAL_SUCCESS,
+    // The job/resource has completed with a partial success result (e.g. 1 good recipient and 1 bad recipient in an email job)
+    CANCELED,
+    /// The job/resource was cancelled.
+    FAILED,
+    /// The job/resource encountered an error condition while processing.
+    // ABORTED,
+    // /// The job/resource has been aborted.
+    // STORED,
+    // /// The job has been successfully stored.
+    // STORED_AND_PROCESSED,
+    // /// The job has been successfully stored and processed/deliverd (e.g. Proof and Hold)
+    // RETRY,
+    // /// The resource encountered a condition requiring a retry. Jobs MUST NOT use this state.
+    SCHEDULED,
+    // Job wants to schedule itself to be retried later by PJA
+    // BLOCKED,
+    // /// This is used by Jobs that are Blocked at some point
+    // CORRUPTED,
+    // /// The job has been corrupted
+    FAILED_AND_PUT_JOB_HOLD,
+    /// The resource encountered an error condition while processing and the policy is to set the job on hold.
+    FAILED_BUT_RETRY,
+    /// The resource encountered an error condition while printing and the policy is to retry the job
+    INTERRUPTED,
+    /// The resource is interrupted while printing
+}
+
+/// Completion codes for PJA jobs/resources
+enum CompletionCodeType:byte 
+{
+    UNDEFINED,
+
+    ////////////////////////////////////////////////////////////////////////
+    // EWP: We will enable these as we turn on the job framework for Dune //
+    ////////////////////////////////////////////////////////////////////////
+    // NO_COMPLETION_CODE,
+    // /// No Completion code
+    // START_RESOURCE_INSTANCE_FAILED,
+    // /// RESOURCE:The resource encountered an exception while starting
+    // RESET_RESOURCE_INSTANCE_FAILED,
+    // /// RESOURCE:The resource encountered an exception while being reset
+    // CANCEL_RESOURCE_INSTANCE_FAILED,
+    // /// RESOURCE:The resource encountered an exception while being canceled
+    // INITIALIZE_JOB_FAILED,
+    // /// JOB:The job encountered an exception while being initialized
+    // START_JOB_FAILED,
+    // /// JOB:The job encountered an exception while being started
+    // CANCEL_JOB_FAILED,
+    // /// JOB:The job encountered an exception while being canceled
+    // ALLOCATED_JOB_FAILED,
+    // /// JOB:The job encountered an exception while the resource is allocated
+    // ALLOCATION_CANCELED_JOB_FAILED,
+    // /// JOB:The job encountered an exception while the resource allocation is canceled
+    // FREE_RESOURCE_SERVICE_FAILED,
+    // /// RESOURCESERVICE: An exception was encountered while freeing a resource
+}
+
+/// general state values for Resource instances
+enum ResourceStateType:byte 
+{
+    UNDEFINED,
+    
+    ////////////////////////////////////////////////////////////////////////
+    // EWP: We will enable these as we turn on the job framework for Dune //
+    ////////////////////////////////////////////////////////////////////////
+    // INITIALIZING,
+    // /// The resource is currently initializing itself.
+    FUNDING_PENDING,
+    /// The resource requires funding (memory) before it will be ready.
+    READY,
+    /// The resource is ready to be started.
+    PROCESSING,
+    /// The resource is processing.
+    // INTERRUPTING,
+    // /// The resource is being interrupted.
+    // INTERRUPTED,
+    // /// The resource has been interrupted.
+    // PAUSING,
+    // /// The resource is being paused.
+    // PAUSED,
+    // /// The resource has been paused.
+    INTERVENTION,
+    /// The resource is in an intervention state (e.g. jam, Bin Full, etc).
+    CANCELING,
+    /// The resource is being cancelled.
+    // ABORTING,
+    // /// The resource is being aborted.
+    DONE,
+    /// The resource has Completed.  The CompletionType attribute of the ticket will provide information how the resource completed.
+    INTERRUPTING,
+    /// The resource is being interrupted.
+}
+
+/// Used to track the allocation state of a given resource
+enum ResourceAllocationState:byte 
+{
+    NOT_ALLOCATED,
+    /// The resource is not currently allocated
+    ALLOCATION_PENDING,
+    /// The allocation-request has been made, but ResourceManager has not yet allocated the resource
+    ALLOCATION_CANCELED,
+    /// The allocation-request has been canceled, but ResourceManager has not yet confirmed the cancel
+    ALLOCATED,
+    /// The allocation has occured; ResourceManager has provided the resource
+}
+
+/// general state values for PJA ResourceServices
+enum ResourceServiceStateType:byte 
+{
+    UNAVAILABLE,
+    /// The Resource Service is currently unavailable.  Unavailable typically indicates there is an error condition
+    /// preventing the resource from functioning properly.  Look at the ResourceService.StateProvider for more details.
+    ALLOCATABLE,
+    /// The Resource Service is currently able to handle allocation requests.
+    NOT_ALLOCATABLE,
+    /// The Resource Service is currently unable to handle allocation requests.  This state typically indicates the Resource
+    /// Service has handed out all of its alloted allocation requests.
+    INITIALIZING,
+    /// The Resource Service is currently Initializing. This state typically indicates the Serivce is Initializing due
+    /// to boot or wake from a sleep state.
+    SHUTTINGDOWN, 
+    /// The Resource Service is currently Shutting down. It should not be used anymore.
+}
+
+enum ResourceManagerStateType:byte
+{
+    AVAILABLE,
+    PAUSING,
+    PAUSED,
+    RESUMING,
+}
+
+/// State of a resource client as it goes through the 'allocation dance' for a particular resource.
+/// These states are ordered from highest priority to lowest ('Allocated' being highest)
+enum ResourceClientAllocationState:byte 
+{
+    NONE = 0, 
+    ///> RESERVED.  This state should not be used during the allocation dance.
+    ALLOCATED = 1,
+    /// Resource instance has been allocated to the resource client, and is currently processing.
+    PROMOTED,
+    /// Resource client was promoted, has tried to allocate, and is waiting for a resource to be allocated to it.
+    PROMOTED_PENDING,
+    /// Resource client was promoted and has not tried to allocate a resource yet, but presumably will someday.
+    INTERRUPTED,
+    /// Resource instance has been allocated to a resource client, but the instance was interrupted.
+    WAITING,
+    /// Resource client has tried to allocate and is waiting for a resource to be allocated to it.
+    PENDING
+    /// Resource client has not tried to allocate a resource instance, but presumably will someday.
+}
+
+enum ProcessingDetailedState:byte
+{
+    NONE = 0,
+    WAITING = 1,
+    SCANNING,
+    PRINTING,
+    CURING,
+    SENDING,
+    RECEIVING,
+    PREPARINGTOPRINT,
+    DRYING,
+    PRINTERMAINTENANCE,
+    DIALING,
+    INCOMINGCALL,
+    CONNECTING,
+    CONNECTED,
+    FAXING,
+    RECEIVED,
+    COMMUNICATIONPROBLEM,
+    NOANSWER,
+    RECIPIENTBUSY
+}
+
+enum ProcessingDetailedStateAction:byte
+{
+    CANCEL_DRYING,
+    STOP_SCAN,
+    QUIET_MODE_ON_PROCESSING,
+    QUIET_MODE_OFF_PROCESSING
+}
+
+enum JobQuietMode:byte
+{
+    /// default
+    NONE = 0,
+    OFF,
+    ON,
+    UNSUPPORTED,
+    OFF_PROCESSING,
+    ON_PROCESSING
+}
+
+//Execution mode of the job
+enum ExecutionMode:byte 
+{
+    /// default
+    NORMAL = 0,
+    /// Stored jobs only: store the job
+    STORE,
+    /// Stored jobs only: store and print the job
+    STOREANDPROCESS,
+    /// Stored jobs only: print the job
+    RETRIEVE,
+    /// retry job: retry the job
+    RETRY,
+    /// rerun job: reprint or resend to another destination
+    RERUN,
+    /// Held jobs only: resume the job that was previously held
+    RESUME,
+    /// Pause the job before starting it
+    START_AND_HOLD,
+    /// Retry the STOREANDPROCESS job
+    RETRYSTOREANDPROCESS
+}
+
+enum JobletBoundary:byte
+{
+    UNDEFINED = 0, /** No Joblet state specified */
+    START,     /** Joblet starts here */
+    END,        /** joblet boundary end here. */
+    CRITICAL
+}
+
+enum JobPauseReason:byte
+{
+    /// No pause reason
+    NONE = 0, 
+    /// Job is scheduled
+    SCHEDULED, 
+    /// Device is paused
+    DEVICE_PAUSED, 
+    /// Media mismatch
+    MEDIA_MISMATCH, 
+    /// Hold recovered
+    HOLD_RECOVERED,
+    /// Hold for manual release
+    HOLD_FOR_MANUAL_RELEASE,
+    /// Hold for attended mode
+    HOLD_FOR_ATTENDED_MODE,
+    /// Hold for account ID
+    HOLD_FOR_ACCOUNT_ID,
+    /// Supplies mismatch
+    SUPPLIES_MISMATCH ,
+    /// Output destination mismatch
+    OUTPUT_MISMATCH
+}
+
+enum DataSource:byte
+{
+    UNDEFINED,
+    NETWORKIO,
+    DIRECTIO,
+    INTERNALSTORAGE,
+    REMOVABLESTORAGE,
+    EMBEDDEDWEBSOURCE,
+    SCANNER,
+    SYSTEM,
+    FAXCARD,
+    NETWORKFOLDER,
+    LDAP,
+    IPP_WALKUP
+}
+
+enum PrintProtocol:byte
+{
+    UNDEFINED,
+    PORT9100,
+    IPP,
+    WSP,
+    FTP,
+    LPD,
+    USB,
+    EWS,
+    USB_DRIVE
+}
+
+
+/**
+ * Job Resources will trigger the following SystemEvents:
+ *
+ * - FIRMWARE_JOB_PRINTDEVICE_CANCEL: When print engine cancels a page
+ * - FIRMWARE_JOB_PRINTDEVICE_INTERVENTION: When print engine / print device is waiting for user to fix a problem
+ * - FIRMWARE_JOB_PRINTDEVICE_RESUME: When print engine / print devices resumes printing after an intervention
+ *
+ * These events will contain detailed information on the reason.
+ * The following enumerates encapsulate the possible keys and values for them
+ * @{
+ */
+
+enum SystemEventKeys : byte
+{
+    JOB_SE_JOB_ID,            /** A key which value will be the UUID of the JOB */
+    JOB_SE_PAGE_NUMBER,       /** A key which value wil be the page that has the issue (starting from 1) */
+    JOB_SE_SUBSYSTEM,         /** Subsystem causing the issue (see SystemEventsSubsystems enumeration) */
+    JOB_SE_MEDIA_SOURCE,      /** [optional] When SUBSYSTEM is MEDIA_SOURCE it indicates the dune.imaging.types.MediaSource */
+    JOB_SE_MEDIA_DESTINATION, /** [optional] When SUBSYSTEM is MEDIA_DESTIONATION it indicates the dune.imaging.types.MediaDestinationId */
+    JOB_SE_SLOT,              /** [optional] When SUBSYSTEM is CARTRIDGES or MAINTENANCE it indicates the failing slot */
+    JOB_SE_PAUSE_REASON,      /** [optional] When job goes to hold it indicates the pause reason */
+}
+
+
+enum SystemEventSubsystem : byte
+{
+    UNDEFINED,
+    MEDIA_SOURCE,      /** The issue is in the media source */
+    MEDIA_PATH,        /** The issue is in the media path */
+    MEDIA_DESTINATION, /** The issue is in the media destination */
+    CARTRIDGES,        /** The issue is in the Cartridges (supplies, phs or toner) */
+    MAINTENANCE,       /** The issue is in the Maintenance long life consumables */
+    DOORS,             /** The issue is due to Covers Doors */
+}
+
+/**
+ * @}
+ */
+ 
+// Specifies how the job should be resumed
+enum JobResumeMode:byte
+{
+    NORMAL = 0,
+    /// Resume the job and print anyway
+    PRINT_ANYWAY
+}
+
+enum JobCategory:byte
+{
+    NONE = 0,     /** Default value. The job is a common use case sent by the user */
+    SERVICE,      /** The job is a service one. I.e: a calibration. */
+    REPORT,       /** The job is an internal report */
+    STORED,       /** stored print jobs */
+    NOTIFICATION, /** The job is a notification */
+}
+
+// Speicifes the priority mode session behavior type
+enum PriorityModeSessionBehavior:byte
+{
+    UNDEFINED = 0,
+    /// Block jobs that don't have priority mode
+    BLOCK_NON_PRIORITY_JOBS,
+    /// Block all jobs (With or without priority mode)
+    BLOCK_ALL_JOBS,
+    /// Block all jobs and interrupt current jobs as well
+    INTERRUPT_AND_BLOCK_ALL_JOBS,
+    /// Block non urgent jobs and interrupt current jobs as well
+    INTERRUPT_AND_BLOCK_NON_URGENT_JOBS
+}
+
+/**
+ * @brief Enum to order the pages in a job
+ */
+enum PageOrder : byte
+{
+    CREATION,    /** Order by creation time */
+    PAGE_NUMBER  /** Order by page number */
+}
+
+/**
+ * @brief Enum for the move operationType
+ */
+enum MoveOperationType : byte
+{
+    PROMOTE,               /** Promote the job to the beginning */
+    BEFORE,                /** Move before some jobId */
+    AFTER,                 /** Move after some jobId */
+    PROMOTE_AND_INTERRUPT  /** Promote the job to the beginning and interrupt current printing job */
+}
+
+/**
+ * @brief Enum for the move operationType
+ */
+enum MovePageOperationType : byte
+{
+    BEFORE,    /** Move before some pageId */
+    AFTER      /** Move after some pageId */
+}

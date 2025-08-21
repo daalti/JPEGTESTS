@@ -1,0 +1,71 @@
+include "JobFrameworkTypes.fbs";
+include "Uuid.fbs";
+include "StoreJobDetails.fbs";
+include "JobNotificationDetails.fbs";
+include "PageTicket.fbs";
+include "PipeMetaInfo.fbs";
+
+
+namespace dune.job;
+
+table JobTicketFb {
+  name:string;
+  jobId:dune.framework.core.uuid.fbs.Uuid;
+  ordinal:uint32 = 0;
+  state:JobStateType = UNDEFINED;
+  storePath:string;
+  priority:JobPriorityType;
+  completionState:CompletionStateType;
+  type:JobType = UNDEFINED;
+  executionMode:ExecutionMode = NORMAL;
+  jobDelayedDuringExecution:bool = false;
+  userNameDeprecated:string (deprecated);
+  jobServiceIdDeprecated:string (deprecated);
+  startTime:uint64;
+  completionTime:uint64;
+  scheduledTime:uint64;
+  completionCode:uint64;
+  completionTextDeprecated:string (deprecated);
+  sourceJobStorePath:string; 
+  persistentPipePath:string;
+  isVisible:bool = true;
+  isPromotable:bool = true (deprecated);
+  parentJobId:dune.framework.core.uuid.fbs.Uuid;
+  storeJobDetails:StoreJobDetailsFb;
+  ticketId:dune.framework.core.uuid.fbs.Uuid;
+  isRestrictedJob:bool = true;
+  jobServiceId:JobServiceId = UNDEFINED;
+  jobNotificationDetails:JobNotificationDetailsFb;
+  securityContext:string;
+  isJobReprintable:bool = false;
+  processingDetailedState:ProcessingDetailedState = NONE;
+  pagesTickets:[PageTicketFb] (deprecated); 
+  pauseReason:JobPauseReason = NONE;
+  heldTime:uint64;
+  applicationName:string;
+  dataSource:DataSource = UNDEFINED;
+  storeJobPassword:string;
+  resumeMode:JobResumeMode = NORMAL;
+  // Enable these later while turning on respective functionality.
+  //jobDetails:IResourceStateAggregator;
+  //isAccountingEnabled:bool = true;
+  //usageData:IAccountingUsageData;
+  //destinationList:[IDestination];
+  //applicationId:string;
+  //quotaTicket:IQuotaTicket;
+  applicationVersion:string;
+  hostName:string;
+  applicationJobUUID:string;
+  jobCategory:JobCategory=NONE;
+  solutionId:dune.framework.core.uuid.fbs.Uuid;
+  solutionContext:string;
+  nativeJobStatusAlertsEnabled:bool = true;
+  sourceIpAddress:string;
+  hpTimeOffset:int64;
+  inputPipeMetaInfo:PipeMetaInfoFb;
+  outputPipeMetaInfo:PipeMetaInfoFb;
+  inputPipePath:string;
+  outputPipePath:string;
+}
+
+root_type JobTicketFb;

@@ -1,0 +1,15 @@
+@startuml
+note top
+    Condition: SegmentType::PrepareSegment && Product::LFP
+end note
+
+partition "onBuildPipeline" {
+
+(*) --> setupScanDevice
+    --> setupBufferingImagePersister
+    --> setupBufferingImageRetriever
+    --> setupImagePersisterPreview           
+}
+
+--> (*)
+@enduml

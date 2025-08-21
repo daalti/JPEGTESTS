@@ -1,0 +1,11 @@
+namespace dune.imaging.types;
+
+enum NotificationStrategy : uint8
+{
+  NONE = 0,
+  ON_STARTED = 1,
+  ON_COMPLETED = 2,
+  PASS_THROUGH = 3,
+  STREAM_IMAGE = 4,
+  OPTIMIZED = 5
+}

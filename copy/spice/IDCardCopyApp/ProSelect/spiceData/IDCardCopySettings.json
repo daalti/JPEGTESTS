@@ -1,0 +1,52 @@
+{
+    "list": [
+        {
+            "id": "idcopySettingsPage",
+            "titleId": "StringIds.cOptions",
+            "priority": 1,
+            "module": "qrc:/menu/MenuList.qml",
+            "children": [
+                "idcopy_colorMode",
+                "idcopy_paperTray",
+                "idcopy_quality",
+                "idcopy_exposure",
+                "idcopy_contentOrientation"
+            ]
+        },
+        {
+            "id": "idcopy_colorMode",
+            "titleId": "StringIds.cColor",
+            "priority": 1,
+            "delegate": "qrc:/menu/MenuNameValue.qml",
+            "module": "qrc:/menu/MenuSelectionList.qml"
+        },
+        
+        {
+            "id": "idcopy_exposure",
+            "titleId": "StringIds.cLighterDarker",
+            "priority": 4,
+            "delegate": "qrc:/menu/MenuSlider.qml"
+        },
+        {
+            "id": "idcopy_quality",
+            "titleId": "StringIds.cQuality",
+            "priority": 3,
+            "delegate": "qrc:/menu/MenuNameValue.qml",
+            "module": "qrc:/menu/MenuSelectionList.qml"
+        },
+        {
+            "id": "idcopy_paperTray",
+            "titleId": "StringIds.cPaperTray",
+            "priority": 2,
+            "delegate": "qrc:/menu/MenuNameValue.qml",
+            "module": "qrc:/menu/MenuSelectionList.qml"
+        },
+        {
+            "id": "idcopy_contentOrientation",
+            "titleId": "StringIds.cOrientation",
+            "priority": 5,
+            "delegate": "qrc:/menu/MenuNameValue.qml",
+            "module": "qrc:/menu/MenuSelectionList.qml"
+        }
+    ]
+}

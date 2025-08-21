@@ -1,0 +1,16 @@
+namespace dune.framework.core.uuid.fbs;
+
+struct Uuid
+{
+    clock_low : uint32;
+    clock_mid : uint16;
+    clock_hiv : uint16;
+    node      : uint64;
+}
+
+table UuidTable
+{
+    uuid : Uuid;
+}
+
+root_type UuidTable;

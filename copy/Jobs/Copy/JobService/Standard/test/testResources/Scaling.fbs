@@ -1,0 +1,25 @@
+namespace dune.imaging.types;
+
+/**< Specifies the strategy to be use by the scaling algorithm. */
+/**< Check src/fw/imaging/ImageProcessing/Scaling/src/filtering.cpp */
+enum ScaleStrategy:byte
+{
+    UNKNOWN = 0,
+    POINT = 1,
+    BOX = 2,
+    TRIANGLE = 3,
+    QUADRATIC = 4,
+    CUBIC = 5,
+    CATROM = 6,
+    MITCHELL = 7,
+    GAUSSIAN = 8,
+    SINC = 9,
+    BESSEL = 10,
+    HANNING = 11,
+    HAMMING = 12,
+    BLACKMAN = 13,
+    KAISER = 14,
+    HERMITE = 15,
+    LANCZOS = 16,
+    NORMAL = 17
+}

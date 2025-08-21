@@ -1,0 +1,282 @@
+namespace dune.imaging.types;
+
+/**
+ * All finishing options
+ */
+enum FinishingOptions : short
+{
+    BALE,
+    BINDING,
+    BINDING_BOTTOM,
+    BINDING_LEFT,
+    BINDING_RIGHT,
+    BINDING_TOP,
+    BOOKLET_MAKER,
+    COVER,
+    EDGE_STITCH,
+    EDGE_STITCH_BOTTOM,
+    EDGE_STITCH_LEFT,
+    EDGE_STITCH_RIGHT,
+    EDGE_STITCH_TOP,
+    FOLD,
+    JOG_OFFSET,
+    NONE,
+    PUNCH,
+    SADDLE_STITCH,
+    STAPLE,
+    STAPLE_BOTTOM_LEFT,
+    STAPLE_BOTTOM_RIGHT,
+    STAPLE_DUAL_BOTTOM,
+    STAPLE_DUAL_LEFT,
+    STAPLE_DUAL_RIGHT,
+    STAPLE_DUAL_TOP,
+    STAPLE_TOP_LEFT,
+    STAPLE_TOP_RIGHT,
+    TRIM
+}
+
+/**
+ * All media processing types
+ */
+enum MediaProcessingTypes : short
+{
+    STAPLE,
+    PUNCH,
+    STAPLE_AND_PUNCH,
+    FOLD,
+    BOOKLET_MAKING,
+    JOG
+}
+
+/**
+ * All booklet making options
+ */
+enum BookletMakingOptions : short
+{
+    NONE,
+    DEFAULT,
+    BOOKLET_MAKER,
+    SADDLE_STITCH
+}
+
+/**
+ * All jog options
+ */
+enum JogOptions : short
+{
+    NONE,
+    OFF,
+    LEFT,
+    RIGHT
+}
+
+/**
+ * All folding options
+ */
+enum FoldingOptions : short
+{
+    NONE,
+    DEFAULT,
+    C_INWARD_TOP,
+    C_INWARD_BOTTOM,
+    C_OUTWARD_TOP,
+    C_OUTWARD_BOTTOM,
+    V_INWARD_TOP,
+    V_INWARD_BOTTOM,
+    V_OUTWARD_TOP,
+    V_OUTWARD_BOTTOM
+}
+
+/**
+ * All punching options
+ */
+enum PunchingOptions : short
+{
+    NONE,
+    DEFAULT,
+    TWO_POINT_ANY,
+    LEFT_TWO_POINT_DIN,
+    RIGHT_TWO_POINT_DIN,
+    TOP_TWO_POINT_DIN,
+    BOTTOM_TWO_POINT_DIN,
+    TWO_POINT_DIN,
+    LEFT_TWO_POINT_US,
+    RIGHT_TWO_POINT_US,
+    TOP_TWO_POINT_US,
+    BOTTOM_TWO_POINT_US,
+    TWO_POINT_US,
+    LEFT_THREE_POINT_US,
+    RIGHT_THREE_POINT_US,
+    TOP_THREE_POINT_US,
+    BOTTOM_THREE_POINT_US,
+    THREE_POINT_US,
+    THREE_POINT_ANY,
+    LEFT_FOUR_POINT_DIN,
+    RIGHT_FOUR_POINT_DIN,
+    TOP_FOUR_POINT_DIN,
+    BOTTOM_FOUR_POINT_DIN,
+    FOUR_POINT_DIN,
+    LEFT_FOUR_POINT_SWD,
+    RIGHT_FOUR_POINT_SWD,
+    TOP_FOUR_POINT_SWD,
+    BOTTOM_FOUR_POINT_SWD,
+    FOUR_POINT_SWD,
+    FOUR_POINT_ANY,
+    LEFT_TWO_POINT,
+    RIGHT_TWO_POINT,
+    TOP_TWO_POINT,
+    BOTTOM_TWO_POINT
+}
+
+/**
+ * All staple options
+ */
+enum StapleOptions : short
+{
+    NONE,
+    DEFAULT,
+    TOP_ANY_ONE_POINT_ANY,
+    TOP_ANY_ONE_POINT_ANGLED,
+    TOP_LEFT_ONE_POINT_ANY,
+    TOP_LEFT_ONE_POINT_ANGLED,
+    TOP_LEFT_ONE_POINT_HORIZONTAL,
+    TOP_LEFT_ONE_POINT_VERTICAL,
+    TOP_RIGHT_ONE_POINT_ANY,
+    TOP_RIGHT_ONE_POINT_ANGLED,
+    TOP_RIGHT_ONE_POINT_HORIZONTAL,
+    TOP_RIGHT_ONE_POINT_VERTICAL,
+    BOTTOM_LEFT_ONE_POINT_ANY,
+    BOTTOM_LEFT_ONE_POINT_ANGLED,
+    BOTTOM_LEFT_ONE_POINT_HORIZONTAL,
+    BOTTOM_LEFT_ONE_POINT_VERTICAL,
+    BOTTOM_RIGHT_ONE_POINT_ANY,
+    BOTTOM_RIGHT_ONE_POINT_ANGLED,
+    BOTTOM_RIGHT_ONE_POINT_HORIZONTAL,
+    BOTTOM_RIGHT_ONE_POINT_VERTICAL,
+    CENTER_POINT_POINT,
+    LEFT_TWO_POINTS,
+    LEFT_TWO_POINTS_ANY,
+    RIGHT_TWO_POINTS,
+    TOP_TWO_POINTS,
+    BOTTOM_TWO_POINTS,
+    CENTER_TWO_POINTS,
+    LEFT_THREE_POINTS,
+    LEFT_THREE_POINTS_ANY,
+    RIGHT_THREE_POINTS,
+    TOP_THREE_POINTS,
+    BOTTOM_THREE_POINTS,
+    CENTER_THREE_POINTS,
+    LEFT_SIX_POINTS,
+    LEFT_SIX_POINTS_ANY,
+    RIGHT_SIX_POINTS,
+    TOP_SIX_POINTS,
+    BOTTOM_SIX_POINTS,
+    CENTER_SIX_POINTS
+}
+
+/**
+ * Job offset modes
+ */
+enum JobOffsetMode : short
+{
+    MODE_DISABLE,
+    MODE_ENABLE_NON_STAPLE_JOB
+}
+
+/**
+ * The order of page of a job to follow
+ */
+enum JobSequencePageOrder : short
+{
+    FRONT_TO_BACK,  // Job needs to be sent from the first page to the last page.
+    BACK_TO_FRONT   // Job needs to be sent from the last page to the first page.
+}
+
+/**
+ * The order of duplex pages to follow
+ */
+enum DuplexPageOrder : short
+{
+    CORRECT_ORDER,  // Normal order. Front side first.
+    REVERSE_ORDER   // Swap the front and the back sides.
+}
+
+/**
+ * The side based on which 180-degrees rotation should be done
+ */
+enum FormatterRotationPriority : short
+{
+    RotationBasedOnFrontSide,   // Rotate 180-degrees based on the front side.
+    RotationBasedOnBackSide     // Rotate 180-degrees based on the back side.
+}
+
+/**
+ * Content orientation of the image
+ */
+enum FinishingContentOrientation : short
+{
+    PORTRAIT,
+    LANDSCAPE,
+    REVERSE_PORTRAIT,
+    REVERSE_LANDSCAPE
+}
+
+/**
+ * Finishing alignment direction
+ */
+ enum FinishingAlignmentDirection : short
+ {
+     ALIGNMENT_IN_FEED_DIRECTION,
+     ALIGNMENT_IN_WIDTH_DIRECTION
+ }
+
+/**
+ * Staples out actions
+ */
+enum StaplesOutAction : short
+{
+    CONTINUE,
+    STOP
+}
+
+/**
+ * Stapler mechanial buffer
+ */
+enum StaplerMechanicalBuffer : short
+{
+    DISABLED,
+    ENABLED,
+    AUTOMATIC
+}
+
+/**
+ * Direction of the media processing option
+ */
+enum ProcessingOptionDirection : short
+{
+    NONE,
+    INWARD,
+    OUTWARD
+}
+
+/**
+ * Reference edge of the media processing option
+ */
+enum ProcessingOptionReferenceEdge : short
+{
+    NONE,
+    TOP,
+    BOTTOM,
+    LEFT,
+    RIGHT
+}
+
+/**
+ * Media processing boundaries
+ */
+enum MediaProcessingBoundary : short
+{
+    JOB,
+    MOPY,
+    SET
+}

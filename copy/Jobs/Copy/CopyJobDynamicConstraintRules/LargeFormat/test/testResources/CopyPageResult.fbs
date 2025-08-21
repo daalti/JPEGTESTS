@@ -1,0 +1,10 @@
+include "PrintPageResult.fbs";
+include "ScanPageResult.fbs";
+
+namespace dune.job;
+
+table CopyPageResultFb {
+    printPageResult:dune.job.PrintPageResultFb;
+    scanPageResult:dune.job.ScanPageResultFb;
+}
+root_type CopyPageResultFb;

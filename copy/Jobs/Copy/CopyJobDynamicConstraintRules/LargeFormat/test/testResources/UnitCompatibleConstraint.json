@@ -1,0 +1,15 @@
+{
+    "listOfSettingsAffectedByMeasurementUnit":[
+        {
+            "settingName":"src/scan/colorMode",
+            "supportedValuesForUS":[
+                {"unionValue":{"value":"COLOR"},"unionValue_type":"ColorMode"},
+                {"unionValue":{"value":"GRAYSCALE"},"unionValue_type":"ColorMode"}
+            ],
+            "supportedValuesForMetric":[
+                {"unionValue":{"value":"COLOR"},"unionValue_type":"ColorMode"},
+                {"unionValue":{"value":"BLACKANDWHITE"},"unionValue_type":"ColorMode"}
+            ]
+        }
+    ]
+}

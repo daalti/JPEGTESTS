@@ -1,0 +1,25 @@
+{
+    "listOfRulesBasedOnTicketValues":[
+        {
+            "settingName":"src/scan/contentType",
+            "rules":[
+                {
+                    "if":[
+                        {
+                            "settingName":"src/scan/mediaType",
+                            "withValueIn": [
+                                {"unionValue":{"value":"TRANSLUCENT_PAPER"},"unionValue_type":"OriginalMediaType"},
+                                PRINTS"},"unionValue_type":"OriginalMediaType"},
+                                {"unionValue":{"value":"DARK_BLUEPRINTS"},"unionValue_type":"OriginalMediaType"}
+                            ]                                        
+                        }
+                    ],
+                    "then":{
+                        "supporMessageStringId":"StringIds.cThisOptionUnavailable",
+                        "disabled":true
+                    }
+                }
+            ]
+        }
+    ]
+}

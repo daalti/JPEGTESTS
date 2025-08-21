@@ -1,0 +1,15 @@
+{
+    "instances":[
+        {
+            "name":"CopyApp",
+            "data":{
+                "interactive":{
+                    "list":[
+                        "copy_numberOfCopies", "scan_colorMode", "copy_sides", "copy_quality", "copy_paperSource"
+                    ]
+                }
+            },
+            "overrides":[]
+        }
+    ]
+}

@@ -1,0 +1,22 @@
+// DUNE_NOT_PERSISTENT
+include "ScanPipelineConfig.fbs";
+include "PrintingOrder.fbs";
+
+namespace dune.copy.Jobs.Copy;
+
+
+table CopyPipelineStandardConfig {
+    pipelineBuilderConfig: dune.scan.Jobs.Scan.PipelineBuilderConfig;
+    thresholdOverride:int=0;
+    topSpecificPadding:float=0.0;
+    bottomSpecificPadding:float=0.0;
+    leftSpecificPadding:float=0.0;
+    rightSpecificPadding:float=0.0;
+    printingOrder:dune.imaging.types.PrintingOrder=UNKNOWN;
+    pageCountBeforeSequencing:int=0;
+    maxPagesToCollate:uint32=0;
+    maxFlatbedDuplexPages:int=1;
+    layoutFilterEnabled:bool=false;  // Indicates if LayoutFilter must be used instead of Marking Filter
+}
+
+root_type CopyPipelineStandardConfig;

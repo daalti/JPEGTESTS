@@ -1,0 +1,17 @@
+include "Resolution.fbs";
+include "MediaSizeId.fbs";
+
+namespace dune.job;
+
+enum CaptureModeType:byte
+{
+    STANDARD=0,
+    JOBBUILD,
+    BOOKMODE,
+    IDCARD
+}
+
+table JobMetaInfoData{
+    captureMode:CaptureModeType;
+    lastPageMediaSize:dune.imaging.types.MediaSizeId;
+}

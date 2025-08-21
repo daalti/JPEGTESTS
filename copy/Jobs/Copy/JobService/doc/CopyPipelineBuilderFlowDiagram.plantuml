@@ -1,0 +1,38 @@
+@startuml
+note right: <b>COPY PIPELINE</b>
+
+partition "onBuildPipeline: Scan_PageAssembler_Print" {
+
+(*) --> ScanDevice
+
+if "Scan Disk Buffering?" then
+    -->[true] SDB_ImagePersister
+    SDB_ImagePersister --> SDB_ImageRetriever
+    SDB_ImageRetriever --> === SDB_END ===
+else
+    -->[false] === SDB_END ====
+endif
+
+=== SDB_END === --> AfterScanImaging
+
+if "LFP?" then
+    -->[true] ImageProcessor
+    ImageProcessor --> ISF_ImagePersister
+    ISF_ImagePersister --> ISF_ImageRetriever
+    ISF_ImageRetriever --> === LFP ===
+else
+    -->[false] HomeProMarkingFilter
+    note left
+        LFP may have a Marking Filter in the future
+        Does it make sense to merge them?
+    end note
+    HomeProMarkingFilter --> PageAssembler
+    PageAssembler --> === LFP ===
+endif
+
+=== LFP === --> PrintDevice
+
+}
+
+--> (*)
+@enduml

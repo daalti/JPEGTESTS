@@ -27,19 +27,6 @@ class MediaCanon(MediaDune):
         logging.info("Initializing MediaCanon")
         super().__init__()
 
-    def reset_inputs(self) -> None:
-        """
-        Reset all media inputs to their default state.
-        This is a no-op in the base class, but can be overridden by subclasses.
-        """
-        logging.info("Resetting all media inputs to default state.")
-        for config in self.get_media_configuration().get('inputs', []):
-            input = config.get('mediaSourceId')
-            media_size = self.get_default_size(input)
-            media_type = self.get_default_type(input)
-            logging.info('Resetting %s to default: %s - %s', input, media_size, media_type)
-            Media.Tray.load(self.tray, input, media_size, media_type)
-
     class Tray(Media.Tray):
         """
         Custom Tray for MediaLowFidelity.
@@ -54,6 +41,27 @@ class MediaCanon(MediaDune):
             logging.info('Instantiating PrintEmulation with %s', engine_simulator_ip)
             self._peclient = Canon(engine_simulator_ip)
             self._mapper = MapperCanon()
+
+        def install(self, tray: str, **kwargs: Optional[str]) -> None:
+            """
+            Install a media tray.
+            
+            Args:
+                tray: The media tray to install.
+            """
+            tray_name = MediaInputIds[tray]
+            self._peclient.client.execute(f'tray {tray_name} install')
+
+        def uninstall(self, tray: str, **kwargs: Optional[str]) -> None:
+            """
+            Uninstall a media tray.
+
+            Args:
+                tray: The media tray to uninstall.
+
+            """
+            tray_name = MediaInputIds[tray]
+            self._peclient.client.execute(f'tray {tray_name} uninstall')
 
         def load(
             self,
@@ -90,9 +98,9 @@ class MediaCanon(MediaDune):
             Logs:
                 Info: Loading media input with specified parameters.
             """
-            input_str = self._get_value(input)
-            media_size_str = self._get_value(media_size)
-            media_type_str = self._get_value(media_type)
+            input_str = self._get_name(input)
+            media_size_str = self._get_name(media_size)
+            media_type_str = self._get_name(media_type)
 
             if need_open:
                 logging.info(f"Opening tray {input_str} before loading media")
@@ -277,5 +285,5 @@ class MediaCanon(MediaDune):
             tray_name = self._mapper.MediaInputIds[trayid]
             return self._peclient.client.execute(f'tray {tray_name} unlimited')
             
-        def _get_value(self, val: Union[Enum, str]) -> str:
-            return val.value if isinstance(val, Enum) else val
+        def _get_name(self, val: Union[Enum, str]) -> str:
+            return val.name if isinstance(val, Enum) else val

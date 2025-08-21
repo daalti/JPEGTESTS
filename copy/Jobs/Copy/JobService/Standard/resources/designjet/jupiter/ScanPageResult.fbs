@@ -1,0 +1,6 @@
+namespace dune.job;
+
+table ScanPageResultFb {
+    scannedWidth:uint32;
+    scannedHeight:uint32;
+}

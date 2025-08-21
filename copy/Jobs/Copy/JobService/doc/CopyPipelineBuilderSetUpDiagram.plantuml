@@ -1,0 +1,55 @@
+@startuml
+note right: <b>COPY PIPELINE</b>
+
+partition "onBuildPipeline" {
+
+(*) --> Start
+note right
+    Before start the if-else conditions, setCollateMode() is called when "Stage::Setup"
+    it sets the collateMode_
+end note
+    --> if "" then
+    note right
+        ScanCaptureModeType::JOBBUILD && SegmentType::FinalSegment
+    end note
+        --> [true] CPBSepUpFinalSegmentDiagram
+        else
+        --> [false] if "" then
+            note right
+                SegmentType::PrepareSegment && Product::LFP
+            end note
+            --> [true] CPBSetUpPrepareSegmentDiagram
+            else
+            --> [false] if "" then
+                note right
+                    Stage::ScanFirstPage
+                end note
+                --> [true] CPBSetUpFirstPageStageDiagram
+                else
+                --> [false] if "" then
+                    note right
+                        Stage::ScanSecondPage
+                    end note
+                    --> [true] CPBSetUpSecondPageStageDiagram
+                    else
+                    --> [false] if "" then
+                        note right
+                            Stage::PrintAllPages
+                        end note
+                        --> [true] CPBSetUpPrintAllPagesStageDiagram
+                        else
+                        --> [false] if "" then
+                            note right
+                                Stage::Scan_PageAssembler_Print
+                            end note
+                            --> [true] CPBSetUpScanPageAssemblerPrintStageDiagram
+                            else
+                            --> [false] if "" then
+                                note right
+                                    Stage::Scan_Basic_Print
+                                end note
+                                --> [true] CPBSetUpScanBasicPrintStageDiagram
+                                else 
+                                --> [false] (*)
+}
+@enduml

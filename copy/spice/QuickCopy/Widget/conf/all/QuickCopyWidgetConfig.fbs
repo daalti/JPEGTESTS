@@ -1,0 +1,8 @@
+// DUNE_NOT_PERSISTENT
+namespace dune.copy.spice;
+
+table QuickCopyWidgetConfig {
+    listOfWidgetSummary: [string];
+}
+
+root_type QuickCopyWidgetConfig;

@@ -1,0 +1,10 @@
+include "CopyJobConstraints.fbs";
+
+namespace dune.copy.Jobs.Copy;
+
+table JobConstraintsStandardConfig {
+    constraints: CopyJobConstraintsFb;
+    defaultMediaDestinationConstraint: dune.imaging.types.MediaDestinationId=DEFAULT;
+}
+
+root_type JobConstraintsStandardConfig;

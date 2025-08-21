@@ -1,6 +1,7 @@
 # file: dunetuf/media/media.py
 
 import logging
+import time
 from typing import Any, Dict, Type, cast, Optional, List, Tuple, Union
 from typing_extensions import Self  # type: ignore
 
@@ -552,7 +553,6 @@ class Media:
         """
         raise NotImplementedError("almost_out_of_media() must be implemented in the subclass")
 
-
     def unload_media(self, tray: str = 'all') -> None:
         """
         Simulate unloading media (OUT_OF_MEDIA) on the specified tray(s),
@@ -569,25 +569,92 @@ class Media:
     def reset_inputs(self) -> None:
         """
         Reset all media inputs to their default state.
-        This is a no-op in the base class, but can be overridden by subclasses.
+        This implementation handles exceptions gracefully so that platform-specific
+        behavior doesn't require try/catch in calling code.
+        
+        All Dune/Ares platform subclasses use this common implementation.
         """
         logging.info("Resetting all media inputs to default state.")
-        for config in self.get_media_configuration().get('inputs', []):
-            input = config.get('mediaSourceId')
-            media_size = self.get_default_size(input)
-            media_type = self.get_default_type(input)
+        try:
+            for config in self.get_media_configuration().get('inputs', []):
+                input = config.get('mediaSourceId')
+                try:
+                    media_size = self.get_default_size(input)
+                    media_type = self.get_default_type(input)
+                    logging.info('Resetting %s to default: %s - %s', input, media_size, media_type)
+                    self.tray.load(input, media_size, media_type)
+                except Exception as e:
+                    logging.warning("Failed to reset input %s: %s", input, e)
+                    logging.info("Continuing with other inputs")
+        except Exception as e:
+            logging.warning("Failed to get media configuration for reset: %s", e)
+            logging.info("Skipping media input reset")
 
-            logging.info('Resetting %s to default: %s - %s', input, media_size, media_type)
-            self.tray.load(input, media_size, media_type)
+    def get_alerts(self, category='any'):
+        """Get and return media handling alert list."""
+        alerts = self._cdm.get(self._cdm.CDM_MEDIAHANDLING_ALERTS)
 
-        #TODO: Check if is needed
+        alerts = alerts.get('alerts')
+        logging.debug('Media handling alerts: %s', alerts)
+
+        alerts = [alert for alert in alerts if alert.get('category') == category or category == 'any']
+        return alerts
+
+    def wait_for_alerts(self, category='any'):
         """
-            try:
-                self._cdm.alerts.wait_for_alerts('sizeType', 1)
-                self._media.alert_action(category='sizeType', response='ok')
-            except:
-                logging.info("sizeType alert not found")
+        Wait until a specific category of media alert is observed.
+
+        Args:
+            category: The category of media alert to wait for.
         """
+        logging.info('Waiting for media handling alert of category: %s', category)
+
+        ALERTS_TIME_OUT = 15
+        time_elapsed = 0
+
+        while time_elapsed <= ALERTS_TIME_OUT:
+            alerts = self.get_alerts(category)
+            logging.info('Expected alert category: %s, timeElapsed: %.1fs', category, time_elapsed)
+            if alerts:
+                logging.info('Expected alert category: %s, alerts raised: %s', category, alerts)
+                return alerts
+            
+            time.sleep(0.5)
+            time_elapsed += 0.5
+
+        raise TimeoutError('Timeout waiting media handling alert!')
+
+    def alert_action(self, category, response):
+        """
+        Check the Flow Category against the one returned by cdm.
+        
+        Args:
+            category: The category of media alert to check.
+            response: The response action to take for the alert.
+        """
+        alerts = self.get_alerts(category)
+        response_data = {'selectedAction':  response}
+        response_created = False
+        for alert in alerts:
+            if alert["category"] == 'sizeType' and category == 'sizeType':
+                data = alert.get('data')
+                for item in data:
+                    if(item.get('propertyPointer') == '/currentMediaSource'):
+                        media_source = item.get('value', {}).get('seValue') 
+                        response_data = {"selectedAction": response, "mediaSourceId": media_source}
+                        print("\n response data: " + str(response_data))
+                        response_created = True
+                        break
+                if response_created:
+                    break
+        alerts = self.get_alerts(category)
+        for alert in alerts:
+            action_urls = alert.get('actions').get('links')
+            action_url = [url.get('href') for url in action_urls][0]
+
+            result = self._cdm.put_raw(action_url, response_data)
+            assert result.status_code == 200
+
 
     class Tray:
         """
@@ -604,6 +671,25 @@ class Media:
             self._tcl = TclSocketClient(self._ip_address, 9104)
             self._target_platform = media._target_platform
             logging.info(f"Initializing Tray for platform: {self._target_platform}")
+
+        def install(self, tray: str, **kwargs: Optional[str]) -> None:
+            """
+            Install a media tray.
+            
+            Args:
+                tray: The media tray to install.
+            """
+            raise NotImplementedError("install() must be implemented in the subclass")
+
+        def uninstall(self, tray: str, **kwargs: Optional[str]) -> None:
+            """
+            Uninstall a media tray.
+
+            Args:
+                tray: The media tray to uninstall.
+
+            """
+            raise NotImplementedError("uninstall() must be implemented in the subclass")
 
         def load(
             self,

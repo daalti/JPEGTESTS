@@ -1,0 +1,279 @@
+include "CopyJobTicket.fbs";
+include "Rotate.fbs";
+
+namespace dune.copy.Jobs.Copy;
+
+// Basic types for union use
+// If you need to use a new type, create first here as a Table/Value
+table MinMaxLengthUInt
+{
+    minLength:uint;
+    maxLength:uint;
+}
+table TEXT {
+    regularExpression:string (required);
+    length:MinMaxLengthUInt;
+}
+table RangeValueInt{
+    min:int;
+    max:int;
+    step:int;
+}
+table RangeValueDouble{
+    min:double;
+    max:double;
+    step:double;
+}
+table INT8 {
+    value:int8;
+}
+table INT16 {
+    value:int16;
+}
+table INT32 {
+    value:int32;
+}
+table INT64 {
+    value:int64;
+}
+table UINT8{
+    value:uint8;
+}
+table UINT16{
+    value:uint16;
+}
+table UINT32{
+    value:uint32;
+}
+table UINT64{
+    value:uint64;
+}
+table DOUBLE {
+    value:double;
+}
+table BOOL {
+    value:bool=false;
+}
+table AttachmentSize{
+    value:dune.scan.types.AttachmentSize;
+}
+table OriginalMediaType{
+    value:dune.scan.types.OriginalMediaType;
+}
+table ScanSource{
+    value:dune.scan.types.ScanSource;
+}
+table ScanFeedOrientation{
+    value:dune.scan.types.ScanFeedOrientation;
+}
+table BlankDetectEnum{
+    value:dune.scan.types.BlankDetectEnum;
+}
+table OverScanType{
+    value:dune.scan.types.OverScanType;
+}
+table ScanCaptureModeType{
+    value:dune.scan.types.ScanCaptureModeType;
+}
+table ScanImagingProfileType{
+    value:dune.scan.types.ScanImagingProfileType;
+}
+table CcdChannelEnum{
+    value:dune.scan.types.CcdChannelEnum;
+}
+table BinaryRenderingEnum{
+    value:dune.scan.types.BinaryRenderingEnum;
+}
+table AutoColorDetectEnum{
+    value:dune.scan.types.AutoColorDetectEnum;
+}
+table ImagePreview{
+    value:dune.scan.types.ImagePreview;
+}
+table ScanScaleSelectionEnum{
+    value:dune.scan.types.ScanScaleSelectionEnum;
+}
+table ScanAcquisitionsSpeedEnum{
+    value:dune.scan.types.ScanAcquisitionsSpeedEnum;
+}
+table ColorMode{
+    value:dune.imaging.types.ColorMode;
+}
+table ContentOrientation{
+    value:dune.imaging.types.ContentOrientation;
+}
+table OriginalContentType{
+    value:dune.imaging.types.OriginalContentType;
+}  
+table MediaSizeId{
+    value:dune.imaging.types.MediaSizeId;
+}
+table Plex{
+    value:dune.imaging.types.Plex;
+}
+table PlexBinding{
+    value:dune.imaging.types.PlexBinding;
+}
+table Resolution{
+    value:dune.imaging.types.Resolution;
+}
+table MediaSource{
+    value:dune.imaging.types.MediaSource;
+}
+table OutputCanvas{
+    value:dune.imaging.types.OutputCanvas(cpp_ptr_type:"std::shared_ptr");
+} 
+table OutputCanvasAnchorType{
+    value:dune.imaging.types.OutputCanvasAnchorType;
+} 
+table MediaOrientation{
+    value:dune.imaging.types.MediaOrientation;
+}
+table MediaIdType{
+    value:dune.imaging.types.MediaIdType;
+}
+table MediaDestinationId{
+    value:dune.imaging.types.MediaDestinationId;
+}
+table PrintQuality{
+    value:dune.imaging.types.PrintQuality;
+}
+table CopyMargins{
+    value:dune.imaging.types.CopyMargins;
+}
+table PrintingOrder{
+    value:dune.imaging.types.PrintingOrder;
+}
+table MediaFamily{
+    value:dune.imaging.types.MediaFamily;
+}
+table Rotate{
+    value:dune.imaging.types.Rotate;
+}
+table CopyOutputNumberUpCount{
+    value:dune.imaging.types.CopyOutputNumberUpCount;
+}
+table SheetCollate{
+    value:dune.copy.SheetCollate;
+}
+// Add here if there is a type that not is supported.
+// Union values must to manage all values expected for copy ticket
+union CopyIntentValues {
+    INT8,
+    INT16,
+    INT32,
+    INT64,
+    UINT8,
+    UINT16,
+    UINT32,
+    UINT64,
+    DOUBLE,
+    MinMaxLengthUInt,
+    TEXT,
+    RangeValueInt,
+    RangeValueDouble,
+    BOOL,
+    AttachmentSize, 
+    OriginalMediaType,
+    ScanSource,
+    ScanFeedOrientation,
+    BlankDetectEnum,
+    OverScanType,
+    ScanCaptureModeType,
+    ScanImagingProfileType,
+    CcdChannelEnum,
+    BinaryRenderingEnum,
+    AutoColorDetectEnum,
+    ImagePreview,
+    ScanScaleSelectionEnum,
+    ScanAcquisitionsSpeedEnum,
+    ColorMode,
+    ContentOrientation,
+    OriginalContentType,
+    MediaSizeId, 
+    Plex,
+    PlexBinding,
+    Resolution,
+    MediaSource,
+    OutputCanvas,
+    OutputCanvasAnchorType,
+    MediaOrientation,
+    MediaIdType,
+    MediaDestinationId,
+    PrintQuality,
+    CopyMargins,
+    PrintingOrder,
+    MediaFamily,
+    CopyOutputNumberUpCount,
+    SheetCollate,
+    Rotate
+}
+
+enum OperationModeRule:byte {
+    AND=0,                              // Check if all settings to check are satisfied
+    OR,                                 // Check if any setting to check is satisfied
+    NAND,                               // Check if any settings to check is not satisfied
+    NOR                                 // Check if all setting to check are not satisfied
+}
+
+enum RulePolicy:byte{
+    STOP=0,                             // When rule is satisfied, then next rules on list will not be executed
+    CONTINUE                            // When rule is satisfied, then merge rule and continue with next on list
+}
+
+table CopyIntentTableValue
+{
+    unionValue:CopyIntentValues;
+}
+
+table SettingFromTicket{
+    settingName:string;                                                     // Name of setting from ticket (cdm url format)
+    withValueIn:[CopyIntentTableValue](cpp_ptr_type:"std::shared_ptr");     // Values on ticket
+}
+
+table ConstrainedValues {
+    supportedValues:[CopyIntentTableValue](cpp_ptr_type:"std::shared_ptr"); // Values to set on constraint
+    constrainedMessageStringId:string;                                      // String id for set unique string id used.
+    disabled:bool=false;                                                    // Set if setting must to be disabled.
+}
+
+table CopyTicketRule {
+    if:[SettingFromTicket](cpp_ptr_type:"std::shared_ptr");             // If there is next settings on ticket
+    ifOperation:OperationModeRule=AND;                                  // Operation mode to check settings on ticket selected
+    then:ConstrainedValues(cpp_ptr_type:"std::shared_ptr");             // Then to next constrained values
+    rulePolicy:RulePolicy=STOP;                                         // Policy to be applied on check match
+}
+
+table CopyDynamicRule
+{
+    settingName:string;                                                 // Name of the setting to apply constraints (CDM url format)
+    rules:[CopyTicketRule](cpp_ptr_type:"std::shared_ptr");             // Combinatory rules to apply for setting
+}
+
+table CopyIntentStringIdValueMap
+{
+    settingNameValue: string;                                           // Name of the value setting to apply constraints (must to coincidence with the string return from call to valueToString easybuffers)
+    stringId: string;                                                   // String id associated
+}
+
+table CopyIntentStringIdMap {
+    settingName:string;                                                                         // Name of the setting to apply constraints (CDM url format)
+    vectorStringId:[string];                                                                    // vector of String id associated
+    stringIdsForValuesOfSetting:[CopyIntentStringIdValueMap](cpp_ptr_type:"std::shared_ptr");   // Map vector with string setting --> string id
+}
+
+table CopyMeasurementSetting {
+    settingName:string;                         // Name of the setting to apply constraints (CDM url format)
+    supportedValuesForUS:[CopyIntentTableValue](cpp_ptr_type:"std::shared_ptr"); // Values to set on constraint
+    supportedValuesForMetric:[CopyIntentTableValue](cpp_ptr_type:"std::shared_ptr"); // Values to set on constraint
+}
+
+table CopyJobDynamicConstraintRulesLargeFormatConfig {
+    blockedSettingsBetweenPages:[string];                                                   // List of blocked settings while job is on processing state
+    listOfRulesBasedOnTicketValues:[CopyDynamicRule](cpp_ptr_type:"std::shared_ptr");       // List of rules that will request constraints based on current ticket
+    listOfDynamicForceSets:[CopyDynamicRule](cpp_ptr_type:"std::shared_ptr");               // List of rules that will force set based on current ticket
+    vectorMapStringIdForSettings:[CopyIntentStringIdMap](cpp_ptr_type:"std::shared_ptr");   // Vector map with pair setting --> string id array
+    listOfSettingsAffectedByMeasurementUnit:[CopyMeasurementSetting](cpp_ptr_type:"std::shared_ptr");  // This list contains settings that could be affected by the current measurement selected on printer
+}
+
+root_type CopyJobDynamicConstraintRulesLargeFormatConfig;

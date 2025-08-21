@@ -1,0 +1,55 @@
+{
+    "interactive": {
+        "list":[
+            "copy_numberOfCopies", "scan_colorMode", "copy_sides"
+        ]
+    },
+    "copySettings" : {
+        "list":[
+            {
+                "id": "copySettingsPage_",
+                "titleId": "StringIds.cOptions",
+                "priority": 1,
+                "module": "qrc:/menu/MenuList.qml",
+                "children": [
+                   "scan_scanOptions",
+                   "scan_contentType",
+                   "scan_originalSize",
+                   "scan_lighterDarker",
+                   "copy_printOptions",
+                   "copy_numberOfCopies",
+                   "copy_quality"
+                ]
+            },
+            {
+                "id": "scan_scanOptions",
+                "titleId": "StringIds.cScanOptions",
+                "priority": 1,
+                "delegate": "MenuSection.qml"
+            }, 
+            {
+                "id": "scan_contentType",
+                "titleId": "StringIds.cContentType",
+                "priority": 2,
+                "delegate": "qrc:/menu/MenuComboBox.qml",
+                "enabled": "qrc:/CopyApp/CopySettingsHelper.qml::isSettingEnabled(\"src/scan/contentType\")"
+            }
+        ]
+    },
+    "quicksetList":[
+        {
+            "icon": "qrc:/images/Graphics/ColorModeMixedColor.json",
+            "uuid": "cedab422-33b3-4638-b6a1-604e54525215"
+        }
+    ],
+    "copyModeSettings":{
+        "list": [
+            {
+                "id": "copyModeSettingsPage",
+                "priority": 1,
+                "delegate": "qrc:/menu/MenuTextImageBranch.qml",
+                "module": "qrc:/menu/MenuSelectionList.qml"
+            }
+        ]
+    }
+}

@@ -1,0 +1,13 @@
+{
+    "instances":[
+        {
+            "name":"IDCardCopyApp",
+            "data":{
+                "list":[
+                    "copy_numberOfCopies", "scan_colorMode", "copy_quality", "copy_paperSource"
+                ]
+            },
+            "overrides":[]
+        }
+    ]
+}

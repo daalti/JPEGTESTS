@@ -1,0 +1,17 @@
+{
+    "instances": [
+        {
+            "name": "JobConstraints",
+            "data": {
+                "constraints": {
+                    "scanJobConstraint": {
+                        "scanCaptureModes": [
+                            "STANDARD",
+                            "IDCARD"
+                        ]
+                    }
+                }
+            }
+        }
+    ]
+}

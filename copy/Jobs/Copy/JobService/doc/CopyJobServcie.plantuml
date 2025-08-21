@@ -1,0 +1,64 @@
+@startuml
+title <size:20><b>CopyJobService Class Diagram</b></size>
+
+Interface IJobServcie 
+{
+    +virtual std::string getJobServiceId() const = 0;
+    
+    +virtual ~IJobService() {}
+}
+
+Interface IJobServiceFactory 
+{
+    +StateEvent = Event<IJobServiceFactory<IJT>, JobServiceStateType>;
+    +virtual JobServiceStateType getState() const = 0;
+    +virtual StateEvent& getStateChanged() = 0;
+    +virtual std::shared_ptr<IJT> getDefaultJobTicket() = 0;
+    +virtual std::shared_ptr<IJob> createJob() = 0;
+    +virtual std::shared_ptr<IJob> createJob(std::shared_ptr<IJT> jobTicket) = 0;
+    +virtual ~IJobServiceFactory() {}
+}
+
+IJobServiceFactory <<template <class IJT> >>
+
+
+Class JobServiceFactory
+{
+    -JobServiceStateType     stateType_{JobServiceStateType::AVAILABLE};
+    -StateEventSource        jobServiceStateEvent_{this};
+    -IJobManager *           jobManagerPtr_{nullptr};
+    -IResourceManagerClient  *resourceManagerClient_{nullptr};
+    -string                  jobServiceId_;
+
+    #virtual std::shared_ptr<IJT> createEmptyJobTicket() = 0;
+    #virtual std::shared_ptr<IPipelineBuilder> createPipelineBuilder(std::shared_ptr<IJT> jobTicket) = 0;
+    #virtual std::shared_ptr<IJob> onCreateJob(std::shared_ptr<IJT>               jobTicket,
+                                              std::shared_ptr<IPipelineBuilder>  pipelineBuilder,
+                                              std::shared_ptr<IPromptController> promptController) = 0;
+}
+
+JobServiceFactory << template <class IJT>>>
+
+Interface ICopyJobService
+{
+}
+
+ICopyJobService << template <class IJT>>>
+
+
+Interface IComponent
+{
+
+}
+
+Class JobServiceStandard <<ICopyJobTicket>>
+{
+
+}
+
+IJobServiceFactory <|-- ICopyJobService
+IJobServcie <|-- JobServiceFactory
+IJobServiceFactory <|-- JobServiceFactory
+JobServiceFactory <|-- JobServiceStandard
+IComponent <|-- JobServiceStandard
+@enduml

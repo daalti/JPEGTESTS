@@ -1,0 +1,59 @@
+{
+    "ConstrainedCopyPrimaryButtonMessage":
+    {
+        "paperJam": { "paperJam": "StringIds.cPaperJamDetected", "components":["Scanners,LightWing", "Scanners, LFP Candela"]}
+    },
+    "copyPrompt":{
+        "releasePage": {"releasePage": "StringIds.cTouchReleasePage", "components":["Scanners, LFP Candela"]}
+    },
+    "paperEject":{
+        "eject":{"eject":  "StringIds.cEject","components":["Scanners, LFP Candela"]}
+    },
+    "jobQueue":{
+        "progressJobQueue": {"progressJobQueue": "StringIds.cProgressJobQueue", "components":["spice/hardwareServices/ControlPanelWatcher/Jupiter"]}
+    },
+    "dune::spice::copy_1::configuration::CopyMode::CopyMode": {
+        "_undefined_": "StringIds.cUndefined",
+        "printAfterScanning": "StringIds.cCopySendManually",
+        "printWhileScanning": "StringIds.cCopySendAutomatically"
+    },
+    "FinisherFoldOption": {
+        "none": "StringIds.cNone",
+        "fold": {"fold":"StringIds.cFold",	"components":["Business Unit,OPS & A3/A4,A3 & SFP/MFP,MFP, Print Engine,DragonLaserJet & Finishers,Folder"]},
+        "cFold": {"cFold":"StringIds.cCFold",	"components":["Business Unit,OPS & A3/A4,A3 & SFP/MFP,MFP, Print Engine,DragonLaserJet & Finishers,Folder"]},
+        "vFold": {"vFold":"StringIds.cVFold",	"components":["Business Unit,OPS & A3/A4,A3 & SFP/MFP,MFP, Print Engine,DragonLaserJet & Finishers,Folder"]},			
+        "cInwardTop": {"cInwardTop":"StringIds.cFoldingCInwardTop",	"components":["Business Unit,OPS & A3/A4,A3 & SFP/MFP,MFP, Print Engine,DragonLaserJet & Finishers,Folder"]},
+        "cInwardBottom": {"cInwardBottom":"StringIds.cFoldingCInwardBottom","components":["Business Unit,OPS & A3/A4,A3 & SFP/MFP,MFP, Print Engine,DragonLaserJet & Finishers,Folder"]},
+        "cOutwardTop": {"cOutwardTop":"StringIds.cFoldingCOutwardTop","components":["Business Unit,OPS & A3/A4,A3 & SFP/MFP,MFP, Print Engine,DragonLaserJet & Finishers,Folder"]},
+        "cOutwardBottom": {"cOutwardBottom":"StringIds.cFoldingCOutwardBottom","components":["Business Unit,OPS & A3/A4,A3 & SFP/MFP,MFP, Print Engine,DragonLaserJet & Finishers,Folder"]},
+        "vInwardTop": {"vInwardTop":"StringIds.cFoldingVInwardTop","components":["Business Unit,OPS & A3/A4,A3 & SFP/MFP,MFP, Print Engine,DragonLaserJet & Finishers,Folder"]},
+        "vInwardBottom": {"vInwardBottom":"StringIds.cFoldingVInwardTop","components":["Business Unit,OPS & A3/A4,A3 & SFP/MFP,MFP, Print Engine,DragonLaserJet & Finishers,Folder"]},
+        "vOutwardTop": {"vOutwardTop":"StringIds.cFoldingVOutwardTop","components":["Business Unit,OPS & A3/A4,A3 & SFP/MFP,MFP, Print Engine,DragonLaserJet & Finishers,Folder"]},
+        "vOutwardBottom": {"vInwardBottom":"StringIds.cFoldingVOutwardTop","components":["Business Unit,OPS & A3/A4,A3 & SFP/MFP,MFP, Print Engine,DragonLaserJet & Finishers,Folder"]}
+    },
+    "fitToPageIncludeMargin": {
+        "OutputScaleConstraint" : {"OutputScaleConstraint": "StringIds.cOutputScaleConstraint", "components":["Print Engine,DragonLaserJet & SFP/MFP,MFP","Print Engine,LaserJet & SFP/MFP,MFP"]}
+    },
+    "CopyFoldOption": {
+        "none": "StringIds.cNone",
+        "default_": "StringIds.cDefault",					
+        "cInwardTop": {"cInwardTop":"StringIds.cInwardcFoldLeftUp",	"components":["Business Unit,OPS & A3/A4,A3 & SFP/MFP,MFP, Print Engine,DragonLaserJet & Finishers,Folder"]},
+        "cInwardBottom": {"cInwardBottom":"StringIds.cInwardcFoldRightDown","components":["Business Unit,OPS & A3/A4,A3 & SFP/MFP,MFP, Print Engine,DragonLaserJet & Finishers,Folder"]},
+        "cOutwardTop": {"cOutwardTop":"StringIds.cOutwardCFoldLeftUp","components":["Business Unit,OPS & A3/A4,A3 & SFP/MFP,MFP, Print Engine,DragonLaserJet & Finishers,Folder"]},
+        "cOutwardBottom": {"cOutwardBottom":"StringIds.cOutwardCFoldRightDown","components":["Business Unit,OPS & A3/A4,A3 & SFP/MFP,MFP, Print Engine,DragonLaserJet & Finishers,Folder"]},
+        "vInwardTop": {"vInwardTop":"StringIds.cInwardVFold","components":["Business Unit,OPS & A3/A4,A3 & SFP/MFP,MFP, Print Engine,DragonLaserJet & Finishers,Folder"]},
+        "vInwardBottom": {"vInwardBottom":"StringIds.cInwardVFold","components":["Business Unit,OPS & A3/A4,A3 & SFP/MFP,MFP, Print Engine,DragonLaserJet & Finishers,Folder"]},
+        "vOutwardTop": {"vOutwardTop":"StringIds.cOutwardVFold","components":["Business Unit,OPS & A3/A4,A3 & SFP/MFP,MFP, Print Engine,DragonLaserJet & Finishers,Folder"]},
+        "vOutwardBottom": {"vInwardBottom":"StringIds.cOutwardVFold","components":["Business Unit,OPS & A3/A4,A3 & SFP/MFP,MFP, Print Engine,DragonLaserJet & Finishers,Folder"]}
+    },
+    "CopyBookletMakerOption": {
+        "none": "StringIds.cNone",
+        "default": "StringIds.cDefault",
+        "bookletMaker": {"bookletMaker":"StringIds.cBookletFormat",	"components":["Business Unit,OPS & A3/A4,A3 & SFP/MFP,MFP, Print Engine,DragonLaserJet & Finishers,Booklet Maker"]},
+        "saddleStitch": {"saddleStitch":"StringIds.cFinishingBookletMaker", "components":["Business Unit,OPS & A3/A4,A3 & SFP/MFP,MFP, Print Engine,DragonLaserJet & Finishers,Booklet Maker"]}
+    },
+    "CopyJobPrompts": {
+        "cFlipIDCardDone": {"cFlipIDCardDone" : "StringIds.cFlipIDCardDone" , "components":["copy/spice/IDCardCopyApp/Workflow"]},
+        "cIDCardBack": {"cIDCardBack" : "StringIds.cIDCardBack" , "components":["copy/spice/IDCardCopyApp/Workflow"]}
+    }
+}

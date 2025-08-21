@@ -1,0 +1,14 @@
+namespace dune.imaging.types;
+
+/**< Original content type of image being scanned and used to select color values for print*/
+
+enum OriginalContentType:byte
+{
+    AUTO=0,
+    TEXT,
+    LINE_DRAWING,
+    PHOTO,
+    IMAGE,
+    GLOSSY,
+    MIXED
+}

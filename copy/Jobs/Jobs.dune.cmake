@@ -1,0 +1,2 @@
+DUNE_ADD_INTERFACE()
+    DUNE_LINK_LIBRARIES(imaging/types)

@@ -1,0 +1,34 @@
+{
+    "list": [
+        "copy_numberOfCopies",
+        "scan_colorMode",
+        "copy_paperSource"
+    ],
+    "settings": {
+        "list":[
+            {
+                "id": "idCardCopySettingsPage",
+                "titleId": "StringIds.cOptions",
+                "priority": 1,
+                "module": "qrc:/menu/MenuList.qml",
+                "children": [
+                   "scan_scanOptions",
+                   "scan_contentType"
+                ]
+            },
+            {
+                "id": "scan_scanOptions",
+                "titleId": "StringIds.cScanOptions",
+                "priority": 1,
+                "delegate": "MenuSection.qml"
+            }, 
+            {
+                "id": "scan_contentType",
+                "titleId": "StringIds.cContentType",
+                "priority": 2,
+                "delegate": "qrc:/menu/MenuComboBox.qml",
+                "enabled": "qrc:/CopyApp/CopySettingsHelper.qml::isSettingEnabled(\"src/scan/contentType\")"
+            }
+        ]
+    }
+}

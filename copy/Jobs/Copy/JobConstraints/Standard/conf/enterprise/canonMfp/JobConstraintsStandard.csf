@@ -1,0 +1,2588 @@
+{
+    "instances": [
+        {
+            "name": "JobConstraints",
+            "inherits":"family",
+            "data": {
+                "constraints": {
+                    "plexMode": [
+                        "SIMPLEX",
+                        "DUPLEX"
+                    ],
+                    "plexBinding": [
+                        "ONE_SIDED",
+                        "LONG_EDGE",
+                        "SHORT_EDGE"
+                    ],
+                    "collate": [
+                        "Collate",
+                        "Uncollate"
+                    ],
+                    "minCopies": 1,
+                    "maxCopies": 9999,
+                    "stepCopies": 1.0,
+                    "printQuality": [
+                        "DRAFT",
+                        "NORMAL",
+                        "BEST"
+                    ],
+                    "printingOrder": [
+                        "FIRST_PAGE_ON_TOP"
+                    ],
+                    "mediaPrintSupportedSource": [ 
+                        "AUTOSELECT",
+                        "TRAY1",
+                        "TRAY2"
+                    ],
+                    "mediaPrintSupportedDestinations": [
+                        "STANDARDBIN"
+                    ],
+                    "mediaSupportedSize": [
+                        {
+                            "size": {
+                                "id": "ANY"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2",
+                                "TRAY3"
+                            ],
+                            "duplex": [
+                                "SIMPLEX",
+                                "DUPLEX"
+                            ]
+                        },
+                        {
+                            "size":{
+                                "id":"LETTER",
+                                "mediaOrientation":"PORTRAIT"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2",
+                                "TRAY3"
+                            ],
+                            "duplex": [
+                                "SIMPLEX",
+                                "DUPLEX"
+                            ]
+                        },
+                        {
+                            "size":{
+                                "id":"LEGAL",
+                                "mediaOrientation":"PORTRAIT"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2",
+                                "TRAY3"
+                            ],
+                            "duplex": [
+                                "SIMPLEX",
+                                "DUPLEX"
+                            ]
+                        },
+                        {
+                            "size":{
+                                "id":"US_EXECUTIVE"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2",
+                                "TRAY3"
+                            ],
+                            "duplex": [
+                                "SIMPLEX",
+                                "DUPLEX"
+                            ]
+                        },
+                        {
+                            "size":{
+                                "id":"STATEMENT"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2",
+                                "TRAY3"
+                            ],
+                            "duplex": [
+                                "SIMPLEX"
+                            ]
+                        },
+                        {
+                            "size": {
+                              "id": "FOOLSCAP"
+                            },
+                            "supportedMediaSource": [
+                              "TRAY1",
+                              "TRAY2",
+                              "TRAY3"
+                            ],
+                            "duplex": [
+                              "SIMPLEX"
+                            ]
+                        },
+                        {
+                            "size":{
+                                "id":"PHOTO3X5"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2"
+                            ],
+                            "duplex": [
+                                "SIMPLEX"
+                            ]
+                        },
+                        {
+                            "size":{
+                                "id":"PHOTO4X6"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2"
+                            ],
+                            "duplex": [
+                                "SIMPLEX"
+                            ]
+                        },
+                        {
+                            "size":{
+                                "id":"PHOTO5X7"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2"
+                            ],
+                            "duplex": [
+                                "SIMPLEX"
+                            ]
+                        },
+                        {
+                            "size":{
+                                "id":"PHOTO5X8"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2"
+                            ],
+                            "duplex": [
+                                "SIMPLEX"
+                            ]
+                        },
+                        {
+                            "size":{
+                                "id":"OFICIO_216X340"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2",
+                                "TRAY3"
+                            ],
+                            "duplex": [
+                                "SIMPLEX",
+                                "DUPLEX"
+                            ]
+                        },
+                        {
+                            "size":{
+                                "id":"A4",
+                                "mediaOrientation":"PORTRAIT"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2",
+                                "TRAY3"
+                            ],
+                            "duplex": [
+                                "SIMPLEX",
+                                "DUPLEX"
+                            ]
+                        },
+                        {
+                            "size":{
+                                "id":"A5",
+                                "mediaOrientation":"PORTRAIT"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2"
+                            ],
+                            "duplex": [
+                                "SIMPLEX"
+                            ]
+                        },
+                        {
+                            "size":{
+                                "id":"A5",
+                                "mediaOrientation":"LANDSCAPE"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2"
+                            ],
+                            "duplex": [
+                                "SIMPLEX"
+                            ]
+                        },
+                        {
+                            "size":{
+                                "id":"A6"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2"
+                            ],
+                            "duplex": [
+                                "SIMPLEX"
+                            ]
+                        },
+                        {
+                            "size":{
+                                "id":"RA4"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2",
+                                "TRAY3"
+                            ],
+                            "duplex": [
+                                "SIMPLEX",
+                                "DUPLEX"
+                            ]
+                        },
+                        {
+                            "size":{
+                                "id":"JIS_B5",
+                                "mediaOrientation":"PORTRAIT"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2",
+                                "TRAY3"
+                            ],
+                            "duplex": [
+                                "SIMPLEX",
+                                "DUPLEX"
+                            ]
+                        },
+                        {
+                            "size":{
+                                "id":"JIS_B6"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2"
+                            ],
+                            "duplex": [
+                                "SIMPLEX"
+                            ]
+                        },
+                        {
+                            "size":{
+                                "id":"MEDIA100X150"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2",
+                                "TRAY3"
+                            ],
+                            "duplex": [
+                                "SIMPLEX"
+                            ]
+                        },
+                        {
+                            "size":{
+                                "id":"MEDIA16K_195X270"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2",
+                                "TRAY3"                            
+                            ],
+                            "duplex": [
+                                "SIMPLEX",
+                                "DUPLEX"
+                            ]
+                        },
+                        {
+                            "size":{
+                                "id":"MEDIA16K_184X260"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2",
+                                "TRAY3"
+                            ],
+                            "duplex": [
+                                "SIMPLEX",
+                                "DUPLEX"
+                            ]
+                        },
+                        {
+                            "size":{
+                                "id":"ROC16K"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2",
+                                "TRAY3"
+                            ],
+                            "duplex": [
+                                "SIMPLEX",
+                                "DUPLEX"
+                            ]
+                        },
+                        {
+                            "size":{
+                                "id":"HAGAKI_POSTCARD"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1"
+                            ],
+                            "duplex": [
+                                "SIMPLEX"
+                            ]
+                        },
+                        {
+                            "size":{
+                                "id":"HAGAKI_OUFUKU"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1"
+                            ],
+                            "duplex": [
+                                "SIMPLEX"
+                            ]
+                        },
+                        {
+                            "size":{
+                                "id":"COM9ENVELOPE"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2"
+                                
+                            ],
+                            "duplex": [
+                                "SIMPLEX"
+                            ]
+                        },
+                        {
+                            "size":{
+                                "id":"COM10ENVELOPE"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2"
+                            ],
+                            "duplex": [
+                                "SIMPLEX"
+                            ]
+                        },
+                        {
+                            "size":{
+                                "id":"MONARCHENVELOPE"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2"
+                            ],
+                            "duplex": [
+                                "SIMPLEX"
+                            ]
+                        },
+                        {
+                            "size":{
+                                "id":"B5ENVELOPE"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2"
+                            ],
+                            "duplex": [
+                                "SIMPLEX"
+                            ]
+                        },
+                        {
+                            "size":{
+                                "id":"C5ENVELOPE"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2"
+                            ],
+                            "duplex": [
+                                "SIMPLEX"
+                            ]
+                        },
+                        {
+                            "size":{
+                                "id":"C6ENVELOPE"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2"
+                            ],
+                            "duplex": [
+                                "SIMPLEX"
+                            ]
+                        },
+                        {
+                            "size":{
+                                "id":"DLENVELOPE"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2"
+                            ],
+                            "duplex": [
+                                "SIMPLEX"
+                            ]
+                        },
+                        {
+                            "size":{
+                                "id":"CUSTOM"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2",
+                                "TRAY3"
+                            ],
+                            "duplex": [
+                                "SIMPLEX",
+                                "DUPLEX"
+                            ]
+                        }
+                    ],
+                    "mediaSupportedType": [
+                        {
+                            "type":{
+                                "id":"ANY"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2",
+                                "TRAY3"
+                            ],
+                            "duplex": [
+                                "SIMPLEX",
+                                "DUPLEX"
+                            ],
+                            "colorMode": [
+                                "AUTODETECT",
+                                "COLOR",
+                                "GRAYSCALE"
+                            ]                        },
+                        {
+                            "type":{
+                                "id":"STATIONERY"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2",
+                                "TRAY3"
+                            ],
+                            "duplex": [
+                                "SIMPLEX",
+                                "DUPLEX"
+                            ],
+                            "colorMode": [
+                                "AUTODETECT",
+                                "COLOR",
+                                "GRAYSCALE"
+                            ]                        },
+                        {
+                            "type":{
+                                "id":"HPECOFFICIENT"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2",
+                                "TRAY3"
+                            ],
+                            "duplex": [
+                                "SIMPLEX",
+                                "DUPLEX"
+                            ],
+                            "colorMode": [
+                                "AUTODETECT",
+                                "COLOR",
+                                "GRAYSCALE"
+                            ]                        },
+                        {
+                            "type":{
+                                "id":"HPMATTE90G"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2",
+                                "TRAY3"
+                            ],
+                            "duplex": [
+                                "SIMPLEX",
+                                "DUPLEX"
+                            ],
+                            "colorMode": [
+                                "AUTODETECT",
+                                "COLOR",
+                                "GRAYSCALE"
+                            ]                        },
+                        {
+                            "type":{
+                                "id":"LIGHT"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2",
+                                "TRAY3"
+                            ],
+                            "duplex": [
+                                "SIMPLEX",
+                                "DUPLEX"
+                            ],
+                            "colorMode": [
+                                "AUTODETECT",
+                                "COLOR",
+                                "GRAYSCALE"
+                            ]                        },
+                        {
+                            "type":{
+                                "id":"INTERMEDIATE"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2",
+                                "TRAY3"
+                            ],
+                            "duplex": [
+                                "SIMPLEX",
+                                "DUPLEX"
+                            ],
+                            "colorMode": [
+                                "AUTODETECT",
+                                "COLOR",
+                                "GRAYSCALE"
+                            ]                        },
+                        {
+                            "type":{
+                                "id":"BOND"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2",
+                                "TRAY3"
+                            ],
+                            "duplex": [
+                                "SIMPLEX",
+                                "DUPLEX"
+                            ],
+                            "colorMode": [
+                                "AUTODETECT",
+                                "COLOR",
+                                "GRAYSCALE"
+                            ]                        },
+                        {
+                            "type":{
+                                "id":"RECYCLED"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2",
+                                "TRAY3"
+                            ],
+                            "duplex": [
+                                "SIMPLEX",
+                                "DUPLEX"
+                            ],
+                            "colorMode": [
+                                "AUTODETECT",
+                                "COLOR",
+                                "GRAYSCALE"
+                            ]                        },
+                        {
+                            "type":{
+                                "id":"HPMATTE105G"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2",
+                                "TRAY3"
+                            ],
+                            "duplex": [
+                                "SIMPLEX",
+                                "DUPLEX"
+                            ],
+                            "colorMode": [
+                                "AUTODETECT",
+                                "COLOR",
+                                "GRAYSCALE"
+                            ]                        },
+                        {
+                            "type":{
+                                "id":"HPMATTE120G"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2",
+                                "TRAY3"
+                            ],
+                            "duplex": [
+                                "SIMPLEX",
+                                "DUPLEX"
+                            ],
+                            "colorMode": [
+                                "AUTODETECT",
+                                "COLOR",
+                                "GRAYSCALE"
+                            ]                        },
+                        {
+                            "type":{
+                                "id":"HPGLOSSY120G"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2",
+                                "TRAY3"
+                            ],
+                            "duplex": [
+                                "SIMPLEX",
+                                "DUPLEX"
+                            ],
+                            "colorMode": [
+                                "AUTODETECT",
+                                "COLOR",
+                                "GRAYSCALE"
+                            ]                        },
+                        {
+                            "type":{
+                                "id":"MIDWEIGHT"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2",
+                                "TRAY3"
+                            ],
+                            "duplex": [
+                                "SIMPLEX",
+                                "DUPLEX"
+                            ],
+                            "colorMode": [
+                                "AUTODETECT",
+                                "COLOR",
+                                "GRAYSCALE"
+                            ]                        },
+                        {
+                            "type":{
+                                "id":"HEAVY"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2",
+                                "TRAY3"
+                            ],
+                            "duplex": [
+                                "SIMPLEX",
+                                "DUPLEX"
+                            ],
+                            "colorMode": [
+                                "AUTODETECT",
+                                "COLOR",
+                                "GRAYSCALE"
+                            ]                        },
+                        {
+                            "type":{
+                                "id":"HEAVYGLOSSY"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2",
+                                "TRAY3"
+                            ],
+                            "duplex": [
+                                "SIMPLEX",
+                                "DUPLEX"
+                            ],
+                            "colorMode": [
+                                "AUTODETECT",
+                                "COLOR",
+                                "GRAYSCALE"
+                            ]                        },
+                        {
+                            "type":{
+                                "id":"HPMATTE150G"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2",
+                                "TRAY3"
+                            ],
+                            "duplex": [
+                                "SIMPLEX",
+                                "DUPLEX"
+                            ],
+                            "colorMode": [
+                                "AUTODETECT",
+                                "COLOR",
+                                "GRAYSCALE"
+                            ]                        },
+                        {
+                            "type":{
+                                "id":"HPGLOSSY150G"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2",
+                                "TRAY3"
+                            ],
+                            "duplex": [
+                                "SIMPLEX",
+                                "DUPLEX"
+                            ],
+                            "colorMode": [
+                                "AUTODETECT",
+                                "COLOR",
+                                "GRAYSCALE"
+                            ]                        },
+                        {
+                            "type":{
+                                "id":"EXTRAHEAVY"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2",
+                                "TRAY3"
+                            ],
+                            "duplex": [
+                                "SIMPLEX",
+                                "DUPLEX"
+                            ],
+                            "colorMode": [
+                                "AUTODETECT",
+                                "COLOR",
+                                "GRAYSCALE"
+                            ]                        },
+                        {
+                            "type":{
+                                "id":"EXTRAHEAVYGLOSSY"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2",
+                                "TRAY3"
+                            ],
+                            "duplex": [
+                                "SIMPLEX",
+                                "DUPLEX"
+                            ],
+                            "colorMode": [
+                                "AUTODETECT",
+                                "COLOR",
+                                "GRAYSCALE"
+                            ]                        },
+                        {
+                            "type":{
+                                "id":"HPMATTE200G"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2",
+                                "TRAY3"
+                            ],
+                            "duplex": [
+                                "SIMPLEX"
+                            ],
+                            "colorMode": [
+                                "AUTODETECT",
+                                "COLOR",
+                                "GRAYSCALE"
+                            ]                        },
+                        {
+                            "type":{
+                                "id":"HPGLOSSY200G"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2",
+                                "TRAY3"
+                            ],
+                            "duplex": [
+                                "SIMPLEX"
+                            ],
+                            "colorMode": [
+                                "AUTODETECT",
+                                "COLOR",
+                                "GRAYSCALE"
+                            ]                        },
+                        {
+                            "type":{
+                                "id":"CARDSTOCK"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2",
+                                "TRAY3"
+                            ],
+                            "duplex": [
+                                "SIMPLEX"
+                            ],
+                            "colorMode": [
+                                "AUTODETECT",
+                                "COLOR",
+                                "GRAYSCALE"
+                            ]                        },
+                        {
+                            "type":{
+                                "id":"CARDGLOSSY"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2",
+                                "TRAY3"
+                            ],
+                            "duplex": [
+                                "SIMPLEX"
+                            ],
+                            "colorMode": [
+                                "AUTODETECT",
+                                "COLOR",
+                                "GRAYSCALE"
+                            ]                        },
+                        {
+                            "type":{
+                                "id":"TRANSPARENCY"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2",
+                                "TRAY3"
+                            ],
+                            "duplex": [
+                                "SIMPLEX"
+                            ],
+                            "colorMode": [
+                                "AUTODETECT",
+                                "COLOR",
+                                "GRAYSCALE"
+                            ]                        },
+                        {
+                            "type":{
+                                "id":"LABELS"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2",
+                                "TRAY3"
+                            ],
+                            "duplex": [
+                                "SIMPLEX"
+                            ],
+                            "colorMode": [
+                                "AUTODETECT",
+                                "COLOR",
+                                "GRAYSCALE"
+                            ]                        },
+                        {
+                            "type":{
+                                "id":"LETTERHEAD"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2",
+                                "TRAY3"
+                            ],
+                            "duplex": [
+                                "SIMPLEX",
+                                "DUPLEX"
+                            ],
+                            "colorMode": [
+                                "AUTODETECT",
+                                "COLOR",
+                                "GRAYSCALE"
+                            ]                        },
+                        {
+                            "type":{
+                                "id":"ENVELOPE"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2",
+                                "TRAY3"
+                            ],
+                            "duplex": [
+                                "SIMPLEX"
+                            ],
+                            "colorMode": [
+                                "AUTODETECT",
+                                "COLOR",
+                                "GRAYSCALE"
+                            ]                        },
+                        {
+                            "type": {
+                                "id": "HEAVYENVELOPE"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2",
+                                "TRAY3"
+                            ],
+                            "duplex": [
+                                "SIMPLEX"
+                            ],
+                            "colorMode": [
+                                "AUTODETECT",
+                                "COLOR",
+                                "GRAYSCALE"
+                            ]                        },    
+                        {
+                            "type":{
+                                "id":"PREPRINTED"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2",
+                                "TRAY3"
+                            ],
+                            "duplex": [
+                                "SIMPLEX",
+                                "DUPLEX"
+                            ],
+                            "colorMode": [
+                                "AUTODETECT",
+                                "COLOR",
+                                "GRAYSCALE"
+                            ]                        },
+                        {
+                            "type":{
+                                "id":"PREPUNCHED"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2",
+                                "TRAY3"
+                            ],
+                            "duplex": [
+                                "SIMPLEX",
+                                "DUPLEX"
+                            ],
+                            "colorMode": [
+                                "AUTODETECT",
+                                "COLOR",
+                                "GRAYSCALE"
+                            ]                        },
+                        {
+                            "type":{
+                                "id":"COLORED"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2",
+                                "TRAY3"
+                            ],
+                            "duplex": [
+                                "SIMPLEX",
+                                "DUPLEX"
+                            ],
+                            "colorMode": [
+                                "AUTODETECT",
+                                "COLOR",
+                                "GRAYSCALE"
+                            ]                        },
+                        {
+                            "type":{
+                                "id":"ROUGH"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2",
+                                "TRAY3"
+                            ],
+                            "duplex": [
+                                "SIMPLEX",
+                                "DUPLEX"
+                            ],
+                            "colorMode": [
+                                "AUTODETECT",
+                                "COLOR",
+                                "GRAYSCALE"
+                            ]                        },
+                        {
+                            "type":{
+                                "id":"HEAVYROUGH"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2",
+                                "TRAY3"
+                            ],
+                            "duplex": [
+                                "SIMPLEX",
+                                "DUPLEX"
+                            ],
+                            "colorMode": [
+                                "AUTODETECT",
+                                "COLOR",
+                                "GRAYSCALE"
+                            ]                        },
+                        {
+                            "type":{
+                                "id":"OPAQUEFILM"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2",
+                                "TRAY3"
+                            ],
+                            "duplex": [
+                                "SIMPLEX",
+                                "DUPLEX"
+                            ],
+                            "colorMode": [
+                                "AUTODETECT",
+                                "COLOR",
+                                "GRAYSCALE"
+                            ]                        },
+                        {
+                            "type":{
+                                "id":"USER_DEFINED_1"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2",
+                                "TRAY3"
+                            ],
+                            "duplex": [
+                                "SIMPLEX",
+                                "DUPLEX"
+                            ],
+                            "colorMode": [
+                                "AUTODETECT",
+                                "COLOR",
+                                "GRAYSCALE"
+                            ]                        },
+                        {
+                            "type":{
+                                "id":"USER_DEFINED_2"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2",
+                                "TRAY3"
+                            ],
+                            "duplex": [
+                                "SIMPLEX",
+                                "DUPLEX"
+                            ],
+                            "colorMode": [
+                                "AUTODETECT",
+                                "COLOR",
+                                "GRAYSCALE"
+                            ]                        },
+                        {
+                            "type":{
+                                "id":"USER_DEFINED_3"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2",
+                                "TRAY3"
+                            ],
+                            "duplex": [
+                                "SIMPLEX",
+                                "DUPLEX"
+                            ],
+                            "colorMode": [
+                                "AUTODETECT",
+                                "COLOR",
+                                "GRAYSCALE"
+                            ]                        },
+                        {
+                            "type":{
+                                "id":"USER_DEFINED_4"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2",
+                                "TRAY3"
+                            ],
+                            "duplex": [
+                                "SIMPLEX",
+                                "DUPLEX"
+                            ],
+                            "colorMode": [
+                                "AUTODETECT",
+                                "COLOR",
+                                "GRAYSCALE"
+                            ]                        },
+                        {
+                            "type":{
+                                "id":"USER_DEFINED_5"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2",
+                                "TRAY3"
+                            ],
+                            "duplex": [
+                                "SIMPLEX",
+                                "DUPLEX"
+                            ],
+                            "colorMode": [
+                                "AUTODETECT",
+                                "COLOR",
+                                "GRAYSCALE"
+                            ]                        },
+                        {
+                            "type":{
+                                "id":"USER_DEFINED_6"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2",
+                                "TRAY3"
+                            ],
+                            "duplex": [
+                                "SIMPLEX",
+                                "DUPLEX"
+                            ],
+                            "colorMode": [
+                                "AUTODETECT",
+                                "COLOR",
+                                "GRAYSCALE"
+                            ]                        },
+                        {
+                            "type":{
+                                "id":"USER_DEFINED_7"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2",
+                                "TRAY3"
+                            ],
+                            "duplex": [
+                                "SIMPLEX",
+                                "DUPLEX"
+                            ],
+                            "colorMode": [
+                                "AUTODETECT",
+                                "COLOR",
+                                "GRAYSCALE"
+                            ]                        },
+                        {
+                            "type":{
+                                "id":"USER_DEFINED_8"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2",
+                                "TRAY3"
+                            ],
+                            "duplex": [
+                                "SIMPLEX",
+                                "DUPLEX"
+                            ],
+                            "colorMode": [
+                                "AUTODETECT",
+                                "COLOR",
+                                "GRAYSCALE"
+                            ]                        },
+                        {
+                            "type":{
+                                "id":"USER_DEFINED_9"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2",
+                                "TRAY3"
+                            ],
+                            "duplex": [
+                                "SIMPLEX",
+                                "DUPLEX"
+                            ],
+                            "colorMode": [
+                                "AUTODETECT",
+                                "COLOR",
+                                "GRAYSCALE"
+                            ]                        },
+                        {
+                            "type":{
+                                "id":"USER_DEFINED_10"
+                            },
+                            "supportedMediaSource": [
+                                "TRAY1",
+                                "TRAY2",
+                                "TRAY3"
+                            ],
+                            "duplex": [
+                                "SIMPLEX",
+                                "DUPLEX"
+                            ],
+                            "colorMode": [
+                                "AUTODETECT",
+                                "COLOR",
+                                "GRAYSCALE"
+                            ]
+                        }
+                    ],
+                    "scanJobConstraint": {
+                        "colorMode": [
+                            "AUTODETECT",
+                            "COLOR",
+                            "GRAYSCALE"
+                        ],
+                        "pagesPerSheet": [
+                            "OneUp",
+                            "TwoUp",
+                            "FourUp"
+                        ],
+                        "numberUpPresentationDirection": [
+                            "ToBottomToLeft",        
+                            "ToBottomToRight",        
+                            "ToLeftToBottom",        
+                            "ToLeftToTop",        
+                            "ToRightToBottom",        
+                            "ToRightToTop",        
+                            "ToTopToLeft",        
+                            "ToTopToRight"
+                        ],
+                        "bookletFormat":[
+                            "Off",
+                            "LeftEdge"
+                        ],
+                        "imageBorder":[
+                            "NoBorder",
+                            "DefaultLineBorder"
+                        ],
+                        "minSharpness": 0,
+                        "maxSharpness": 5,
+                        "stepSharpness": 1,
+                        "minAutoPaperColorRemovalLevel": 0,
+                        "maxAutoPaperColorRemovalLevel": 5,
+                        "stepAutoPaperColorRemovalLevel": 1,
+                        "minAutoToneLevel": 0,
+                        "maxAutoToneLevel": 5,
+                        "stepAutoToneLevel": 1,
+                        "minContrast": 0,
+                        "maxContrast": 9,
+                        "stepContrast": 1,
+                        "minBackgroundRemoval": 0,
+                        "maxBackgroundRemoval": 9,
+                        "stepBackgroundRemoval": 1,
+                        "scaleSelection": [
+                            "NONE",
+                            "FITTOPAGE",
+                            "CUSTOM",
+                            "LEGALTOLETTER"
+                        ],
+                        "scanCaptureModes":["STANDARD", "BOOKMODE", "IDCARD"],
+                        "watermarkType": [
+                          "NONE",
+                          "TEXT_WATERMARK"
+                        ],
+                        "watermarkId": [
+                            "NONE",
+                            "USER_DEFINED_1",
+                            "ADMIN_DEFINED_1",
+                            "ADMIN_DEFINED_2",
+                            "ADMIN_DEFINED_3",
+                            "ADMIN_DEFINED_4",
+                            "ADMIN_DEFINED_5",
+                            "ADMIN_DEFINED_6",
+                            "ADMIN_DEFINED_7",
+                            "ADMIN_DEFINED_8",
+                            "DRAFT",
+                            "CONFIDENTIAL",
+                            "SECRET",
+                            "TOP_SECRET",
+                            "URGENT"
+                        ],
+                        "watermarkTextColor": [
+                          "BLACK",
+                          "YELLOW",
+                          "GREEN",
+                          "RED",
+                          "BLUE",
+                          "SKY_BLUE",
+                          "PURPLE"
+                        ],
+                        "watermarkTextSize": [
+                          "THIRTY_POINT",
+                          "FORTY_POINT",
+                          "SIXTY_POINT"
+                        ],
+                        "watermarkTextFont": [
+                          "LETTER_GOTHIC",
+                          "ANTIQUE_OLIVE",
+                          "CENTURY_SCHOOLBOOK",
+                          "GARAMOND"
+                        ],
+                        "watermarkOnlyFirstPage": [
+                            false,
+                            true
+                        ],
+                        "watermarkRotate45": [
+                            false,
+                            true
+                        ],
+                        "minWatermarkDarkness": 1,
+                        "maxWatermarkDarkness": 5,
+                        "stepWatermarkDarkness": 1,
+                        "stampLocation": [
+                            "TOP_LEFT",
+                            "TOP_CENTER",
+                            "TOP_RIGHT",
+                            "BOTTOM_LEFT",
+                            "BOTTOM_CENTER",
+                            "BOTTOM_RIGHT"
+                        ],
+                        "stampPolicy": [
+                            "NONE",
+                            "ENFORCED",
+                            "GUIDED"
+                        ],
+                        "stampType": [
+                            "NONE",
+                            "ADMIN_DEFINED_1",
+                            "ADMIN_DEFINED_2",
+                            "ADMIN_DEFINED_3",
+                            "IP_ADDRESS",
+                            "USER_NAME",
+                            "PRODUCT_INFORMATION",
+                            "PAGE_NUMBER",
+                            "DATE_AND_TIME",
+                            "DATE",
+                            "USER_DEFINED_1",
+                            "USER_DEFINED_2"
+                        ],
+                        "stampTextColor": [
+                            "BLACK",
+                            "BLUE",
+                            "GREEN",
+                            "PURPLE",
+                            "RED",
+                            "SKY_BLUE",
+                            "YELLOW"
+                        ],
+                        "stampTextFont": [
+                            "LETTER_GOTHIC",
+                            "ANTIQUE_OLIVE",
+                            "CENTURY_SCHOOLBOOK",
+                            "GARAMOND"
+                        ],
+                        "stampTextSize": [
+                            "EIGHT_POINT",
+                            "TWELVE_POINT",
+                            "TWENTY_POINT"
+                        ],
+                        "stampStartingPageMin": 1,
+                        "stampStartingPageMax": 1000000,
+                        "stampStartingPageStep": 1,
+                        "stampStartingNumberMin": 1,
+                        "stampStartingNumberMax": 1000000,
+                        "stampStartingNumberStep": 1,
+                        "stampNumberOfDigitsMin": 1,
+                        "stampNumberOfDigitsMax": 10,
+                        "stampNumberOfDigitsStep": 1,
+                        "stampPageNumberingStyle": [
+                            "NUMBER",
+                            "PAGE_PLUS_NUMBER",
+                            "HYPHEN_NUMBER_HYPHEN"
+                        ],
+                        "adfOriginalSizes":[
+                            {
+                                "id":"ANY",
+                                "mediaOrientation":"PORTRAIT"
+                            },
+                            {
+                                "id":"LETTER",
+                                "mediaOrientation":"PORTRAIT"
+                            },
+                            {
+                              "id": "MIXED_LETTER_LEGAL",
+                              "mediaOrientation": "PORTRAIT"
+                            },
+                            {
+                                "id":"LEGAL",
+                                "mediaOrientation":"PORTRAIT"
+                            },
+                            {
+                                "id":"US_EXECUTIVE",
+                                "mediaOrientation":"PORTRAIT"
+                            },
+                            {
+                                "id":"STATEMENT",
+                                "mediaOrientation":"PORTRAIT"
+                            },
+                            {
+                                "id": "FOOLSCAP",
+                                "mediaOrientation": "PORTRAIT"
+                            },
+                            {
+                                "id":"PHOTO5X7",
+                                "mediaOrientation":"PORTRAIT"
+                            },
+                            {
+                                "id":"PHOTO5X8",
+                                "mediaOrientation":"PORTRAIT"
+                            },
+                            {
+                                "id":"A4",
+                                "mediaOrientation":"PORTRAIT"
+                            },
+                            {
+                                "id":"A5",
+                                "mediaOrientation":"PORTRAIT"
+                            },
+                            {
+                                "id":"RA4",
+                                "mediaOrientation":"PORTRAIT"
+                            },
+                            {
+                                "id":"JIS_B5",
+                                "mediaOrientation":"PORTRAIT"
+                            },
+                            {
+                                "id":"JIS_B6",
+                                "mediaOrientation":"PORTRAIT"
+                            },
+                            {
+                                "id":"MEDIA16K_195X270",
+                                "mediaOrientation":"PORTRAIT"
+                            },
+                            {
+                                "id":"MEDIA16K_184X260",
+                                "mediaOrientation":"PORTRAIT"
+                            },
+                            {
+                                "id":"ROC16K",
+                                "mediaOrientation":"PORTRAIT"
+                            },
+                            {
+                                "id":"HAGAKI_OUFUKU",
+                                "mediaOrientation":"PORTRAIT"
+                            },
+                            {
+                                "id":"OFICIO_216X340",
+                                "mediaOrientation":"PORTRAIT"
+                            }
+                        ],
+                        "flatbedOriginalSizes":[
+                            {
+                                "id":"ANY",
+                                "mediaOrientation":"PORTRAIT"
+                            },
+                            {
+                                "id":"LETTER",
+                                "mediaOrientation":"PORTRAIT"
+                            },
+                            {
+                              "id": "MIXED_LETTER_LEGAL",
+                              "mediaOrientation": "PORTRAIT"
+                            },
+                            {
+                                "id":"LEGAL",
+                                "mediaOrientation":"PORTRAIT"
+                            },
+                            {
+                                "id":"US_EXECUTIVE",
+                                "mediaOrientation":"PORTRAIT"
+                            },
+                            {
+                                "id":"STATEMENT",
+                                "mediaOrientation":"PORTRAIT"
+                            },
+                            {
+                                "id": "FOOLSCAP",
+                                "mediaOrientation": "PORTRAIT"
+                            },
+                            {
+                                "id":"PHOTO5X7",
+                                "mediaOrientation":"PORTRAIT"
+                            },
+                            {
+                                "id":"PHOTO5X8",
+                                "mediaOrientation":"PORTRAIT"
+                            },
+                            {
+                                "id":"A4",
+                                "mediaOrientation":"PORTRAIT"
+                            },
+                            {
+                                "id":"A5",
+                                "mediaOrientation":"PORTRAIT"
+                            },
+                            {
+                                "id":"RA4",
+                                "mediaOrientation":"PORTRAIT"
+                            },
+                            {
+                                "id":"JIS_B5",
+                                "mediaOrientation":"PORTRAIT"
+                            },
+                            {
+                                "id":"JIS_B6",
+                                "mediaOrientation":"PORTRAIT"
+                            },
+                            {
+                                "id":"MEDIA16K_195X270",
+                                "mediaOrientation":"PORTRAIT"
+                            },
+                            {
+                                "id":"MEDIA16K_184X260",
+                                "mediaOrientation":"PORTRAIT"
+                            },
+                            {
+                                "id":"ROC16K",
+                                "mediaOrientation":"PORTRAIT"
+                            },
+                            {
+                                "id":"HAGAKI_OUFUKU",
+                                "mediaOrientation":"PORTRAIT"
+                            },
+                            {
+                                "id":"OFICIO_216X340",
+                                "mediaOrientation":"PORTRAIT"
+                            }
+                        ]
+                    }
+                }
+            },
+            "overrides": [
+                {
+                    "runtimeProducts": ["Camden", "Bowie"],
+                    "protos": [],
+                    "data": {},
+                    "patch": [
+                        { "op": "remove", "path": "/constraints/scanJobConstraint/minAutoPaperColorRemovalLevel" },
+                        { "op": "remove", "path": "/constraints/scanJobConstraint/maxAutoPaperColorRemovalLevel" },
+                        { "op": "remove", "path": "/constraints/scanJobConstraint/stepAutoPaperColorRemovalLevel" },
+                        { "op": "remove", "path": "/constraints/scanJobConstraint/minAutoToneLevel" },
+                        { "op": "remove", "path": "/constraints/scanJobConstraint/maxAutoToneLevel" },
+                        { "op": "remove", "path": "/constraints/scanJobConstraint/stepAutoToneLevel" }
+                    ]
+                },
+                {
+                    "runtimeProducts": ["Busch", "Dagger"],
+                    "protos": [],
+                    "data": {
+                        "constraints": {
+                            "mediaSupportedType": [
+                                {
+                                    "type":{
+                                        "id":"ANY"
+                                    },
+                                    "supportedMediaSource": [
+                                        "TRAY1",
+                                        "TRAY2",
+                                        "TRAY3"
+                                    ],
+                                    "duplex": [
+                                        "SIMPLEX",
+                                        "DUPLEX"
+                                    ],
+                                    "colorMode": [
+                                        "GRAYSCALE"
+                                    ]
+                                },
+                                {
+                                    "type":{
+                                        "id":"STATIONERY"
+                                    },
+                                    "supportedMediaSource": [
+                                        "TRAY1",
+                                        "TRAY2",
+                                        "TRAY3"
+                                    ],
+                                    "duplex": [
+                                        "SIMPLEX",
+                                        "DUPLEX"
+                                    ],
+                                    "colorMode": [
+                                        "GRAYSCALE"
+                                    ]                                },
+                                {
+                                    "type":{
+                                        "id":"HPECOFFICIENT"
+                                    },
+                                    "supportedMediaSource": [
+                                        "TRAY1",
+                                        "TRAY2",
+                                        "TRAY3"
+                                    ],
+                                    "duplex": [
+                                        "SIMPLEX",
+                                        "DUPLEX"
+                                    ],
+                                    "colorMode": [
+                                        "GRAYSCALE"
+                                    ]                                },
+                                {
+                                    "type":{
+                                        "id":"HPMATTE90G"
+                                    },
+                                    "supportedMediaSource": [
+                                        "TRAY1",
+                                        "TRAY2",
+                                        "TRAY3"
+                                    ],
+                                    "duplex": [
+                                        "SIMPLEX",
+                                        "DUPLEX"
+                                    ],
+                                    "colorMode": [
+                                        "GRAYSCALE"
+                                    ]                                },
+                                {
+                                    "type":{
+                                        "id":"LIGHT"
+                                    },
+                                    "supportedMediaSource": [
+                                        "TRAY1",
+                                        "TRAY2",
+                                        "TRAY3"
+                                    ],
+                                    "duplex": [
+                                        "SIMPLEX",
+                                        "DUPLEX"
+                                    ],
+                                    "colorMode": [
+                                        "GRAYSCALE"
+                                    ]                                },
+                                {
+                                    "type":{
+                                        "id":"INTERMEDIATE"
+                                    },
+                                    "supportedMediaSource": [
+                                        "TRAY1",
+                                        "TRAY2",
+                                        "TRAY3"
+                                    ],
+                                    "duplex": [
+                                        "SIMPLEX",
+                                        "DUPLEX"
+                                    ],
+                                    "colorMode": [
+                                        "GRAYSCALE"
+                                    ]                                },
+                                {
+                                    "type":{
+                                        "id":"BOND"
+                                    },
+                                    "supportedMediaSource": [
+                                        "TRAY1",
+                                        "TRAY2",
+                                        "TRAY3"
+                                    ],
+                                    "duplex": [
+                                        "SIMPLEX",
+                                        "DUPLEX"
+                                    ],
+                                    "colorMode": [
+                                        "GRAYSCALE"
+                                    ]                                },
+                                {
+                                    "type":{
+                                        "id":"RECYCLED"
+                                    },
+                                    "supportedMediaSource": [
+                                        "TRAY1",
+                                        "TRAY2",
+                                        "TRAY3"
+                                    ],
+                                    "duplex": [
+                                        "SIMPLEX",
+                                        "DUPLEX"
+                                    ],
+                                    "colorMode": [
+                                        "GRAYSCALE"
+                                    ]                                },
+                                {
+                                    "type":{
+                                        "id":"HPMATTE105G"
+                                    },
+                                    "supportedMediaSource": [
+                                        "TRAY1",
+                                        "TRAY2",
+                                        "TRAY3"
+                                    ],
+                                    "duplex": [
+                                        "SIMPLEX",
+                                        "DUPLEX"
+                                    ],
+                                    "colorMode": [
+                                        "GRAYSCALE"
+                                    ]                                },
+                                {
+                                    "type":{
+                                        "id":"HPMATTE120G"
+                                    },
+                                    "supportedMediaSource": [
+                                        "TRAY1",
+                                        "TRAY2",
+                                        "TRAY3"
+                                    ],
+                                    "duplex": [
+                                        "SIMPLEX",
+                                        "DUPLEX"
+                                    ],
+                                    "colorMode": [
+                                        "GRAYSCALE"
+                                    ]                                },
+                                {
+                                    "type":{
+                                        "id":"HPGLOSSY120G"
+                                    },
+                                    "supportedMediaSource": [
+                                        "TRAY1",
+                                        "TRAY2",
+                                        "TRAY3"
+                                    ],
+                                    "duplex": [
+                                        "SIMPLEX",
+                                        "DUPLEX"
+                                    ],
+                                    "colorMode": [
+                                        "GRAYSCALE"
+                                    ]                                },
+                                {
+                                    "type":{
+                                        "id":"MIDWEIGHT"
+                                    },
+                                    "supportedMediaSource": [
+                                        "TRAY1",
+                                        "TRAY2",
+                                        "TRAY3"
+                                    ],
+                                    "duplex": [
+                                        "SIMPLEX",
+                                        "DUPLEX"
+                                    ],
+                                    "colorMode": [
+                                        "GRAYSCALE"
+                                    ]                                },
+                                {
+                                    "type":{
+                                        "id":"HEAVY"
+                                    },
+                                    "supportedMediaSource": [
+                                        "TRAY1",
+                                        "TRAY2",
+                                        "TRAY3"
+                                    ],
+                                    "duplex": [
+                                        "SIMPLEX",
+                                        "DUPLEX"
+                                    ],
+                                    "colorMode": [
+                                        "GRAYSCALE"
+                                    ]                                },
+                                {
+                                    "type":{
+                                        "id":"HEAVYGLOSSY"
+                                    },
+                                    "supportedMediaSource": [
+                                        "TRAY1",
+                                        "TRAY2",
+                                        "TRAY3"
+                                    ],
+                                    "duplex": [
+                                        "SIMPLEX",
+                                        "DUPLEX"
+                                    ],
+                                    "colorMode": [
+                                        "GRAYSCALE"
+                                    ]                                },
+                                {
+                                    "type":{
+                                        "id":"HPMATTE150G"
+                                    },
+                                    "supportedMediaSource": [
+                                        "TRAY1",
+                                        "TRAY2",
+                                        "TRAY3"
+                                    ],
+                                    "duplex": [
+                                        "SIMPLEX",
+                                        "DUPLEX"
+                                    ],
+                                    "colorMode": [
+                                        "GRAYSCALE"
+                                    ]                                },
+                                {
+                                    "type":{
+                                        "id":"HPGLOSSY150G"
+                                    },
+                                    "supportedMediaSource": [
+                                        "TRAY1",
+                                        "TRAY2",
+                                        "TRAY3"
+                                    ],
+                                    "duplex": [
+                                        "SIMPLEX",
+                                        "DUPLEX"
+                                    ],
+                                    "colorMode": [
+                                        "GRAYSCALE"
+                                    ]                                },
+                                {
+                                    "type":{
+                                        "id":"EXTRAHEAVY"
+                                    },
+                                    "supportedMediaSource": [
+                                        "TRAY1",
+                                        "TRAY2",
+                                        "TRAY3"
+                                    ],
+                                    "duplex": [
+                                        "SIMPLEX",
+                                        "DUPLEX"
+                                    ],
+                                    "colorMode": [
+                                        "GRAYSCALE"
+                                    ]                                },
+                                {
+                                    "type":{
+                                        "id":"EXTRAHEAVYGLOSSY"
+                                    },
+                                    "supportedMediaSource": [
+                                        "TRAY1",
+                                        "TRAY2",
+                                        "TRAY3"
+                                    ],
+                                    "duplex": [
+                                        "SIMPLEX",
+                                        "DUPLEX"
+                                    ],
+                                    "colorMode": [
+                                        "GRAYSCALE"
+                                    ]                                },
+                                {
+                                    "type":{
+                                        "id":"HPMATTE200G"
+                                    },
+                                    "supportedMediaSource": [
+                                        "TRAY1",
+                                        "TRAY2",
+                                        "TRAY3"
+                                    ],
+                                    "duplex": [
+                                        "SIMPLEX"
+                                    ],
+                                    "colorMode": [
+                                        "GRAYSCALE"
+                                    ]                                },
+                                {
+                                    "type":{
+                                        "id":"HPGLOSSY200G"
+                                    },
+                                    "supportedMediaSource": [
+                                        "TRAY1",
+                                        "TRAY2",
+                                        "TRAY3"
+                                    ],
+                                    "duplex": [
+                                        "SIMPLEX"
+                                    ],
+                                    "colorMode": [
+                                        "GRAYSCALE"
+                                    ]                                },
+                                {
+                                    "type":{
+                                        "id":"CARDSTOCK"
+                                    },
+                                    "supportedMediaSource": [
+                                        "TRAY1",
+                                        "TRAY2",
+                                        "TRAY3"
+                                    ],
+                                    "duplex": [
+                                        "SIMPLEX"
+                                    ],
+                                    "colorMode": [
+                                        "GRAYSCALE"
+                                    ]                                },
+                                {
+                                    "type":{
+                                        "id":"CARDGLOSSY"
+                                    },
+                                    "supportedMediaSource": [
+                                        "TRAY1",
+                                        "TRAY2",
+                                        "TRAY3"
+                                    ],
+                                    "duplex": [
+                                        "SIMPLEX"
+                                    ],
+                                    "colorMode": [
+                                        "GRAYSCALE"
+                                    ]                                },
+                                {
+                                    "type":{
+                                        "id":"TRANSPARENCY"
+                                    },
+                                    "supportedMediaSource": [
+                                        "TRAY1",
+                                        "TRAY2",
+                                        "TRAY3"
+                                    ],
+                                    "duplex": [
+                                        "SIMPLEX"
+                                    ],
+                                    "colorMode": [
+                                        "GRAYSCALE"
+                                    ]                                },
+                                {
+                                    "type":{
+                                        "id":"LABELS"
+                                    },
+                                    "supportedMediaSource": [
+                                        "TRAY1",
+                                        "TRAY2",
+                                        "TRAY3"
+                                    ],
+                                    "duplex": [
+                                        "SIMPLEX"
+                                    ],
+                                    "colorMode": [
+                                        "GRAYSCALE"
+                                    ]                                },
+                                {
+                                    "type":{
+                                        "id":"LETTERHEAD"
+                                    },
+                                    "supportedMediaSource": [
+                                        "TRAY1",
+                                        "TRAY2",
+                                        "TRAY3"
+                                    ],
+                                    "duplex": [
+                                        "SIMPLEX",
+                                        "DUPLEX"
+                                    ],
+                                    "colorMode": [
+                                        "GRAYSCALE"
+                                    ]                                },
+                                {
+                                    "type":{
+                                        "id":"ENVELOPE"
+                                    },
+                                    "supportedMediaSource": [
+                                        "TRAY1",
+                                        "TRAY2",
+                                        "TRAY3"
+                                    ],
+                                    "duplex": [
+                                        "SIMPLEX"
+                                    ],
+                                    "colorMode": [
+                                        "GRAYSCALE"
+                                    ]                                },
+                                {
+                                    "type": {
+                                        "id": "HEAVYENVELOPE"
+                                    },
+                                    "supportedMediaSource": [
+                                        "TRAY1",
+                                        "TRAY2",
+                                        "TRAY3"
+                                    ],
+                                    "duplex": [
+                                        "SIMPLEX"
+                                    ],
+                                    "colorMode": [
+                                        "GRAYSCALE"
+                                    ]                                },
+                                {
+                                    "type":{
+                                        "id":"PREPRINTED"
+                                    },
+                                    "supportedMediaSource": [
+                                        "TRAY1",
+                                        "TRAY2",
+                                        "TRAY3"
+                                    ],
+                                    "duplex": [
+                                        "SIMPLEX",
+                                        "DUPLEX"
+                                    ],
+                                    "colorMode": [
+                                        "GRAYSCALE"
+                                    ]                                },
+                                {
+                                    "type":{
+                                        "id":"PREPUNCHED"
+                                    },
+                                    "supportedMediaSource": [
+                                        "TRAY1",
+                                        "TRAY2",
+                                        "TRAY3"
+                                    ],
+                                    "duplex": [
+                                        "SIMPLEX",
+                                        "DUPLEX"
+                                    ],
+                                    "colorMode": [
+                                        "GRAYSCALE"
+                                    ]                                },
+                                {
+                                    "type":{
+                                        "id":"COLORED"
+                                    },
+                                    "supportedMediaSource": [
+                                        "TRAY1",
+                                        "TRAY2",
+                                        "TRAY3"
+                                    ],
+                                    "duplex": [
+                                        "SIMPLEX",
+                                        "DUPLEX"
+                                    ],
+                                    "colorMode": [
+                                        "GRAYSCALE"
+                                    ]                                },
+                                {
+                                    "type":{
+                                        "id":"ROUGH"
+                                    },
+                                    "supportedMediaSource": [
+                                        "TRAY1",
+                                        "TRAY2",
+                                        "TRAY3"
+                                    ],
+                                    "duplex": [
+                                        "SIMPLEX",
+                                        "DUPLEX"
+                                    ],
+                                    "colorMode": [
+                                        "GRAYSCALE"
+                                    ]                                },
+                                {
+                                    "type":{
+                                        "id":"HEAVYROUGH"
+                                    },
+                                    "supportedMediaSource": [
+                                        "TRAY1",
+                                        "TRAY2",
+                                        "TRAY3"
+                                    ],
+                                    "duplex": [
+                                        "SIMPLEX",
+                                        "DUPLEX"
+                                    ],
+                                    "colorMode": [
+                                        "GRAYSCALE"
+                                    ]                                },
+                                {
+                                    "type":{
+                                        "id":"OPAQUEFILM"
+                                    },
+                                    "supportedMediaSource": [
+                                        "TRAY1",
+                                        "TRAY2",
+                                        "TRAY3"
+                                    ],
+                                    "duplex": [
+                                        "SIMPLEX",
+                                        "DUPLEX"
+                                    ],
+                                    "colorMode": [
+                                        "GRAYSCALE"
+                                    ]                                },
+                                {
+                                    "type":{
+                                        "id":"USER_DEFINED_1"
+                                    },
+                                    "supportedMediaSource": [
+                                        "TRAY1",
+                                        "TRAY2",
+                                        "TRAY3"
+                                    ],
+                                    "duplex": [
+                                        "SIMPLEX",
+                                        "DUPLEX"
+                                    ],
+                                    "colorMode": [
+                                        "GRAYSCALE"
+                                    ]                                },
+                                {
+                                    "type":{
+                                        "id":"USER_DEFINED_2"
+                                    },
+                                    "supportedMediaSource": [
+                                        "TRAY1",
+                                        "TRAY2",
+                                        "TRAY3"
+                                    ],
+                                    "duplex": [
+                                        "SIMPLEX",
+                                        "DUPLEX"
+                                    ],
+                                    "colorMode": [
+                                        "GRAYSCALE"
+                                    ]                                },
+                                {
+                                    "type":{
+                                        "id":"USER_DEFINED_3"
+                                    },
+                                    "supportedMediaSource": [
+                                        "TRAY1",
+                                        "TRAY2",
+                                        "TRAY3"
+                                    ],
+                                    "duplex": [
+                                        "SIMPLEX",
+                                        "DUPLEX"
+                                    ],
+                                    "colorMode": [
+                                        "GRAYSCALE"
+                                    ]                                },
+                                {
+                                    "type":{
+                                        "id":"USER_DEFINED_4"
+                                    },
+                                    "supportedMediaSource": [
+                                        "TRAY1",
+                                        "TRAY2",
+                                        "TRAY3"
+                                    ],
+                                    "duplex": [
+                                        "SIMPLEX",
+                                        "DUPLEX"
+                                    ],
+                                    "colorMode": [
+                                        "GRAYSCALE"
+                                    ]                                },
+                                {
+                                    "type":{
+                                        "id":"USER_DEFINED_5"
+                                    },
+                                    "supportedMediaSource": [
+                                        "TRAY1",
+                                        "TRAY2",
+                                        "TRAY3"
+                                    ],
+                                    "duplex": [
+                                        "SIMPLEX",
+                                        "DUPLEX"
+                                    ],
+                                    "colorMode": [
+                                        "GRAYSCALE"
+                                    ]                                },
+                                {
+                                    "type":{
+                                        "id":"USER_DEFINED_6"
+                                    },
+                                    "supportedMediaSource": [
+                                        "TRAY1",
+                                        "TRAY2",
+                                        "TRAY3"
+                                    ],
+                                    "duplex": [
+                                        "SIMPLEX",
+                                        "DUPLEX"
+                                    ],
+                                    "colorMode": [
+                                        "GRAYSCALE"
+                                    ]                                },
+                                {
+                                    "type":{
+                                        "id":"USER_DEFINED_7"
+                                    },
+                                    "supportedMediaSource": [
+                                        "TRAY1",
+                                        "TRAY2",
+                                        "TRAY3"
+                                    ],
+                                    "duplex": [
+                                        "SIMPLEX",
+                                        "DUPLEX"
+                                    ],
+                                    "colorMode": [
+                                        "GRAYSCALE"
+                                    ]                                },
+                                {
+                                    "type":{
+                                        "id":"USER_DEFINED_8"
+                                    },
+                                    "supportedMediaSource": [
+                                        "TRAY1",
+                                        "TRAY2",
+                                        "TRAY3"
+                                    ],
+                                    "duplex": [
+                                        "SIMPLEX",
+                                        "DUPLEX"
+                                    ],
+                                    "colorMode": [
+                                        "GRAYSCALE"
+                                    ]                                },
+                                {
+                                    "type":{
+                                        "id":"USER_DEFINED_9"
+                                    },
+                                    "supportedMediaSource": [
+                                        "TRAY1",
+                                        "TRAY2",
+                                        "TRAY3"
+                                    ],
+                                    "duplex": [
+                                        "SIMPLEX",
+                                        "DUPLEX"
+                                    ],
+                                    "colorMode": [
+                                        "GRAYSCALE"
+                                    ]                                },
+                                {
+                                    "type":{
+                                        "id":"USER_DEFINED_10"
+                                    },
+                                    "supportedMediaSource": [
+                                        "TRAY1",
+                                        "TRAY2",
+                                        "TRAY3"
+                                    ],
+                                    "duplex": [
+                                        "SIMPLEX",
+                                        "DUPLEX"
+                                    ],
+                                    "colorMode": [
+                                        "GRAYSCALE"
+                                    ]                                }
+                            ]
+                        }
+                    },
+                    "patch": [
+                        { "op": "remove", "path": "/constraints/scanJobConstraint/colorMode/[AUTODETECT]"},
+                        { "op": "remove", "path": "/constraints/scanJobConstraint/colorMode/[COLOR]"},
+                        { "op": "remove", "path": "/constraints/scanJobConstraint/minAutoPaperColorRemovalLevel" },
+                        { "op": "remove", "path": "/constraints/scanJobConstraint/maxAutoPaperColorRemovalLevel" },
+                        { "op": "remove", "path": "/constraints/scanJobConstraint/stepAutoPaperColorRemovalLevel" },
+                        { "op": "remove", "path": "/constraints/scanJobConstraint/minAutoToneLevel" },
+                        { "op": "remove", "path": "/constraints/scanJobConstraint/maxAutoToneLevel" },
+                        { "op": "remove", "path": "/constraints/scanJobConstraint/stepAutoToneLevel" },
+                        { "op": "remove", "path": "/constraints/scanJobConstraint/watermarkTextColor/[YELLOW]"},
+                        { "op": "remove", "path": "/constraints/scanJobConstraint/watermarkTextColor/[GREEN]"},
+                        { "op": "remove", "path": "/constraints/scanJobConstraint/watermarkTextColor/[RED]"},
+                        { "op": "remove", "path": "/constraints/scanJobConstraint/watermarkTextColor/[BLUE]"},
+                        { "op": "remove", "path": "/constraints/scanJobConstraint/watermarkTextColor/[SKY_BLUE]"},
+                        { "op": "remove", "path": "/constraints/scanJobConstraint/watermarkTextColor/[PURPLE]"},
+                        { "op": "remove", "path": "/constraints/scanJobConstraint/stampTextColor/[YELLOW]"},
+                        { "op": "remove", "path": "/constraints/scanJobConstraint/stampTextColor/[GREEN]"},
+                        { "op": "remove", "path": "/constraints/scanJobConstraint/stampTextColor/[RED]"},
+                        { "op": "remove", "path": "/constraints/scanJobConstraint/stampTextColor/[BLUE]"},
+                        { "op": "remove", "path": "/constraints/scanJobConstraint/stampTextColor/[SKY_BLUE]"},
+                        { "op": "remove", "path": "/constraints/scanJobConstraint/stampTextColor/[PURPLE]"}
+                    ]
+                },
+                {
+                    "runtimeProducts": ["Bell", "Curie"],
+                    "protos": [],
+                    "data": {
+                        "constraints": {
+                            "scanJobConstraint": {
+                                "adfOriginalSizes":[
+                                    {
+                                        "id": "ANY",
+                                        "mediaOrientation": "PORTRAIT"
+                                    },
+                                    {
+                                        "id": "MIXED_LETTER_LEGAL",
+                                        "mediaOrientation": "PORTRAIT"
+                                    },
+                                    {
+                                        "id": "LETTER",
+                                        "mediaOrientation": "PORTRAIT"
+                                    },
+                                    {
+                                        "id": "LEGAL",
+                                        "mediaOrientation": "PORTRAIT"
+                                    },
+                                    {
+                                        "id": "US_EXECUTIVE",
+                                        "mediaOrientation": "PORTRAIT"
+                                    },
+                                    {
+                                        "id": "STATEMENT",
+                                        "mediaOrientation": "PORTRAIT"
+                                    },
+                                    {
+                                        "id": "FOOLSCAP",
+                                        "mediaOrientation": "PORTRAIT"
+                                    },
+                                    {
+                                        "id": "PHOTO3X5",
+                                        "mediaOrientation": "PORTRAIT"
+                                    },
+                                    {
+                                        "id": "PHOTO4X6",
+                                        "mediaOrientation": "PORTRAIT"
+                                    },
+                                    {
+                                        "id": "PHOTO5X7",
+                                        "mediaOrientation": "PORTRAIT"
+                                    },
+                                    {
+                                        "id": "PHOTO5X8",
+                                        "mediaOrientation": "PORTRAIT"
+                                    },
+                                    {
+                                        "id": "A4",
+                                        "mediaOrientation": "PORTRAIT"
+                                    },
+                                    {
+                                        "id": "A5",
+                                        "mediaOrientation": "PORTRAIT"
+                                    },
+                                    {
+                                        "id": "A5",
+                                        "mediaOrientation": "LANDSCAPE"
+                                    },
+                                    {
+                                        "id": "A6",
+                                        "mediaOrientation": "PORTRAIT"
+                                    },
+                                    {
+                                        "id": "RA4",
+                                        "mediaOrientation": "PORTRAIT"
+                                    },
+                                    {
+                                        "id": "JIS_B5",
+                                        "mediaOrientation": "PORTRAIT"
+                                    },
+                                    {
+                                        "id": "JIS_B6",
+                                        "mediaOrientation": "PORTRAIT"
+                                    },
+                                    {
+                                        "id": "MEDIA100X150",
+                                        "mediaOrientation": "PORTRAIT"
+                                    },
+                                    {
+                                        "id": "OFICIO_216X340",
+                                        "mediaOrientation": "PORTRAIT"
+                                    },
+                                    {
+                                        "id": "MEDIA16K_195X270",
+                                        "mediaOrientation": "PORTRAIT"
+                                    },
+                                    {
+                                        "id": "MEDIA16K_184X260",
+                                        "mediaOrientation": "PORTRAIT"
+                                    },
+                                    {
+                                        "id": "ROC16K",
+                                        "mediaOrientation": "PORTRAIT"
+                                    },
+                                    {
+                                        "id": "HAGAKI_POSTCARD",
+                                        "mediaOrientation": "PORTRAIT"
+                                    },
+                                    {
+                                        "id": "HAGAKI_OUFUKU",
+                                        "mediaOrientation": "PORTRAIT"
+                                    }
+                                ],
+                                "flatbedOriginalSizes": [
+                                    {
+                                        "id": "ANY",
+                                        "mediaOrientation": "PORTRAIT"
+                                    },
+                                    {
+                                        "id": "MIXED_LETTER_LEGAL",
+                                        "mediaOrientation": "PORTRAIT"
+                                    },
+                                    {
+                                        "id": "LETTER",
+                                        "mediaOrientation": "PORTRAIT"
+                                    },
+                                    {
+                                        "id": "LEGAL",
+                                        "mediaOrientation": "PORTRAIT"
+                                    },
+                                    {
+                                        "id": "US_EXECUTIVE",
+                                        "mediaOrientation": "PORTRAIT"
+                                    },
+                                    {
+                                        "id": "STATEMENT",
+                                        "mediaOrientation": "PORTRAIT"
+                                    },
+                                    {
+                                        "id": "FOOLSCAP",
+                                        "mediaOrientation": "PORTRAIT"
+                                    },
+                                    {
+                                        "id": "PHOTO3X5",
+                                        "mediaOrientation": "PORTRAIT"
+                                    },
+                                    {
+                                        "id": "PHOTO4X6",
+                                        "mediaOrientation": "PORTRAIT"
+                                    },
+                                    {
+                                        "id": "PHOTO5X7",
+                                        "mediaOrientation": "PORTRAIT"
+                                    },
+                                    {
+                                        "id": "PHOTO5X8",
+                                        "mediaOrientation": "PORTRAIT"
+                                    },
+                                    {
+                                        "id": "A4",
+                                        "mediaOrientation": "PORTRAIT"
+                                    },
+                                    {
+                                        "id": "A5",
+                                        "mediaOrientation": "PORTRAIT"
+                                    },
+                                    {
+                                        "id": "A5",
+                                        "mediaOrientation": "LANDSCAPE"
+                                    },
+                                    {
+                                        "id": "A6",
+                                        "mediaOrientation": "PORTRAIT"
+                                    },
+                                    {
+                                        "id": "RA4",
+                                        "mediaOrientation": "PORTRAIT"
+                                    },
+                                    {
+                                        "id": "JIS_B5",
+                                        "mediaOrientation": "PORTRAIT"
+                                    },
+                                    {
+                                        "id": "JIS_B6",
+                                        "mediaOrientation": "PORTRAIT"
+                                    },
+                                    {
+                                        "id": "MEDIA100X150",
+                                        "mediaOrientation": "PORTRAIT"
+                                    },
+                                    {
+                                        "id": "OFICIO_216X340",
+                                        "mediaOrientation": "PORTRAIT"
+                                    },
+                                    {
+                                        "id": "MEDIA16K_195X270",
+                                        "mediaOrientation": "PORTRAIT"
+                                    },
+                                    {
+                                        "id": "MEDIA16K_184X260",
+                                        "mediaOrientation": "PORTRAIT"
+                                    },
+                                    {
+                                        "id": "ROC16K",
+                                        "mediaOrientation": "PORTRAIT"
+                                    },
+                                    {
+                                        "id": "HAGAKI_POSTCARD",
+                                        "mediaOrientation": "PORTRAIT"
+                                    },
+                                    {
+                                        "id": "HAGAKI_OUFUKU",
+                                        "mediaOrientation": "PORTRAIT"
+                                    }
+                                ]
+                            },
+                            "stapleOption": [
+                                "NONE"
+                            ],
+                            "punchOption": [
+                                "NONE"
+                            ],
+                            "stapleOptionStr": [
+                                {"nameValue":"none","stringId":"StringIds.cNone"},
+                                {"nameValue":"topLeftOnePointAny","stringId":"StringIds.cTopLeft"},
+                                {"nameValue":"topLeftOnePointAngled","stringId":"StringIds.cStapleTopLeftOnePointAngled"},
+                                {"nameValue":"topLeftOnePointHorizontal","stringId":"StringIds.cNone"},
+                                {"nameValue":"topLeftOnePointVertical","stringId":"StringIds.cNone"},
+                                {"nameValue":"leftTwoPoints","stringId":"StringIds.cStapleLeftTwoPoints"},
+                                {"nameValue":"leftThreePoints","stringId":"StringIds.cNone"},
+                                {"nameValue":"leftSixPoints","stringId":"StringIds.cNone"},
+                                {"nameValue":"topTwoPoints","stringId":"StringIds.cStapleTopTwoPoints"},
+                                {"nameValue":"topThreePoints","stringId":"StringIds.cStapleTopThreePoints"},
+                                {"nameValue":"topSixPoints","stringId":"StringIds.cNone"},
+                                {"nameValue":"topRightOnePointAny","stringId":"StringIds.cTopRight"},
+                                {"nameValue":"topRightOnePointAngled","stringId":"StringIds.cStapleTopRightOnePointAngled"},
+                                {"nameValue":"topRightOnePointHorizontal","stringId":"StringIds.cNone"},
+                                {"nameValue":"topRightOnePointVertical","stringId":"StringIds.cNone"},
+                                {"nameValue":"rightTwoPoints","stringId":"StringIds.cStapleRightTwoPoints"},
+                                {"nameValue":"rightThreePoints","stringId":"StringIds.cNone"},
+                                {"nameValue":"rightSixPoints","stringId":"StringIds.cNone"},
+                                {"nameValue":"topAnyOnePointAny","stringId":"StringIds.cStapleTopLeftOrRight"},
+                                {"nameValue":"topAnyOnePointAngled","stringId":"StringIds.cStapleTopLeftOnePointAngled"},
+                                {"nameValue":"bottomLeftOnePointAny","stringId":"StringIds.cNone"},
+                                {"nameValue":"bottomLeftOnePointAngled","stringId":"StringIds.cNone"},
+                                {"nameValue":"bottomLeftOnePointHorizontal","stringId":"StringIds.cNone"},
+                                {"nameValue":"bottomLeftOnePointVertical","stringId":"StringIds.cNone"},
+                                {"nameValue":"bottomTwoPoints","stringId":"StringIds.cNone"},
+                                {"nameValue":"bottomThreePoints","stringId":"StringIds.cNone"},
+                                {"nameValue":"bottomSixPoints","stringId":"StringIds.cNone"},
+                                {"nameValue":"bottomRightOnePointAny","stringId":"StringIds.cNone"},
+                                {"nameValue":"bottomRightOnePointAngled","stringId":"StringIds.cNone"},
+                                {"nameValue":"bottomRightOnePointHorizontal","stringId":"StringIds.cNone"},
+                                {"nameValue":"bottomRightOnePointVertical","stringId":"StringIds.cNone"},
+                                {"nameValue":"centerOnePoint","stringId":"StringIds.cNone"},
+                                {"nameValue":"centerTwoPoints","stringId":"StringIds.cNone"},
+                                {"nameValue":"centerThreePoints","stringId":"StringIds.cNone"},
+                                {"nameValue":"centerSixPoints","stringId":"StringIds.cNone"},
+                                {"nameValue":"leftTwoPointsAny","stringId":"StringIds.cPunchingOptionsTwoPointDin"},
+                                {"nameValue":"leftThreePointsAny","stringId":"StringIds.cStapleLeftThreePointsAny"},
+                                {"nameValue":"leftSixPointsAny","stringId":"StringIds.cNone"}
+                            ],
+                            "punchOptionStr": [
+                                {"nameValue":"none","stringId":"StringIds.cNone"},
+                                {"nameValue":"leftFourPointDin","stringId":"StringIds.cPunchingOptionsLeftFourPointDin"},
+                                {"nameValue":"leftFourPointSwd","stringId":"StringIds.cPunchingOptionsLeftFourPointDin"},
+                                {"nameValue":"leftThreePointUs","stringId":"StringIds.cStapleLeftThreePointsAny"},
+                                {"nameValue":"leftTwoPoint","stringId":"StringIds.cStapleLeftTwoPoints"},
+                                {"nameValue":"leftTwoPointDin","stringId":"StringIds.cStapleLeftTwoPoints"},
+                                {"nameValue":"leftTwoPointUs","stringId":"StringIds.cStapleLeftTwoPoints"},
+                                {"nameValue":"topFourPointDin","stringId":"StringIds.cPunchingOptionsTopFourPointDin"},
+                                {"nameValue":"topFourPointSwd","stringId":"StringIds.cPunchingOptionsTopFourPointDin"},
+                                {"nameValue":"topThreePointUs","stringId":"StringIds.cStapleTopThreePoints"},
+                                {"nameValue":"topTwoPoint","stringId":"StringIds.cStapleTopTwoPoints"},
+                                {"nameValue":"twoPointDin","stringId":"StringIds.cPunchingOptionsTwoPointDin"},
+                                {"nameValue":"twoPointUs","stringId":"StringIds.cPunchingOptionsTwoPointDin"},
+                                {"nameValue":"rightFourPointDin","stringId":"StringIds.cPunchingOptionsRightFourPointDin"},
+                                {"nameValue":"rightFourPointSwd","stringId":"StringIds.cPunchingOptionsRightFourPointDin"},
+                                {"nameValue":"rightThreePointUs","stringId":"StringIds.cPunchingOptionsRightThree"},
+                                {"nameValue":"rightTwoPoint","stringId":"StringIds.cStapleRightTwoPoints"},
+                                {"nameValue":"rightTwoPointDin","stringId":"StringIds.cStapleRightTwoPoints"},
+                                {"nameValue":"rightTwoPointUs","stringId":"StringIds.cStapleRightTwoPoints"},
+                                {"nameValue":"bottomFourPointDin","stringId":"StringIds.cPunchingOptionsBottomFourPointDin"},
+                                {"nameValue":"bottomFourPointSwd","stringId":"StringIds.cPunchingOptionsBottomFourPointDin"},
+                                {"nameValue":"bottomThreePointUs","stringId":"StringIds.cPunchingOptionsBottomThreePointUs"},
+                                {"nameValue":"bottomTwoPoint","stringId":"StringIds.cPunchingOptionsBottomTwoPointDin"},
+                                {"nameValue":"bottomTwoPointDin","stringId":"StringIds.cPunchingOptionsBottomTwoPointDin"},
+                                {"nameValue":"bottomTwoPointUs","stringId":"StringIds.cPunchingOptionsBottomTwoPointDin"},
+                                {"nameValue":"fourPointDin","stringId":"StringIds.cPunchingOptionsFourPointAny"},
+                                {"nameValue":"fourPointSwd","stringId":"StringIds.cPunchingOptionsFourPointAny"},
+                                {"nameValue":"fourPointAny","stringId":"StringIds.cPunchingOptionsFourPointAny"},
+                                {"nameValue":"threePointUs","stringId":"StringIds.cPunchingOptionsThreePointAny"},
+                                {"nameValue":"threePointAny","stringId":"StringIds.cPunchingOptionsThreePointAny"},
+                                {"nameValue":"topTwoPointDin","stringId":"StringIds.cStapleTopTwoPoints"},
+                                {"nameValue":"topTwoPointUs","stringId":"StringIds.cStapleTopTwoPoints"},
+                                {"nameValue":"twoPointAny","stringId":"StringIds.cNone"},
+                                {"nameValue":"default_","stringId":"StringIds.cDefault"}
+                            ],
+                            "finisherConstraintString":[
+                                {"nameValue":"cStapleConstraint","stringId":"StringIds.cStapleConstraint"},
+                                {"nameValue":"cHolePunchConstraint","stringId":"StringIds.cHolePunchConstraint"}
+                            ],
+                            "finisherOptionStrings": [
+                                {"nameValue":"STAPLE","stringId":"StringIds.cStapleConstraint"},
+                                {"nameValue":"PUNCH","stringId":"StringIds.cHolePunchConstraint"}
+                            ],
+                            "jobOffset":[
+                                "MODE_DISABLE",
+                                "MODE_ENABLE_NON_STAPLE_JOB"
+                            ]
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}

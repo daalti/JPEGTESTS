@@ -1,0 +1,145 @@
+{
+    "list":[
+        {
+            "id":"MenuChild1",
+            "title":"cMenuChild1",
+            "priority": 2,
+            "delegate":"qrc:/menu/MenuButton.qml",
+            "module":"qrc:/layouts/ButtonListLayout.qml",
+            "enabled":"qrc:/menu/TestGetSet.qml::testEnabled()",
+            "enabledError":"I should get an error",
+            "onEntry":"qrc:/menu/TestGetSet.qml::testOnEntry()",
+            "onExit":"qrc:/menu/TestGetSet.qml::testOnExit()",
+            "displayDependencies":"qrc:/menu/TestGetSet.qml::testDependency()"
+
+        },
+        {
+            "id":"MenuChild2",
+            "title":"cMenuChild2",
+            "priority": 1,
+            "menuNodeType": "CONTROLPANEL",
+            "delegate":"qrc:/menu/MenuButton.qml",
+            "module":"qrc:/components/SpiceButton.qml",
+            "children":["MenuLeafhavingAllDataFilledUp"]
+        },
+        {
+            "id":"MenuForEWSonly",
+            "title":"cMenuVisibleButNotEnabled",
+            "priority": 3,
+            "displayDependencies":"true",
+            "menuNodeType": "EWS"
+        },
+        {
+            "id":"MenuHavingChildren",
+            "title":"cMenuHavingChildren",
+            "priority": 1,
+            "module":"qrc:/menu/MenuList.qml",
+            "children":["MenuChild1","MenuChild2","ToggleExample", "NameValueExample","MenuSliderExample"]
+        },
+        {
+            "id": "MenuLeafhavingAllDataFilledUp",
+            "title": "cMenuLeafhavingAllDataFilledUp",
+            "priority": 1,
+            "menuNodeType": "CONTROLPANEL",
+            "enabledError":"cErrorEnabledMessage",
+            "module": "Testmodule.qml",
+            "ewsLink": "/hp/SomelocationIdontcare"
+        },
+        {
+            "id":"MenuNotVisible",
+            "title":"cMenuNotVisible",
+            "priority": 2,
+            "displayDependencies":"false",
+            "enabled":"true"
+
+        },
+        {
+            "id":"MenuVisibleButNotEnabled",
+            "title":"cMenuVisibleButNotEnabled",
+            "priority": 3,
+            "displayDependencies":"true",
+            "enabled":"false"
+        },
+        {
+            "id":"ToggleExample",
+            "title":"Toggle Example",
+            "priority": 3,
+            "delegate":"qrc:/menu/MenuSwitch.qml"
+        },
+        {
+            "id":"NameValueExample",
+            "title":"NameValue Example",
+            "priority": 4,
+            "delegate":"qrc:/menu/MenuNameValue.qml"
+        },
+        {
+            "id":"MenuSliderExample",
+            "title":"MenuSlider Example",
+            "priority": 5,
+            "delegate":"qrc:/menu/MenuSlider.qml"
+        },        
+        {
+            "id":"MenuHavingMixedChildren",
+            "title":"MenuHavingMixedChildren",
+            "module":"qrc:/menu/MenuList.qml",
+            "priority": 6,
+            "children":["MenuHavingvisibleChildren","MenuHavingInvisibleChildren","MenuVisible", "MenuNotVisibleByFunction"]
+        },        
+        {
+            "id":"MenuVisible",
+            "title":"MenuVisible",
+            "priority": 1,
+            "delegate":"qrc:/menu/MenuButton.qml",
+            "displayDependencies":"true"
+        },
+        {
+            "id":"MenuHavingInvisibleChildren",
+            "title":"MenuHavingInvisibleChildren",
+            "priority": 2,
+            "displayDependencies":"true",
+            "delegate":"qrc:/menu/MenuButton.qml",
+            "children":["MenuInChild1","MenuInChild2"]
+        },
+        {
+            "id":"MenuInChild1",
+            "title":"MenuInChild1",
+            "priority": 1,
+            "displayDependencies":"qrc:/menu/TestGetSet.qml::retFalse()"
+        },
+        {
+            "id":"MenuInChild2",
+            "title":"MenuInChild2",
+            "priority": 2,
+            "displayDependencies":"false"
+        },        
+        {
+            "id":"MenuHavingvisibleChildren",
+            "title":"MenuHavingvisibleChildren",
+            "priority": 3,
+            "delegate":"qrc:/menu/MenuButton.qml",
+            "displayDependencies":"true",
+            "children":["MenuMixedChild1","MenuMixedChild2"]
+        },        
+        {
+            "id":"MenuNotVisibleByFunction",
+            "title":"MenuNotVisibleByFunction",
+            "priority": 4,
+            "delegate":"qrc:/menu/MenuButton.qml",
+            "displayDependencies":"qrc:/menu/TestGetSet.qml::retFalse()",
+            "children":["MenuMixedChild1","MenuMixedChild2"]
+        },
+        {
+            "id":"MenuMixedChild1",
+            "title":"MenuMixedChild1",
+            "priority": 1,
+            "displayDependencies":"qrc:/menu/TestGetSet.qml::retTrue()"
+        },
+        {
+            "id":"MenuMixedChild2",
+            "title":"MenuMixedChild2",
+            "priority": 2,
+            "displayDependencies":"false"
+        }
+
+    ]
+}

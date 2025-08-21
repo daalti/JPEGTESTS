@@ -1,0 +1,74 @@
+
+{
+    "ticketSettings":
+    {
+        "scanJobIntent":
+        {
+            "originalContentType":"LINE_DRAWING",
+            "originalMediaType":"BLUEPRINTS",
+            "colorMode":"GRAYSCALE",
+            "inputPlexMode": "SIMPLEX",
+            "scanSource":"MDF",
+            "longPlotScan":false,
+            "inputMediaSizeId": "ANY",
+            "outputXResolution":"E300DPI",
+            "outputYResolution":"E300DPI",
+            "scanXResolution":"E300DPI",
+            "scanYResolution":"E300DPI",
+            "invertColors":false,
+            "autoRelease":false,
+            "scanAcquisitionsSpeed": "AUTO",
+            "autoDeskew":false,
+            "backgroundColorRemoval":true,
+            "backgroundColorRemovalLevel":0,
+            "blackEnhancementLevel":60,
+            "xScalePercent":100,
+            "yScalePercent":100,
+            "scaleToFitEnabled":false,
+            "scaleToFit":false,
+            "scaleSelection":"CUSTOM",
+            "scaleToSize":"ANY",
+            "scaleToOutput":"ROLL1",
+            "scanCaptureMode":"JOBBUILD",
+            "generatePreview":"true",
+            "scanImagePreview": "Enable",
+            "outputCanvas":
+            {
+                "outputCanvasMediaSize":"ANY",
+                "outputCanvasMediaId":"AUTOSELECT",
+                "outputCanvasXExtent":"2.6",
+                "outputCanvasYExtent":"2.6",
+                "outputCanvasAnchor":"TOPCENTER",
+                "outputCanvasOrientation":"LANDSCAPE"
+            }
+        },
+        
+        "outputMediaSizeId": "ANY",
+        "outputMediaIdType": "ANY",
+        "outputMediaSource": "AUTOSELECT",
+        "outputMediaOrientation":"LANDSCAPE",
+        "outputMediaDestination":"STACKER",
+        "outputPlexMode": "SIMPLEX",
+        "outputPlexBinding": "ONE_SIDED",
+        "copies":1,
+        "copyQuality":"DRAFT",
+        "resize": 100,
+        "copyMargins":"CLIPCONTENT",
+        "collate":"Collate",
+        "autoRotate": true,
+        "printingOrder": "LAST_PAGE_ON_TOP",
+        "mediaFamily": "UNKNOWN"
+        
+    },
+    "metadata":
+    {
+        "shortcutType": "eSINGLEJOB",
+        "isReadOnly": true,
+        "isFactory": true,
+        "isCopyAllowed": true,
+        "action": "eOPEN",
+        "origin": "eEXTERNALSERVICE",
+        "source": "eSCAN",
+        "destinations": ["ePRINT"]
+    }
+}

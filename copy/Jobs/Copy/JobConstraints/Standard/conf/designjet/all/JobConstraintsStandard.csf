@@ -1,0 +1,178 @@
+{    
+    "instances": [
+        {
+            "name": "JobConstraints",
+            "data": {                
+                "constraints": {
+                    "plexMode": [
+                        "SIMPLEX"
+                    ],
+                    "plexBinding": [
+                        "ONE_SIDED"
+                    ],
+                    "collate": [
+                        "Collate",
+                        "Uncollate"
+                    ],
+                    "minCopies": 1,
+                    "maxCopies": 999,
+                    "stepCopies": 1.0,
+                    "printQuality": [
+                        "BEST",
+                        "NORMAL",
+                        "DRAFT"
+                    ],
+                    "copyMargins": [
+                        "OVERSIZE",
+                        "CLIPCONTENT"
+                    ],
+                    "minRotation": 0,
+                    "maxRotation": 270,
+                    "stepRotation": 90,
+                    "mediaFamily": [
+                        "ADHESIVE",
+                        "BACKLIT",
+                        "BANNERANDSIGN",
+                        "BONDANDCOATED",
+                        "BLUEPRINT",
+                        "CUSTOM",
+                        "FILM",
+                        "PHOTO",
+                        "TECHNICAL",
+                        "POSTER",
+                        "UNKNOWN"
+                    ],
+                    "autoRotate": [
+                        false,
+                        true
+                    ],
+                    "printingOrder": [
+                        "FIRST_PAGE_ON_TOP",
+                        "LAST_PAGE_ON_TOP"
+                    ],
+                    "mediaPrintSupportedSource": [ 
+                        "AUTOSELECT",
+                        "ROLL",
+                        "ROLL1",
+                        "ROLL2"
+                    ],
+                    "mediaPrintSupportedSize": ["ANY"],
+                    "mediaPrintSupportedType": ["ANY"],
+                    "mediaPrintSupportedDestinations":["STACKER","BIN","FOLDER"],
+                    "foldingStyleIds": [0],
+                    "scanJobConstraint": { 
+                        "inputPlexMode": [
+                            "SIMPLEX"
+                        ],
+                        "colorMode": [
+                            "COLOR",
+                            "GRAYSCALE"
+                        ],
+                        "supportedMediaTypes" :[
+                            "WHITE_PAPER",
+                            "OLD_RECYCLED_PAPER",
+                            "PHOTO_PAPER",
+                            "BLUEPRINTS",
+                            "DARK_BLUEPRINTS",
+                            "TRANSLUCENT_PAPER"
+                        ],
+                        "scaleSelection": [
+                            "NONE",
+                            "CUSTOM",
+                            "SCALE_TO_OUTPUT",
+                            "STANDARD_SIZE_SCALING"
+                        ],
+                        "mdfResolutions" : [200, 300, 600],
+                        "mdfOriginalSizes":[
+                            {
+                                "id":"ANY",
+                                "mediaOrientation":"PORTRAIT"
+                            }
+                        ],
+                        "outputCanvasMediaIds": [
+                            "AUTOSELECT",
+                            "ROLL1",
+                            "ROLL2"
+                        ],
+                        "outputStandardSizes": [
+                            "ANY",
+                            "CUSTOM",
+                            "A0",
+                            "A1",
+                            "A2",
+                            "A3",
+                            "A4",
+                            "ISO_B0",
+                            "B1",
+                            "B2",
+                            "B3",
+                            "B4",
+                            "LETTER",
+                            "LEDGER",
+                            "C_SIZE",
+                            "D_SIZE",
+                            "E_SIZE",
+                            "ARCH_A",
+                            "ARCH_B",
+                            "ARCH_C",
+                            "ARCH_D",
+                            "ARCH_E"
+                        ],
+                        "scaleToSizes": [
+                            "ANY",
+                            "A0",
+                            "A1",
+                            "A2",
+                            "A3",
+                            "A4",
+                            "ISO_B0",
+                            "B1",
+                            "B2",
+                            "B3",
+                            "B4",
+                            "LETTER",
+                            "LEDGER",
+                            "C_SIZE",
+                            "D_SIZE",
+                            "E_SIZE",
+                            "ARCH_A",
+                            "ARCH_B",
+                            "ARCH_C",
+                            "ARCH_D",
+                            "ARCH_E"
+                        ],
+                        "outputCanvasCustomWidthMin": "66",
+                        "outputCanvasCustomWidthMax": "914",
+                        "outputCanvasCustomWidthStep":"1",
+                        "outputCanvasCustomLengthMin": "66",
+                        "outputCanvasCustomLengthMax": "2377",
+                        "outputCanvasCustomLengthStep": "1",
+                        "outputCanvasAnchors": [
+                            "TOPLEFT",
+                            "TOPCENTER",
+                            "TOPRIGHT",
+                            "MIDDLELEFT",
+                            "MIDDLECENTER",
+                            "MIDDLERIGHT",
+                            "BOTTOMLEFT",
+                            "BOTTOMCENTER",
+                            "BOTTOMRIGHT"
+                        ],
+                        "outputCanvasOrientations": [
+                            "PORTRAIT",
+                            "LANDSCAPE"
+                        ],
+                        "scanCaptureModes": [
+                            "JOBBUILD"
+                        ],
+                        "scanSources":[
+                            "MDF"
+                        ]
+                    }
+                },
+                "defaultMediaDestinationConstraint": "STACKER"
+            },
+            "overrides": []
+        }
+    ]
+}

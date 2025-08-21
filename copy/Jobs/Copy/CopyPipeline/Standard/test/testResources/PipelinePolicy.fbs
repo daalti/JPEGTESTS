@@ -1,0 +1,9 @@
+namespace dune.job;
+
+enum PipelinePolicy : byte
+{
+    undefined = 0,               /** no pipeline policy set */
+    allocate_only,           /** only allocate resources */
+    allocate_all_then_start, /** allocate all resources, and after that start them in order */
+    allocate_and_start       /** as soon as a resource is allocated, start it */
+}

@@ -1,0 +1,24 @@
+{
+    "listOfDynamicForceSets": [
+        {
+            "settingName": "pipelineOptions/imageModifications/backgroundColorRemoval",
+            "rules": [
+                {
+                    "if": [
+                        {
+                            "settingName": "src/scan/contentType",
+                            "withValueIn": [
+                                { "unionValue": {"value":"IMAGE"}, "unionValue_type": "OriginalContentType" }
+                            ]
+                        }
+                    ],
+                    "then": {
+                        "supportedValues": [
+                            { "unionValue": {"value":"false"}, "unionValue_type": "BOOL" }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

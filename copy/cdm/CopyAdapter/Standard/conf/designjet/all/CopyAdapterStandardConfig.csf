@@ -1,0 +1,17 @@
+{
+    "instances":[
+        {
+            "name":"CopyAdapter",
+            "data":{
+                "defaultCopyMode": "PRINT_AFTER_SCANNING",
+                "allowInterrupt": true,
+                "constraintsStringIds": {
+                    "copyMode":"StringIds.cCopyMode",
+                    "incompatibleSettings":"StringIds.cIncompatibleSettings",
+                    "configuringIncompatible":"StringIds.cSettingsConfiguringIncompatible"
+                }
+            },
+            "overrides":[]
+        }
+    ]
+}

@@ -1,0 +1,118 @@
+// DUNE_NOT_PERSISTENT
+include "Plex.fbs";
+include "ColorMode.fbs";
+include "ContentType.fbs";
+include "ScanTypes.fbs";
+include "MediaSource.fbs";
+include "MediaSizeId.fbs";
+include "ContentOrientation.fbs";
+include "OutputCanvasTypes.fbs";
+include "MarkingFilterSettings.fbs";
+include "StampWatermark.fbs";
+include "ImageAnalysisType.fbs";
+
+namespace dune.scan.Jobs.Scan;
+
+
+table MediaSupportedSizeFb {
+    id: dune.imaging.types.MediaSizeId;
+    mediaOrientation: dune.imaging.types.MediaOrientation;
+}
+
+table ScanJobConstraintFb{
+    /* Constraint for Scan */
+    inputPlexMode: [dune.imaging.types.Plex];
+    colorMode: [dune.imaging.types.ColorMode];
+    originalContentType: [dune.imaging.types.OriginalContentType];
+    scanPagesFlipUpEnabled: [bool];
+    minScanExposure: int=1;
+    maxScanExposure: int=9;
+    stepScanExposure: double=1.0;
+    minScalePercent: int=25;
+    maxScalePercent: int=400;
+    step: double=1.0;
+    scaleSelection: [dune.scan.types.ScanScaleSelectionEnum];
+    fitToPageIncludeMargin: [bool];
+    longPlotScan: [bool];
+    /*These resolutions are the user-facing options for walkup apps.
+      These resolutions do not correspond to scanner capabilities*/
+    adfResolutions: [uint32];
+    flatbedResolutions: [uint32];
+    mdfResolutions: [uint32];
+    adfOriginalSizes: [MediaSupportedSizeFb];
+    flatbedOriginalSizes: [MediaSupportedSizeFb];
+    mdfOriginalSizes: [MediaSupportedSizeFb];
+    supportedMediaTypes:[dune.scan.types.OriginalMediaType];
+    outputCanvasMediaIds: [ dune.imaging.types.MediaSource]; // What media source will we use as a reference for the scan output size
+    outputStandardSizes: [ dune.imaging.types.MediaSizeId]; // Standard output sizes available for the scan
+    scaleToSizes: [ dune.imaging.types.MediaSizeId];        // options for the 'src.scan.scaleToSize' property.
+	// Size of output canvas constraints are on millimetres
+    outputCanvasCustomWidthMin: double = 66;
+    outputCanvasCustomWidthMax: double = 914;
+    outputCanvasCustomWidthStep: double = 1;
+    outputCanvasCustomLengthMin: double = 66;
+    outputCanvasCustomLengthMax: double = 2377;
+    outputCanvasCustomLengthStep: double = 1;
+    outputCanvasAnchors: [dune.imaging.types.OutputCanvasAnchorType];
+    outputCanvasOrientations: [dune.imaging.types.ContentOrientation];
+    pagesPerSheet: [dune.imaging.types.CopyOutputNumberUpCount];
+    minBackgroundRemoval: int=0;
+    maxBackgroundRemoval: int=9;
+    stepBackgroundRemoval: int=1;
+    minBackgroundColorRemovalLevel: int=-6;
+    maxBackgroundColorRemovalLevel: int=6;
+    stepBackgroundColorRemovalLevel: int=1;
+    minBlackEnhancementLevel: int=0;
+    maxBlackEnhancementLevel: int=255;
+    stepBlackEnhancementLevel: int=1;
+    minContrast: int=0;
+    maxContrast: int=9;
+    stepContrast: int=1;
+    minSharpness: int=0;
+    maxSharpness: int=5;
+    stepSharpness: int=1;
+    scanCaptureModes: [dune.scan.types.ScanCaptureModeType];
+    scanSources: [dune.scan.types.ScanSource];
+    numberUpPresentationDirection: [dune.imaging.types.NumberUpPresentationDirection];
+    imageBorder: [dune.imaging.types.ImageBorder];
+    eraseEdgeEnabled: bool = false;
+    originalSidesAuto: bool = false;
+    promptForAdditionalPages: [bool];
+    minAutoPaperColorRemovalLevel: int=0;
+    maxAutoPaperColorRemovalLevel: int=5;
+    stepAutoPaperColorRemovalLevel: int=1;
+    minAutoToneLevel: int=0;
+    maxAutoToneLevel: int=5;
+    stepAutoToneLevel: int=1;
+    bookletFormat: [dune.imaging.types.BookletFormat];
+    watermarkType: [dune.imaging.types.WatermarkType];
+    watermarkId: [dune.imaging.types.WatermarkTextType];
+    customText : string;
+    watermarkTextColor: [dune.imaging.types.StampWatermarkTextColor];
+    watermarkTextSize: [dune.imaging.types.StampWatermarkTextSize];
+    watermarkTextFont: [dune.imaging.types.StampWatermarkTextFont];
+    watermarkOnlyFirstPage: [bool];
+    watermarkRotate45: [bool];
+    watermarkBackgroundColor: [dune.imaging.types.BackgroundColor];
+    watermarkBackgroundPattern: [dune.imaging.types.BackgroundPattern];
+    minWatermarkDarkness: int=0;
+    maxWatermarkDarkness: int=5;
+    stepWatermarkDarkness: int=1;
+    stampLocation: [dune.imaging.types.StampLocation];
+    stampPolicy: [dune.imaging.types.StampPolicy];
+    stampType: [dune.imaging.types.StampType];
+    stampTextColor: [dune.imaging.types.StampWatermarkTextColor];
+    stampTextFont: [dune.imaging.types.StampWatermarkTextFont];
+    stampTextSize: [dune.imaging.types.StampWatermarkTextSize];
+    stampStartingPageMin: int=1;
+    stampStartingPageMax: int=1000000;
+    stampStartingPageStep: int=1;
+    stampStartingNumberMin: int=1;
+    stampStartingNumberMax: int=1000000;
+    stampStartingNumberStep: int=1;
+    stampNumberOfDigitsMin: int=1;
+    stampNumberOfDigitsMax: int=10;
+    stampNumberOfDigitsStep: int=1;
+    stampPageNumberingStyle: [dune.imaging.types.PageNumberingStyle];
+    autoCropMode: [dune.imaging.types.AutoCropMode];
+}

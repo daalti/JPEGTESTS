@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/QuickCopy">
+    <file>QuickCopyFooter.qml</file>
+    <file>QuickCopyComponentHandler.qml</file>
+    <file>QuickCopyController.qml</file>
+    <file>imports/quickCopyFooter/qmldir</file>
+    <file>AsyncOperationWrapper.qml</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,20 @@
+namespace dune.imaging.types;
+
+enum Plex:byte
+{
+  SIMPLEX = 0,
+  DUPLEX
+}
+
+enum PlexSide:byte
+{
+  FIRST = 0,
+  SECOND
+}
+
+enum PlexBinding:byte
+{
+  LONG_EDGE = 0,
+  SHORT_EDGE,
+  ONE_SIDED
+}

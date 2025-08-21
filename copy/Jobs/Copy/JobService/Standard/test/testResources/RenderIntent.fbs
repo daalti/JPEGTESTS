@@ -1,0 +1,11 @@
+namespace dune.imaging.types;
+
+
+enum RenderIntent : byte
+{
+    PERCEPTUAL,
+    RELATIVE_COLORIMETRIC,
+    SATURATION,
+    ABSOLUTE_COLORIMETRIC,
+    AUTO
+}

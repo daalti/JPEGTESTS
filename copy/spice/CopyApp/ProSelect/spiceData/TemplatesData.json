@@ -1,0 +1,149 @@
+{
+    "menuButtons": [
+        {
+            "id": "copy_colorMode",
+            "valueResource": "data.src.scan.colorMode",
+            "type": "dune::spice::jobTicket_1::ColorModes::ColorModes"
+        },
+        {
+            "id": "copy_quality",
+            "valueResource": "data.dest.print.printQuality",
+            "type": "dune::spice::glossary_1::PrintQuality::PrintQuality"
+        },
+        {
+            "id": "copy_mediaSize",
+            "valueResource": "data.dest.print.mediaSize",
+            "type": "dune::spice::glossary_1::MediaSize::MediaSize"
+        },
+        {
+            "id": "copy_originalSize",
+            "valueResource": "data.src.scan.mediaSize",
+            "type": "dune::spice::glossary_1::MediaSize::MediaSize"
+        },
+        {
+            "id": "copy_paperType",
+            "valueResource": "data.dest.print.mediaType",
+            "type": "dune::spice::glossary_1::MediaType::MediaType"
+        },
+        {
+            "id": "copy_paperTray",
+            "valueResource": "data.dest.print.mediaSource",
+            "type": "dune::spice::glossary_1::MediaSourceId::MediaSourceId"
+        },
+        {
+            "id": "copy_paperSelection",
+            "valueResource": "data.dest.print.mediaSize",
+            "type": "dune::spice::glossary_1::MediaSize::MediaSize"
+        },
+        {
+            "id": "copy_contentType",
+            "valueResource": "data.src.scan.contentType",
+            "type": "dune::spice::jobTicket_1::ContentType::ContentType"
+        },
+        {
+            "id": "copy_pagesPerSheet",
+            "valueResource": "data.pipelineOptions.imageModifications.pagesPerSheet",
+            "type": "dune::spice::jobTicket_1::PagesPerSheet::PagesPerSheet"
+        },
+        {
+            "id": "copy_sides",
+            "valueResource": "data.dest.print.mediaSize",
+            "type": "dune::spice::glossary_1::MediaSize::MediaSize"
+        },
+        {
+            "id": "copy_resize",
+            "valueResource": "data.pipelineOptions.scaling.xScalePercent"
+        }
+    ],
+    "menuSelections": [
+        {
+            "id": "copy_colorMode",
+            "titleId": "StringIds.cColor",
+            "valueResource": "data.src.scan.colorMode",
+            "enumType": "dune::spice::jobTicket_1::ColorModes::ColorModes"
+        },
+        {
+            "id": "copy_quality",
+            "titleId": "StringIds.cQuality",
+            "valueResource": "data.dest.print.printQuality",
+            "enumType": "dune::spice::glossary_1::PrintQuality::PrintQuality"
+        },
+        {
+            "id": "copy_mediaSize",
+            "titleId": "StringIds.cMediaSize",
+            "valueResource": "data.dest.print.mediaSize",
+            "enumType": "dune::spice::glossary_1::MediaSize::MediaSize"
+        },
+        {
+            "id": "copy_originalSize",
+            "titleId": "StringIds.cOriginalSize",
+            "valueResource": "data.src.scan.mediaSize",
+            "enumType": "dune::spice::glossary_1::MediaSize::MediaSize"
+        },
+        {
+            "id": "copy_paperType",
+            "titleId": "StringIds.cPaperType",
+            "valueResource": "data.dest.print.mediaType",
+            "enumType": "dune::spice::glossary_1::MediaType::MediaType"
+        },
+        {
+            "id": "copy_paperTray",
+            "titleId": "StringIds.cPaperTray",
+            "valueResource": "data.dest.print.mediaSource",
+            "enumType": "dune::spice::glossary_1::MediaSourceId::MediaSourceId"
+        },
+        {
+            "id": "copy_contentType",
+            "titleId": "StringIds.cContentType",
+            "valueResource": "data.src.scan.contentType",
+            "enumType": "dune::spice::jobTicket_1::ContentType::ContentType"
+        },
+        {
+            "id": "copy_pagesPerSheet",
+            "titleId": "StringIds.cPagesPerSheet",
+            "valueResource": "data.pipelineOptions.imageModifications.pagesPerSheet",
+            "enumType": "dune::spice::jobTicket_1::PagesPerSheet::PagesPerSheet"
+        }
+    ],
+    "menuSwitches": [
+        {
+            "id": "copy_toggle",
+            "titleId": "StringIds.c2SidedPages",
+            "valueResource": "data.src.scan.pagesFlipUpEnabled",
+            "ON": "dune::spice::glossary_1::FeatureEnabled::FeatureEnabled.true_",
+            "OFF": "dune::spice::glossary_1::FeatureEnabled::FeatureEnabled.false_"
+        },
+        {
+            "id": "copy_collateToggle",
+            "titleId": "StringIds.cCollate",
+            "valueResource": "data.dest.print.collate",
+            "ON": "dune::spice::jobTicket_1::CollateModes::CollateModes.collated",
+            "OFF": "dune::spice::jobTicket_1::CollateModes::CollateModes.uncollated"
+        }
+    ],
+    "menuSliders": [
+        {
+            "id": "copy_exposure",
+            "valueResource": "data.pipelineOptions.imageModifications.exposure",
+            "variation": "VariationB",
+            "from": 1,
+            "to": 9,
+            "stepSize": 1
+        }
+    ],
+    "menuDetailedItems": [
+        {
+            "id": "helpTwoSidedCopying",
+            "titleId": "StringIds.c2SidedCopy",
+            "viewProperties": [
+                {
+                    "label": "StringIds.cSavePaperCopy"
+                },
+                {
+                    "action": "StringIds.cOKButton",
+                    "callOnAction": "qrc:/menu/MenuDelegateAction.qml::back()"
+                }
+            ]
+        }
+    ]
+}

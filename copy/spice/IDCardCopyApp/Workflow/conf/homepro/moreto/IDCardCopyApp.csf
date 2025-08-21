@@ -1,0 +1,14 @@
+{
+    "instances":[
+        {
+            "name":"IDCardCopyApp",
+            "inherits" : "family",
+             "patch": [
+                { "op": "add", "path": "/list/-", "value": "scan_colorMode"},
+                { "op": "add", "path": "/list/-", "value": "copy_quality"},
+                { "op": "add", "path": "/settings/list/0/children/2", "value": "scan_colorMode"}
+            ],
+            "overrides":[]
+        }
+    ]
+}

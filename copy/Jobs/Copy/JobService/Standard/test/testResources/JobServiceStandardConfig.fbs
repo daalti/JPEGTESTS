@@ -1,0 +1,69 @@
+include "CopyJobTicket.fbs";
+include "ScanPipelineConfig.fbs";
+include "Shortcut.fbs";
+include "RenderIntent.fbs";
+
+namespace dune.copy.Jobs.Copy;
+
+enum ProductType : short
+{
+    HOME_PRO = 0,
+    LFP = 1,
+    ENTERPRISE = 2
+}
+
+table CopyJobIntentConfigFb {
+    defaultValues: CopyJobIntentFb(cpp_ptr_type:"std::shared_ptr");
+}
+
+table CopyStringIdMap {
+    type: string;
+    stringId: string;
+}
+
+// Enum list of settings that can be upgraded, increase list if there are needed anymore to be used
+enum SettingsEnumForForceValue : short {
+    MEDIA_FAMILY = 0,
+    AUTO_ROTATE = 1,
+    SCALE_TO_OUTPUT = 2,
+    IMAGE_PREVIEW_CONFIGURATION = 3
+}
+
+// Table to create a list of settings to be upgraded between version upgrades
+// In general this is only needed when:
+// - A new value was added on Ticket fbs
+// - Default value on fbs, it's supported, but cause a problem as a initial value because is not the default value expected for Product
+// - We update from a previous release that could have default value, and no reset to factory settings is supported
+//
+// If this case, we will force a value on tickets that are a previous version,
+// to take the specific value on list SettingsEnumForForceValue from Default Values on Csf file
+table ForceToDefaultValue{
+    version:uint;
+    listOfSettingsToBeForced:[SettingsEnumForForceValue];
+}
+
+table JobServiceStandardConfig {
+    jobRetryCount: uint32;
+    hasSharedPaperPath: bool;
+    prePrintConfiguration: ProductType;
+    copyBasicPipeline: bool;
+    jobIntentConfiguration: CopyJobIntentConfigFb;
+    scanPipelineCfg: dune.scan.Jobs.Scan.ScanPipelineConfig;
+    stringIds: [CopyStringIdMap](cpp_ptr_type:"std::shared_ptr");
+    isSupportedIdCardCopy: bool;
+    copyQuicksets:[dune.admin.shortcuts.FactoryShortuctDef](cpp_ptr_type:"std::shared_ptr");
+    isPrintService: bool;
+    staticConstrainsAreCached:bool=false;
+    thresholdOverride:int=0;
+    renderIntent:dune.imaging.types.RenderIntent=AUTO;
+    validateTicketsOnInitialization:bool=false;
+    currentTicketVersion:uint=0;
+    ticketUpgradeFunctionality:[ForceToDefaultValue](cpp_ptr_type:"std::shared_ptr");
+    quickSetSupported:bool = true;
+    isMediaTypeVisibilityTogglingSupported : bool = false;
+    //This configuration is specific for multipage support from Flatbed and unrelated to promptForAdditionalPage Enterprise
+    //PromptForAdditionalPages will be a user based setting would be added in Scan Job Intnet with the future epic
+    multiPageSupportedFromFlatbed:bool = false;
+}
+
+root_type JobServiceStandardConfig;

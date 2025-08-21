@@ -1,0 +1,24 @@
+{
+    "stringIds": [
+        {
+            "type": "COPY",
+            "stringId": "StringIds.cCopyAppHeading"
+        },
+        {
+            "type": "scanning",
+            "stringId": "StringIds.cScanning"
+        },
+        {
+            "type": "copying",
+            "stringId": "StringIds.cCopying"
+        },
+        {
+            "type": "copyCanceled",
+            "stringId": "StringIds.cCopyCanceledMessage"
+        },
+        {
+            "type": "copySuccess",
+            "stringId": "StringIds.cCopyComplete"
+        }
+    ]
+}

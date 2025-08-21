@@ -1,0 +1,298 @@
+{
+    "outputDevicesPresent": true,
+    "inputDevicesPresent": true,
+    "mediaPathDevicesPresent": true,
+    "finisherDevicesPresent": false,
+    "drawerDevicesPresent" : false,
+    "defaultMediaMargins": {
+        "top":    { "value": 420, "dpi" : 3600 },
+        "bottom": { "value": 420, "dpi" : 3600 },
+        "left":   { "value": 420, "dpi" : 3600 },
+        "right":  { "value": 420, "dpi" : 3600 }
+    },
+    "settings": [{
+        "type": "LOW_ON_PAPER_MESSAGE_ENABLE",
+        "settingValue": {"value_type":"INT16",
+            "value":{"value":34} }
+    },
+    {
+        "type": "INVALID",
+        "settingValue": {"value_type":"INT16",
+            "value":{"value":55} }
+    } ],
+    "outputDevices": [
+        {
+            "device": {
+                "id": 3,
+                "hasInstallationType": true,
+                "installationType": "BUILTIN",
+                "hasMediaSupportedSizes": false,
+                "hasMediaSupportedTypes": false,
+                "hasSupportedMediaWidths": false,
+                "hasSupportedMediaLengths": false
+            },
+            "snapshotData": {
+                "outputSnapshot":{
+                    "deviceSnapshot":{
+                        "snapState":  "OK" ,
+                        "snapStatus": []
+                    }
+                },
+                "hasSnapRemainingSheets": false
+            },
+            "snapshotData_type": "OutputBinSnapshotFbs",
+            "subType": {
+                "subType": "Bin",
+                "hasSupportsManualMode": true,
+                "supportsManualMode": false,
+                "hasSheetsCapacity": false,
+                "hasPageDeliveryOrientation": true,
+                "pageDeliveryOrientation": "FACE_UP",
+                "hasIsBinFullSupported": true,
+                "isBinFullSupported": true,
+                "hasIsBinExternal": true,
+                "isBinExternal": true,
+                "hasIsBinPartOfPaperPath": true,
+                "isBinPartOfPaperPath": true,
+                "hasIsBinPartOfDuplexPath": true,
+                "isBinPartOfDuplexPath": true,
+                "hasIsBinPartOfFinishingPath": true,
+                "isBinPartOfFinishingPath": true
+            },
+            "subType_type": "Bin"
+        }
+    ],
+    "inputDevices": [
+        {
+            "device": {
+                "id": 1,
+                "hasInstallationType": true,
+                "installationType": "BUILTIN",
+                "hasMediaSupportedSizes": true,
+                "mediaSupportedSizes": [
+                  { "size": { "type": "A4", "width": { "value": 210000, "dpi": 25400}, "height": { "value": 297000, "dpi": 25400} }, "orientation":  ["PORTRAIT"] },  
+                  { "size": { "type": "A5", "width": { "value": 148000, "dpi": 25400}, "height": { "value": 210000, "dpi": 25400} }, "orientation":  ["PORTRAIT"] },  
+                  { "size": { "type": "A6", "width": { "value": 105000, "dpi": 25400}, "height": { "value": 148000, "dpi": 25400} }, "orientation":  ["PORTRAIT"] },  
+                  { "size": { "type": "LETTER", "width": { "value": 215900, "dpi": 25400}, "height": { "value": 279400, "dpi": 25400} }, "orientation":  ["PORTRAIT"] },  
+                  { "size": { "type": "GOVT_LETTER", "width": { "value": 203200, "dpi": 25400}, "height": { "value": 254000, "dpi": 25400} }, "orientation":  ["PORTRAIT"] },  
+                  { "size": { "type": "LEGAL", "width": { "value": 215900, "dpi": 25400}, "height": { "value": 355600, "dpi": 25400} }, "orientation":  ["PORTRAIT"] },
+                  { "size": { "type": "CUSTOM", "width": { "value" : 0, "dpi" : 1200 }, "height": { "value" : 0, "dpi" : 1200 } }, "orientation": [ "PORTRAIT" ] }, 
+                  { "size": { "type": "US_EXECUTIVE", "width": { "value": 184150, "dpi": 25400}, "height": { "value": 266700, "dpi": 25400} }, "orientation":  ["PORTRAIT"] },  
+                  { "size": { "type": "FOOLSCAP", "width": { "value": 215900, "dpi": 25400}, "height": { "value": 330200, "dpi": 25400} }, "orientation":  ["PORTRAIT"] },  
+                  { "size": { "type": "PHOTO4X6", "width": { "value": 101600, "dpi": 25400}, "height": { "value": 152400, "dpi": 25400} }, "orientation":  ["PORTRAIT"] },
+                  { "size": {  "type": "PHOTO5X5", "width": { "value" : 127000, "dpi" : 25400 }, "height": { "value" : 127000, "dpi" : 25400 } }, "orientation": [ "PORTRAIT" ] },
+                  { "size": { "type": "PHOTO5X7", "width": { "value": 127000, "dpi": 25400}, "height": { "value": 177800, "dpi": 25400} }, "orientation":  ["PORTRAIT"] },  
+                  { "size": { "type": "PHOTO5X8", "width": { "value": 127000, "dpi": 25400}, "height": { "value": 203200, "dpi": 25400} }, "orientation":  ["PORTRAIT"] },  
+                  { "size": { "type": "PHOTO_L", "width": { "value": 88900, "dpi": 25400}, "height": { "value": 127000, "dpi": 25400} }, "orientation":  ["PORTRAIT"] },  
+                  { "size": { "type": "JIS_B5", "width": { "value": 182000, "dpi": 25400}, "height": { "value": 257000, "dpi": 25400} }, "orientation":  ["PORTRAIT"] },  
+                  { "size": { "type": "MEDIA100X150", "width": { "value": 100000, "dpi": 25400}, "height": { "value": 150000, "dpi": 25400} }, "orientation":  ["PORTRAIT"] },  
+                  { "size": { "type": "PERSONAL_ENVELOPE", "width": { "value": 92075, "dpi": 25400}, "height": { "value": 165100, "dpi": 25400} }, "orientation":  ["PORTRAIT"] },  
+                  { "size": { "type": "COM10ENVELOPE", "width": { "value": 104648, "dpi": 25400}, "height": { "value": 241300, "dpi": 25400} }, "orientation":  ["PORTRAIT"] },  
+                  { "size": { "type": "MONARCHENVELOPE", "width": { "value": 98298, "dpi": 25400}, "height": { "value": 190500, "dpi": 25400} }, "orientation":  ["PORTRAIT"] },  
+                  { "size": { "type": "B5ENVELOPE", "width": { "value": 176000, "dpi": 25400}, "height": { "value": 250000, "dpi": 25400} }, "orientation":  ["PORTRAIT"] },  
+                  { "size": { "type": "C5ENVELOPE", "width": { "value": 162000, "dpi": 25400}, "height": { "value": 229000, "dpi": 25400} }, "orientation":  ["PORTRAIT"] },  
+                  { "size": { "type": "C6ENVELOPE", "width": { "value": 114000, "dpi": 25400}, "height": { "value": 162000, "dpi": 25400} }, "orientation":  ["PORTRAIT"] },  
+                  { "size": { "type": "DLENVELOPE", "width": { "value": 110000, "dpi": 25400}, "height": { "value": 220000, "dpi": 25400} }, "orientation":  ["PORTRAIT"] },  
+                  { "size": { "type": "A2ENVELOPE", "width": { "value": 111125, "dpi": 25400}, "height": { "value": 146050, "dpi": 25400} }, "orientation":  ["PORTRAIT"] },  
+                  { "size": { "type": "CHOU3_ENVELOPE", "width": { "value": 120000, "dpi": 25400}, "height": { "value": 235000, "dpi": 25400} }, "orientation":  ["PORTRAIT"] },  
+                  { "size": { "type": "CHOU4_ENVELOPE", "width": { "value": 90000, "dpi": 25400}, "height": { "value": 205000, "dpi": 25400} }, "orientation":  ["PORTRAIT"] },  
+                  { "size": { "type": "HAGAKI_POSTCARD", "width": { "value": 100000, "dpi": 25400}, "height": { "value": 148000, "dpi": 25400} }, "orientation":  ["PORTRAIT"] },  
+                  { "size": { "type": "HAGAKI_OUFUKU", "width": { "value": 148000, "dpi": 25400}, "height": { "value": 200000, "dpi": 25400} }, "orientation":  ["LANDSCAPE"] },  
+                  { "size": { "type": "STATEMENT", "width": { "value": 139700, "dpi": 25400}, "height": { "value": 215900, "dpi": 25400} }, "orientation":  ["PORTRAIT"] },  
+                  { "size": { "type": "PHOTO3X5", "width": { "value": 76200, "dpi": 25400}, "height": { "value": 127000, "dpi": 25400} }, "orientation":  ["PORTRAIT"] },  
+                  { "size": { "type": "PHOTO4X12", "width": { "value": 101600, "dpi": 25400}, "height": { "value": 304800, "dpi": 25400} }, "orientation":  ["PORTRAIT"] },
+                  { "size": { "type": "PHOTO_2L", "width": { "value" : 127000, "dpi" : 25400 }, "height": { "value" : 177800, "dpi" : 25400 } }, "orientation": [ "PORTRAIT" ] }
+                ],
+                "hasMediaSupportedTypes": true,
+                "mediaSupportedTypes": [
+                    { "type": "STATIONERY" },
+                    { "type": "HP_MATTE_PRESENTATION" },
+                    { "type": "LETTERHEAD" },
+                    { "type": "OTHERMATTE" },
+                    { "type": "OTHERGLOSSY" },
+                    { "type": "HPMATTE_BROCHURE" },
+                    { "type": "HPSPECIALTY_GLOSSY" },
+                    { "type": "TRIFOLD_BROCHURE_GLOSSY" },
+                    { "type": "PHOTOGRAPHICGLOSSY" },
+                    { "type": "OTHERPHOTO" },
+                    { "type": "HAGAKI" },
+                    { "type": "HEAVY" },
+                    { "type": "LIGHT" }
+                ],
+                "hasSupportedMediaWidths": true,
+                "supportedMediaWidths": {
+                    "min": { "value": 21600, "dpi": 7200 },
+                    "max": { "value": 61200, "dpi": 7200 }
+                },
+                "hasSupportedMediaLengths": true,
+                "supportedMediaLengths": {
+                    "min": { "value": 36000, "dpi": 7200 },
+                    "max": { "value": 100800,"dpi": 7200 }
+                },
+                "considerSupportedWidthLength": false,
+                "deviceSettings": [{
+                    "type": "LOW_ON_PAPER_MESSAGE_ENABLE",
+                    "settingValue": {"value_type":"INT16",
+                        "value":{"value":23} }
+                },
+                {
+                    "type": "INVALID",
+                    "settingValue": {"value_type":"INT16",
+                        "value":{"value":24} }
+                } ]
+            },
+            "snapshotData": {
+                "inputSnapshot":{
+                    "deviceSnapshot":{
+                        "snapState":  "OK" ,
+                        "snapStatus": ["READY"]
+                    },
+                    "hasSnapMediaId": true,
+                    "snapMediaId":{
+                        "type": "STATIONERY"
+                    },
+                    "hasSnapMediaSize": true,
+                    "snapMediaSize":{
+                            "type": "LETTER",
+                            "width": {
+                                "value": 215900,
+                                "dpi": 25400
+                            },
+                            "height": {
+                                "value": 279400,
+                                "dpi": 25400
+                            }
+                        },
+                    "hasSnapMediaLoadOrientation": true,
+                    "snapMediaLoadOrientation": "PORTRAIT"
+                }
+            },
+            "snapshotData_type": "InputTraySnapshotFbs",
+            "subType": {
+                "subType": "Tray",
+                "mediaSource": "MAIN",
+                "hasPhysicalMargins": true,
+                "physicalMargins": {
+                                     "top":    { "value": 840, "dpi"  : 7200 },
+                                     "bottom": { "value": 840, "dpi"  : 7200 },
+                                     "left":   { "value": 840, "dpi"  : 7200 },
+                                     "right":  { "value": 840, "dpi"  : 7200 }
+                                   },
+                "hasSheetCapacity": true,
+                "sheetsCapacity" : 250,
+                "hasLowThreshold": false,
+                "hasFullBleedSupportConstraints": true,
+                "fullBleedSupportConstraints": {
+                    "supportedIds": [
+                        { "type": "HP_MATTE_PRESENTATION" },
+                        { "type": "HPSPECIALTY_GLOSSY" },
+                        { "type": "HPMATTE_BROCHURE" },
+                        { "type": "PHOTOGRAPHICGLOSSY" },
+                        { "type": "OTHERPHOTO" },
+                        { "type": "OTHERMATTE" },
+                        { "type": "OTHERGLOSSY" },
+                        { "type": "HAGAKI" },
+                        { "type": "TRIFOLD_BROCHURE_GLOSSY" }
+                    ],
+                    "supportedSizes": [ 
+                        { "type": "PHOTO_L", "width": { "value": 88900, "dpi": 25400}, "height": { "value": 127000, "dpi": 25400} },
+                        { "type": "PHOTO4X6", "width": { "value": 101600, "dpi": 25400}, "height": { "value": 152400, "dpi": 25400} },
+                        { "type": "PHOTO5X7", "width": { "value": 127000, "dpi": 25400}, "height": { "value": 177800, "dpi": 25400} },
+                        { "type": "PHOTO_2L", "width": { "value" : 127000, "dpi" : 25400}, "height": { "value" : 177800, "dpi" : 25400} },
+                        { "type": "GOVT_LETTER", "width": { "value": 203200, "dpi": 25400}, "height": { "value": 254000, "dpi": 25400} },
+                        { "type": "LETTER", "width": { "value": 215900, "dpi": 25400}, "height": { "value": 279400, "dpi": 25400} },
+                        { "type": "A4", "width": { "value": 210000, "dpi": 25400}, "height": { "value": 297000, "dpi": 25400} },
+                        { "type": "A5", "width": { "value": 148000, "dpi": 25400}, "height": { "value": 210000, "dpi": 25400} },
+                        { "type": "A6", "width": { "value": 105000, "dpi": 25400}, "height": { "value": 148000, "dpi": 25400} },
+                        { "type": "JIS_B5", "width": { "value": 182000, "dpi": 25400}, "height": { "value": 257000, "dpi": 25400} },
+                        { "type": "PHOTO4X12", "width": { "value": 101600, "dpi": 25400}, "height": { "value": 304800, "dpi": 25400} },
+                        { "type": "MEDIA100X150", "width": { "value": 100000, "dpi": 25400}, "height": { "value": 150000, "dpi": 25400} },
+                        { "type": "PHOTO5X5", "width": { "value" : 127000, "dpi" : 25400 }, "height": { "value" : 127000, "dpi" : 25400 } },
+                        { "type": "HAGAKI_POSTCARD", "width": { "value": 100000, "dpi": 25400}, "height": { "value": 148000, "dpi": 25400} },
+                        { "type": "PHOTO3X5", "width": { "value": 76200, "dpi": 25400}, "height": { "value": 127000, "dpi": 25400} },
+                        { "type": "FOOLSCAP", "width": { "value": 215900, "dpi": 25400}, "height": { "value": 330200, "dpi": 25400} },
+                        { "type": "B5ENVELOPE", "width": { "value": 176000, "dpi": 25400}, "height": { "value": 250000, "dpi": 25400} },
+                        { "type": "US_EXECUTIVE", "width": { "value": 184150, "dpi": 25400}, "height": { "value": 266700, "dpi": 25400} },
+                        { "type": "LEGAL", "width": { "value": 215900, "dpi": 25400}, "height": { "value": 355600, "dpi": 25400} }
+                    ],
+                    "supportedCombinations": []
+                },
+                "hasFeedOrientationSupported": true,
+                "feedOrientationSupported": "PORTRAIT",
+                "hasPageFaceOrientation": true,
+                "pageFaceOrientation": "FACE_UP",
+                "hasIsTrayPartOfPaperPath": true,
+                "isTrayPartOfPaperPath": false,
+                "hasIsMediaSizeSensingSupported": true,
+                "isMediaSizeSensingSupported": false,
+                "hasIsMediaTypeSensingSupported": true,
+                "isMediaTypeSensingSupported": false,
+                "hasIsMediaElectronicLevelSensingSupported": true,
+                "isMediaElectronicLevelSensingSupported": false,
+                "hasIsMediaDiscreteLevelSensingSupported": true,
+                "isMediaDiscreteLevelSensingSupported": false,
+                "hasMediaDetectableSizes": false
+            },
+            "subType_type": "Tray"
+        }
+    ],
+    "mediaPathDevices": [
+        {
+             "device": {
+                "id": 4,
+                "hasInstallationType": true,
+                "installationType": "BUILTIN",
+                "hasMediaSupportedSizes": true,
+                "mediaSupportedSizes": [
+                    { "size": {  "type": "A4", "width": { "value" : 210000, "dpi" : 25400 }, "height": { "value" : 297000, "dpi" : 25400 } }, "orientation": [ "PORTRAIT" ] },
+                    { "size": {  "type": "LETTER", "width": { "value" : 215900, "dpi" : 25400 }, "height": { "value" : 279400, "dpi" : 25400 } }, "orientation": [ "PORTRAIT" ] },
+                    { "size": {  "type": "US_EXECUTIVE", "width": { "value" : 184150, "dpi" : 25400 }, "height": { "value" : 266700, "dpi" : 25400 } }, "orientation": [ "PORTRAIT" ] },
+                    { "size": {  "type": "PHOTO4X6", "width": { "value" : 101600, "dpi" : 25400 }, "height": { "value" : 152400, "dpi" : 25400 } }, "orientation": [ "PORTRAIT" ] },
+                    { "size": {  "type": "JIS_B5", "width": { "value" : 182000, "dpi" : 25400 }, "height": { "value" : 257000, "dpi" : 25400 } }, "orientation": [ "PORTRAIT" ] },
+                    { "size": {  "type": "MEDIA100X150", "width": { "value" : 100000, "dpi" : 25400 }, "height": { "value" : 150000, "dpi" : 25400 } }, "orientation": [ "PORTRAIT" ] },
+                    { "size": {  "type": "B5ENVELOPE", "width": { "value" : 176000, "dpi" : 25400 }, "height": { "value" : 250000, "dpi" : 25400 } }, "orientation": [ "PORTRAIT" ] }
+                ],
+                "hasMediaSupportedTypes": true,
+                "mediaSupportedTypes": [
+                    { "type": "STATIONERY" },
+                    { "type": "OTHERMATTE" },
+                    { "type": "OTHERGLOSSY" },
+                    { "type": "HAGAKI" },
+                    { "type": "HEAVY" },
+                    { "type": "TRIFOLD_BROCHURE_GLOSSY" },
+                    { "type": "LIGHT" },
+                    { "type": "HPBROCHURE_MATTE" },
+                    { "type": "HPMATTE_BROCHURE" },
+                    { "type": "HPSPECIALTY_GLOSSY" },
+                    { "type": "HP_MATTE_PRESENTATION" },
+                    { "type": "LETTERHEAD" }
+                ],
+                "hasSupportedMediaWidths": true,
+                "supportedMediaWidths": {
+                    "min": {"value": 28346, "dpi":7200},"max": {"value":61200, "dpi":7200}
+                },
+                "hasSupportedMediaLengths": true,
+                "supportedMediaLengths": {
+                    "min": {"value": 42520, "dpi":7200},"max": {"value":84188, "dpi":7200}
+                }
+            },
+            "snapshotData": {
+                "mediaPathSnapshot": {
+                    "deviceSnapshot": {
+                        "snapState":  "OK" ,
+                        "snapStatus": []
+                    }
+                }
+            },
+            "snapshotData_type": "DuplexerSnapshotFbs",
+            "subType": {
+                "subType": "Duplexer"
+            },
+            "subType_type": "Duplexer"
+        }
+    ],
+    "finisherDevices": [
+    ],
+    "drawerDevices":[
+    ]
+}

@@ -1,0 +1,51 @@
+namespace dune.spice.guiCore;
+
+enum MenuNodeType :short
+{
+    NONE = 0,
+    CONTROLPANEL = 1,
+    EWS = 2,
+    BOTH = 3
+}
+
+enum Operation :short
+{
+    NONE = 0,
+    NOT = 1
+}
+
+table displayDependencyNode
+{
+    operation:Operation = NONE;
+    function:string;
+}
+
+table MenuNode
+{
+    id: string      (key);
+    title: string;
+    titleId: string;
+    priority: uint;
+    menuNodeType:MenuNodeType = CONTROLPANEL;
+    enabled:string;
+    enabledError:string;
+    module: string;
+    delegate:string;
+    displayDependencies: string;
+    onEntry: string;
+    onExit: string;
+    ewsLink: string;
+    children: [string];
+    permissionId:string;
+    section: string;
+    displayDependency:[string];
+    enableDependency:[string];
+}
+
+table MenuNodes
+{
+    list:[MenuNode];
+}
+
+root_type MenuNodes;
+

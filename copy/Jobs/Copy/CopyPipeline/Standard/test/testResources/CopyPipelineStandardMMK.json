@@ -1,0 +1,696 @@
+{
+    "pipelineBuilderConfig": {
+        "defaultWriteStrategy": "WRITE_STREAM",
+        "defaultNotificationStrategy": "STREAM_IMAGE",
+        "previewSettings": {
+                "previewResolution": "100",
+                "stripHeight": "64",
+                "savePreviewMode": "true"
+        },
+        "pipelineSegements": [
+            {
+                "sectionEnabled": true,
+                "pipelineSegmentType": "FINAL_SEGMENT",
+                "pipelinePolicy": "undefined",
+                "resourceInstanceProxyList": [
+                    {
+                        "resourceId": "SCANDEVICE",
+                        "jobletBoudary": "UNDEFINED",
+                        "toPipe": "NONE",
+                        "fromPipe": "NONE",
+                        "setKeep": "false",
+                        "isSegmentFirstResource" : "true",
+                        "pipeType": "IMAGECONTAINER",
+                        "queuingFlag": "BOTH",
+                        "isPipeQueueRequired": "true",
+                        "reusePipeQueue": "false",
+                        "openForAppending": "false"
+                    },
+                    {
+                        "resourceId": "IMAGEPROCESSOR",
+                        "jobletBoudary": "START",
+                        "toPipe": "NONE",
+                        "fromPipe": "NONE",
+                        "setKeep": "false",
+                        "isSegmentFirstResource" : "false",
+                        "pipeType": "IMAGECONTAINER",
+                        "queuingFlag": "BOTH",
+                        "isPipeQueueRequired": "true",
+                        "reusePipeQueue": "false",
+                        "openForAppending": "false",
+                        "flowType": "COPY"
+                    },
+                    {
+                        "resourceId": "MARKINGFILTER",
+                        "jobletBoudary": "UNDEFINED",
+                        "toPipe": "NONE",
+                        "fromPipe": "NONE",
+                        "setKeep": "false",
+                        "isSegmentFirstResource" : "false",
+                        "pipeType": "IMAGECONTAINER",
+                        "queuingFlag": "BOTH",
+                        "isPipeQueueRequired": "true",
+                        "reusePipeQueue": "false",
+                        "openForAppending": "false",
+                        "flowType": "COPY",
+                        "enabledIf": ["2Up"]
+                    },
+                    {
+                        "resourceId": "IMAGEPERSISTER",
+                        "jobletBoudary": "UNDEFINED",
+                        "fileFormat": "JPEG",
+                        "fileName": "",
+                        "notificationStrategy": "ON_STARTED",
+                        "toPipe": "NONE",
+                        "fromPipe": "NONE",
+                        "setKeep": "false",
+                        "isSegmentFirstResource" : "false",
+                        "pipeType": "IMAGECONTAINER",
+                        "queuingFlag": "BOTH",
+                        "isPipeQueueRequired": "true",
+                        "flowType": "DEFAULT",
+                        "thumbnailResolution": "0",
+                        "computeScale": "NONE",
+                        "reusePipeQueue": "false",
+                        "openForAppending": "false",
+                        "persistentPipe": "true"
+                    },
+                    {
+                        "resourceId": "IMAGERETRIEVER",
+                        "jobletBoudary": "UNDEFINED",
+                        "toPipe": "NONE",
+                        "fromPipe": "NONE",
+                        "setKeep": "true",
+                        "isSegmentFirstResource" : "false",
+                        "pipeType": "IMAGECONTAINER",
+                        "queuingFlag": "BOTH",
+                        "isPipeQueueRequired": "true",
+                        "reusePipeQueue": "false",
+                        "openForAppending": "false",
+                        "reloadResource": "false",
+                        "removeImageWhenFinish": "true",
+                        "section": "2"
+                    },
+                    {
+                        "resourceId": "RTPFILTER",
+                        "jobletBoudary": "UNDEFINED",
+                        "toPipe": "NONE",
+                        "fromPipe": "NONE",
+                        "setKeep": "true",
+                        "isSegmentFirstResource" : "false",
+                        "pipeType": "IMAGECONTAINER",
+                        "queuingFlag": "BOTH",
+                        "isPipeQueueRequired": "true",
+                        "reusePipeQueue": "false",
+                        "openForAppending": "false",
+                        "flowType": "COPY",
+                        "section": "2"
+                    },
+                    {
+                        "resourceId": "PRINTDEVICE",
+                        "jobletBoudary": "END",
+                        "toPipe": "NONE",
+                        "fromPipe": "NONE",
+                        "setKeep": "true",
+                        "isSegmentFirstResource" : "false",
+                        "pipeType": "IMAGECONTAINER",
+                        "queuingFlag": "NONE",
+                        "isPipeQueueRequired": "true",
+                        "reusePipeQueue": "false",
+                        "openForAppending": "false",
+                        "flowType": "COPY",
+                        "section": "2"
+                    }
+                ]
+            },
+            {
+                "pipelineSegmentType": "MULTIPAGE_SEGMENT_ONE",
+                "pipelinePolicy": "allocate_and_start",
+                "resourceInstanceProxyList": [
+                    {
+                        "resourceId": "SCANDEVICE",
+                        "jobletBoudary": "UNDEFINED",
+                        "toPipe": "NONE",
+                        "fromPipe": "NONE",
+                        "setKeep": "true",
+                        "isSegmentFirstResource" : "true",
+                        "pipeType": "IMAGECONTAINER",
+                        "queuingFlag": "BOTH",
+                        "isPipeQueueRequired": "true",
+                        "reusePipeQueue": "false",
+                        "openForAppending": "false"
+                    },
+                    {
+                        "resourceId": "IMAGEPERSISTER",
+                        "jobletBoudary": "UNDEFINED",
+                        "fileFormat": "JPEG",
+                        "notificationStrategy": "ON_STARTED",
+                        "toPipe": "IMAGERETRIEVER",
+                        "fromPipe": "NONE",
+                        "setKeep": "true",
+                        "isSegmentFirstResource" : "false",
+                        "pipeType": "IMAGECONTAINER",
+                        "queuingFlag": "ENQUEUE",
+                        "isPipeQueueRequired": "true",
+                        "reusePipeQueue": "true",
+                        "openForAppending": "false",
+                        "persistentPipe": "true"
+                    }
+                ]
+            },
+            {
+                "pipelineSegmentType": "MULTIPAGE_SEGMENT_TWO",
+                "pipelinePolicy": "allocate_and_start",
+                "resourceInstanceProxyList": [
+                    {
+                        "resourceId": "SCANDEVICE",
+                        "jobletBoudary": "UNDEFINED",
+                        "toPipe": "NONE",
+                        "fromPipe": "NONE",
+                        "setKeep": "false",
+                        "isSegmentFirstResource" : "true",
+                        "pipeType": "IMAGECONTAINER",
+                        "queuingFlag": "BOTH",
+                        "isPipeQueueRequired": "true",
+                        "reusePipeQueue": "false",
+                        "openForAppending": "false"
+                    },
+                    {
+                        "resourceId": "IMAGEPERSISTER",
+                        "jobletBoudary": "START",
+                        "fileFormat": "JPEG",
+                        "notificationStrategy": "ON_STARTED",
+                        "toPipe": "IMAGERETRIEVER",
+                        "fromPipe": "NONE",
+                        "setKeep": "false",
+                        "isSegmentFirstResource" : "false",
+                        "pipeType": "IMAGECONTAINER",
+                        "queuingFlag": "ENQUEUE",
+                        "isPipeQueueRequired": "true",
+                        "reusePipeQueue": "true",
+                        "openForAppending": "true"
+                    }
+                ]
+            },
+            {
+                "sectionEnabled": true,
+                "pipelineSegmentType": "MULTIPAGE_SEGMENT_THREE",
+                "pipelinePolicy": "undefined",
+                "resourceInstanceProxyList": [
+                    {
+                        "resourceId": "IMAGERETRIEVER",
+                        "jobletBoudary": "START",
+                        "toPipe": "NONE",
+                        "fromPipe": "IMAGEPERSISTER",
+                        "setKeep": "true",
+                        "isSegmentFirstResource" : "true",
+                        "pipeType": "IMAGECONTAINER",
+                        "queuingFlag": "BOTH",
+                        "isPipeQueueRequired": "true",
+                        "reusePipeQueue": "false",
+                        "openForAppending": "false",
+                        "reloadResource": "false",
+                        "removeImageWhenFinish": "true"
+                    },
+                    {
+                        "resourceId": "IMAGEPROCESSOR",
+                        "jobletBoudary": "UNDEFINED",
+                        "toPipe": "NONE",
+                        "fromPipe": "NONE",
+                        "setKeep": "true",
+                        "isSegmentFirstResource" : "false",
+                        "pipeType": "IMAGECONTAINER",
+                        "queuingFlag": "BOTH",
+                        "isPipeQueueRequired": "true",
+                        "reusePipeQueue": "false",
+                        "openForAppending": "false",
+                        "flowType": "COPY"
+                    },
+                    {
+                        "resourceId": "MARKINGFILTER",
+                        "jobletBoudary": "UNDEFINED",
+                        "toPipe": "NONE",
+                        "fromPipe": "NONE",
+                        "setKeep": "true",
+                        "isSegmentFirstResource" : "false",
+                        "pipeType": "IMAGECONTAINER",
+                        "queuingFlag": "BOTH",
+                        "isPipeQueueRequired": "true",
+                        "reusePipeQueue": "false",
+                        "openForAppending": "false",
+                        "flowType": "COPY",
+                        "enabledIf": ["2Up", "IDCard"]
+                    },
+                    {
+                        "resourceId": "RTPFILTER",
+                        "jobletBoudary": "UNDEFINED",
+                        "toPipe": "NONE",
+                        "fromPipe": "NONE",
+                        "setKeep": "true",
+                        "isSegmentFirstResource" : "false",
+                        "pipeType": "IMAGECONTAINER",
+                        "queuingFlag": "BOTH",
+                        "isPipeQueueRequired": "true",
+                        "reusePipeQueue": "false",
+                        "openForAppending": "false",
+                        "flowType": "COPY"
+                    },
+                    {
+                        "resourceId": "PRINTDEVICE",
+                        "jobletBoudary": "END",
+                        "toPipe": "NONE",
+                        "fromPipe": "NONE",
+                        "setKeep": "true",
+                        "isSegmentFirstResource" : "false",
+                        "pipeType": "IMAGECONTAINER",
+                        "queuingFlag": "NONE",
+                        "isPipeQueueRequired": "true",
+                        "reusePipeQueue": "false",
+                        "openForAppending": "false",
+                        "flowType": "COPY"
+                    }
+                ]
+            },
+            {
+                "sectionEnabled": true,
+                "pipelineSegmentType": "RETRY",
+                "pipelinePolicy": "allocate_and_start",
+                "resourceInstanceProxyList": [
+                    {
+                        "resourceId": "IMAGERETRIEVER",
+                        "jobletBoudary": "UNDEFINED",
+                        "toPipe": "NONE",
+                        "fromPipe": "NONE",
+                        "setKeep": "true",
+                        "isSegmentFirstResource" : "true",
+                        "pipeType": "IMAGECONTAINER",
+                        "queuingFlag": "BOTH",
+                        "isPipeQueueRequired": "true",
+                        "reusePipeQueue": "false",
+                        "openForAppending": "false",
+                        "reloadResource": "false",
+                        "removeImageWhenFinish": "true",
+                        "reset": "true",
+                        "useTicketPersistentPath": "true"
+                    },
+                    {
+                        "resourceId": "IMAGEPROCESSOR",
+                        "jobletBoudary": "UNDEFINED",
+                        "toPipe": "NONE",
+                        "fromPipe": "NONE",
+                        "setKeep": "true",
+                        "isSegmentFirstResource" : "false",
+                        "pipeType": "IMAGECONTAINER",
+                        "queuingFlag": "BOTH",
+                        "isPipeQueueRequired": "true",
+                        "reusePipeQueue": "false",
+                        "openForAppending": "false",
+                        "flowType": "COPY",
+                        "reset": "true",
+                        "enabledIf": ["GlassMultiStage"]
+                    },
+                    {
+                        "resourceId": "MARKINGFILTER",
+                        "jobletBoudary": "UNDEFINED",
+                        "toPipe": "NONE",
+                        "fromPipe": "NONE",
+                        "setKeep": "true",
+                        "isSegmentFirstResource" : "false",
+                        "pipeType": "IMAGECONTAINER",
+                        "queuingFlag": "BOTH",
+                        "isPipeQueueRequired": "true",
+                        "reusePipeQueue": "false",
+                        "openForAppending": "false",
+                        "flowType": "COPY",
+                        "enabledIf": ["2UpGlass","IDCardGlass"],
+                        "reset": "true"
+                    },
+                    {
+                        "resourceId": "RTPFILTER",
+                        "jobletBoudary": "UNDEFINED",
+                        "toPipe": "NONE",
+                        "fromPipe": "NONE",
+                        "setKeep": "true",
+                        "isSegmentFirstResource" : "false",
+                        "pipeType": "IMAGECONTAINER",
+                        "queuingFlag": "BOTH",
+                        "isPipeQueueRequired": "true",
+                        "reusePipeQueue": "false",
+                        "openForAppending": "false",
+                        "flowType": "COPY",
+                        "reset": "true"
+                    },
+                    {
+                        "resourceId": "PRINTDEVICE",
+                        "jobletBoudary": "UNDEFINED",
+                        "toPipe": "NONE",
+                        "fromPipe": "NONE",
+                        "setKeep": "true",
+                        "isSegmentFirstResource" : "false",
+                        "pipeType": "IMAGECONTAINER",
+                        "queuingFlag": "NONE",
+                        "isPipeQueueRequired": "true",
+                        "reusePipeQueue": "false",
+                        "openForAppending": "false",
+                        "flowType": "COPY",
+                        "reset": "true"
+                    }
+                ]
+            },
+
+            // TEST PIPELINES; JUST WHILE LAYOUT FILTER IS ON DEVELOPMENT
+            {
+                "sectionEnabled": true,
+                "pipelineSegmentType": "TEST_FINAL_SEGMENT_LAYOUT_FILTER",
+                "pipelinePolicy": "undefined",
+                "resourceInstanceProxyList": [
+                    {
+                        "resourceId": "SCANDEVICE",
+                        "jobletBoudary": "UNDEFINED",
+                        "toPipe": "NONE",
+                        "fromPipe": "NONE",
+                        "setKeep": "false",
+                        "isSegmentFirstResource": "true",
+                        "pipeType": "IMAGECONTAINER",
+                        "queuingFlag": "BOTH",
+                        "isPipeQueueRequired": "true",
+                        "reusePipeQueue": "false",
+                        "openForAppending": "false"
+                    },
+                    {
+                        "resourceId": "IMAGEPROCESSOR",
+                        "jobletBoudary": "START",
+                        "toPipe": "NONE",
+                        "fromPipe": "NONE",
+                        "setKeep": "false",
+                        "isSegmentFirstResource": "false",
+                        "pipeType": "IMAGECONTAINER",
+                        "queuingFlag": "BOTH",
+                        "isPipeQueueRequired": "true",
+                        "reusePipeQueue": "false",
+                        "openForAppending": "false",
+                        "flowType": "COPY"
+                    },
+                    {
+                        "resourceId": "IMAGEPERSISTER",
+                        "jobletBoudary": "UNDEFINED",
+                        "fileFormat": "JPEG",
+                        "fileName": "",
+                        "notificationStrategy": "ON_STARTED",
+                        "toPipe": "NONE",
+                        "fromPipe": "NONE",
+                        "setKeep": "false",
+                        "isSegmentFirstResource": "false",
+                        "pipeType": "IMAGECONTAINER",
+                        "queuingFlag": "BOTH",
+                        "isPipeQueueRequired": "true",
+                        "flowType": "DEFAULT",
+                        "thumbnailResolution": "0",
+                        "computeScale": "NONE",
+                        "reusePipeQueue": "false",
+                        "openForAppending": "false",
+                        "persistentPipe": "true"
+                    },
+                    {
+                        "resourceId": "LAYOUTFILTER",
+                        "jobletBoudary": "UNDEFINED",
+                        "toPipe": "NONE",
+                        "fromPipe": "NONE",
+                        "setKeep": "true",
+                        "isSegmentFirstResource": "false",
+                        "pipeType": "IMAGECONTAINER",
+                        "queuingFlag": "BOTH",
+                        "isPipeQueueRequired": "true",
+                        "reusePipeQueue": "false",
+                        "openForAppending": "false",
+                        "flowType": "COPY",
+                        "enabledIf": [
+                            "2Up"
+                        ],
+                        "reloadResource": "false",
+                        "removeImageWhenFinish": "true",
+                        "section": "2"
+                    },
+                    {
+                        "resourceId": "RTPFILTER",
+                        "jobletBoudary": "UNDEFINED",
+                        "toPipe": "NONE",
+                        "fromPipe": "NONE",
+                        "setKeep": "true",
+                        "isSegmentFirstResource": "false",
+                        "pipeType": "IMAGECONTAINER",
+                        "queuingFlag": "BOTH",
+                        "isPipeQueueRequired": "true",
+                        "reusePipeQueue": "false",
+                        "openForAppending": "false",
+                        "flowType": "COPY",
+                        "section": "2"
+                    },
+                    {
+                        "resourceId": "PRINTDEVICE",
+                        "jobletBoudary": "END",
+                        "toPipe": "NONE",
+                        "fromPipe": "NONE",
+                        "setKeep": "true",
+                        "isSegmentFirstResource": "false",
+                        "pipeType": "IMAGECONTAINER",
+                        "queuingFlag": "NONE",
+                        "isPipeQueueRequired": "true",
+                        "reusePipeQueue": "false",
+                        "openForAppending": "false",
+                        "flowType": "COPY",
+                        "section": "2"
+                    }
+                ]
+            },
+            // TEST PIPELINES; JUST WHILE LAYOUT FILTER IS ON DEVELOPMENT
+            {
+                "pipelineSegmentType": "TEST_MULTIPAGE_SEGMENT_ONE_LAYOUT_FILTER",
+                "pipelinePolicy": "allocate_and_start",
+                "resourceInstanceProxyList": [
+                    {
+                        "resourceId": "SCANDEVICE",
+                        "jobletBoudary": "UNDEFINED",
+                        "toPipe": "NONE",
+                        "fromPipe": "NONE",
+                        "setKeep": "true",
+                        "isSegmentFirstResource": "true",
+                        "pipeType": "IMAGECONTAINER",
+                        "queuingFlag": "BOTH",
+                        "isPipeQueueRequired": "true",
+                        "reusePipeQueue": "false",
+                        "openForAppending": "false"
+                    },
+                    {
+                        "resourceId": "IMAGEPROCESSOR",
+                        "jobletBoudary": "UNDEFINED",
+                        "toPipe": "NONE",
+                        "fromPipe": "NONE",
+                        "setKeep": "true",
+                        "isSegmentFirstResource": "false",
+                        "pipeType": "IMAGECONTAINER",
+                        "queuingFlag": "BOTH",
+                        "isPipeQueueRequired": "true",
+                        "reusePipeQueue": "false",
+                        "openForAppending": "false",
+                        "flowType": "COPY"
+                    },
+                    {
+                        "resourceId": "IMAGEPERSISTER",
+                        "jobletBoudary": "UNDEFINED",
+                        "fileFormat": "JPEG",
+                        "fileName": "persistRaster",
+                        "notificationStrategy": "ON_STARTED",
+                        "toPipe": "IMAGERETRIEVER",
+                        "fromPipe": "NONE",
+                        "setKeep": "true",
+                        "isSegmentFirstResource": "false",
+                        "pipeType": "IMAGECONTAINER",
+                        "queuingFlag": "ENQUEUE",
+                        "isPipeQueueRequired": "true",
+                        "reusePipeQueue": "true",
+                        "openForAppending": "false",
+                        "persistentPipe": "true"
+                    }
+                ]
+            },
+
+            // TEST PIPELINES; JUST WHILE LAYOUT FILTER IS ON DEVELOPMENT
+            {
+                "pipelineSegmentType": "TEST_MULTIPAGE_SEGMENT_TWO_LAYOUT_FILTER",
+                "pipelinePolicy": "allocate_and_start",
+                "resourceInstanceProxyList": [
+                    {
+                        "resourceId": "SCANDEVICE",
+                        "jobletBoudary": "UNDEFINED",
+                        "toPipe": "NONE",
+                        "fromPipe": "NONE",
+                        "setKeep": "false",
+                        "isSegmentFirstResource": "true",
+                        "pipeType": "IMAGECONTAINER",
+                        "queuingFlag": "BOTH",
+                        "isPipeQueueRequired": "true",
+                        "reusePipeQueue": "false",
+                        "openForAppending": "false"
+                    },
+                    {
+                        "resourceId": "IMAGEPROCESSOR",
+                        "jobletBoudary": "START",
+                        "toPipe": "NONE",
+                        "fromPipe": "NONE",
+                        "setKeep": "false",
+                        "isSegmentFirstResource": "false",
+                        "pipeType": "IMAGECONTAINER",
+                        "queuingFlag": "BOTH",
+                        "isPipeQueueRequired": "true",
+                        "reusePipeQueue": "false",
+                        "openForAppending": "false",
+                        "flowType": "COPY"
+                    },
+                    {
+                        "resourceId": "IMAGEPERSISTER",
+                        "jobletBoudary": "UNDEFINED",
+                        "fileFormat": "JPEG",
+                        "notificationStrategy": "ON_STARTED",
+                        "toPipe": "IMAGERETRIEVER",
+                        "fromPipe": "NONE",
+                        "setKeep": "false",
+                        "isSegmentFirstResource": "false",
+                        "pipeType": "IMAGECONTAINER",
+                        "queuingFlag": "ENQUEUE",
+                        "isPipeQueueRequired": "true",
+                        "reusePipeQueue": "true",
+                        "openForAppending": "true"
+                    }
+                ]
+            },
+
+            // TEST PIPELINES; JUST WHILE LAYOUT FILTER IS ON DEVELOPMENT
+            {
+                "sectionEnabled": true,
+                "pipelineSegmentType": "TEST_MULTIPAGE_SEGMENT_THREE_LAYOUT_FILTER",
+                "pipelinePolicy": "undefined",
+                "resourceInstanceProxyList": [
+                    {
+                        "resourceId": "LAYOUTFILTER",
+                        "jobletBoudary": "START",
+                        "toPipe": "NONE",
+                        "fromPipe": "IMAGEPERSISTER",
+                        "setKeep": "true",
+                        "isSegmentFirstResource": "true",
+                        "pipeType": "IMAGECONTAINER",
+                        "queuingFlag": "BOTH",
+                        "isPipeQueueRequired": "true",
+                        "reusePipeQueue": "false",
+                        "openForAppending": "false",
+                        "flowType": "COPY",
+                        "enabledIf": [
+                            "2Up",
+                            "IDCard"
+                        ],
+                        "reloadResource": "false",
+                        "removeImageWhenFinish": "true"
+                    },
+                    {
+                        "resourceId": "RTPFILTER",
+                        "jobletBoudary": "UNDEFINED",
+                        "toPipe": "NONE",
+                        "fromPipe": "NONE",
+                        "setKeep": "true",
+                        "isSegmentFirstResource": "false",
+                        "pipeType": "IMAGECONTAINER",
+                        "queuingFlag": "BOTH",
+                        "isPipeQueueRequired": "true",
+                        "reusePipeQueue": "false",
+                        "openForAppending": "false",
+                        "flowType": "COPY"
+                    },
+                    {
+                        "resourceId": "PRINTDEVICE",
+                        "jobletBoudary": "END",
+                        "toPipe": "NONE",
+                        "fromPipe": "NONE",
+                        "setKeep": "true",
+                        "isSegmentFirstResource": "false",
+                        "pipeType": "IMAGECONTAINER",
+                        "queuingFlag": "NONE",
+                        "isPipeQueueRequired": "true",
+                        "reusePipeQueue": "false",
+                        "openForAppending": "false",
+                        "flowType": "COPY"
+                    }
+                ]
+            },
+
+            // TEST PIPELINES; JUST WHILE LAYOUT FILTER IS ON DEVELOPMENT
+            {
+                "sectionEnabled": true,
+                "pipelineSegmentType": "TEST_RETRY_LAYOUT_FILTER",
+                "pipelinePolicy": "allocate_and_start",
+                "resourceInstanceProxyList": [
+                    {
+                        "resourceId": "LAYOUTFILTER",
+                        "jobletBoudary": "UNDEFINED",
+                        "toPipe": "NONE",
+                        "fromPipe": "NONE",
+                        "setKeep": "true",
+                        "isSegmentFirstResource": "true",
+                        "pipeType": "IMAGECONTAINER",
+                        "queuingFlag": "BOTH",
+                        "isPipeQueueRequired": "true",
+                        "reusePipeQueue": "false",
+                        "openForAppending": "false",
+                        "flowType": "COPY",
+                        "enabledIf": [
+                            "2UpGlass",
+                            "IDCardGlass"
+                        ],
+                        "reloadResource": "false",
+                        "removeImageWhenFinish": "true",
+                        "reset": "true",
+                        "useTicketPersistentPath": "true"
+                    },
+                    {
+                        "resourceId": "RTPFILTER",
+                        "jobletBoudary": "UNDEFINED",
+                        "toPipe": "NONE",
+                        "fromPipe": "NONE",
+                        "setKeep": "true",
+                        "isSegmentFirstResource": "false",
+                        "pipeType": "IMAGECONTAINER",
+                        "queuingFlag": "BOTH",
+                        "isPipeQueueRequired": "true",
+                        "reusePipeQueue": "false",
+                        "openForAppending": "false",
+                        "flowType": "COPY",
+                        "reset": "true"
+                    },
+                    {
+                        "resourceId": "PRINTDEVICE",
+                        "jobletBoudary": "UNDEFINED",
+                        "toPipe": "NONE",
+                        "fromPipe": "NONE",
+                        "setKeep": "true",
+                        "isSegmentFirstResource": "false",
+                        "pipeType": "IMAGECONTAINER",
+                        "queuingFlag": "NONE",
+                        "isPipeQueueRequired": "true",
+                        "reusePipeQueue": "false",
+                        "openForAppending": "false",
+                        "flowType": "COPY",
+                        "reset": "true"
+                    }
+                ]
+            }
+        ]
+    },
+    "topSpecificPadding": "3.5",
+    "bottomSpecificPadding": "3.5",
+    "leftSpecificPadding": "0.0",
+    "rightSpecificPadding": "0.0",
+    "printingOrder": "UNKNOWN",
+    "pageCountBeforeSequencing":"8",
+    "maxPagesToCollate": "24",
+    "maxFlatbedDuplexPages": "10",
+    "layoutFilterEnabled": "true"
+}

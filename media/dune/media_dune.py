@@ -22,12 +22,45 @@ class MediaDune(Media):
             cls._configuration = Configuration(cls._cdm)
             cls._family_name = cls._configuration.familyname
             cls._product_name = cls._configuration.productname
-            pe_platform = cls._udw.mainApp.execute("ConnectorDriver PUB_getPrintEnginePlatform") # type: ignore
-            cls._print_engine_platform = DuneEnginePlatform(int(pe_platform)).name
-            pe_interface = cls._udw.mainApp.execute("ConnectorDriver PUB_getPrintEngineInterface") # type: ignore
-            cls._print_engine_interface = DuneEngineInterface(int(pe_interface)).name
-            pe_make = cls._udw.mainApp.execute("ConnectorDriver PUB_getEngineMake") # type: ignore
-            cls._engine_make = DuneEngineMake(int(pe_make)).name
+            
+            # Get print engine platform with error handling
+            try:
+                pe_platform = cls._udw.mainApp.execute("ConnectorDriver PUB_getPrintEnginePlatform") # type: ignore
+                pe_platform_int = int(pe_platform)
+                if pe_platform_int < 0:
+                    logging.warning("Invalid print engine platform value (%d), defaulting to hwEngine", pe_platform_int)
+                    cls._print_engine_platform = DuneEnginePlatform.hwEngine.name
+                else:
+                    cls._print_engine_platform = DuneEnginePlatform(pe_platform_int).name
+            except (ValueError, KeyError):
+                logging.warning("Failed to get valid print engine platform, defaulting to hwEngine")
+                cls._print_engine_platform = DuneEnginePlatform.hwEngine.name
+            
+            # Get print engine interface with error handling
+            try:
+                pe_interface = cls._udw.mainApp.execute("ConnectorDriver PUB_getPrintEngineInterface") # type: ignore
+                pe_interface_int = int(pe_interface)
+                if pe_interface_int < 0:
+                    logging.warning("Invalid print engine interface value (%d), defaulting to homeSmb", pe_interface_int)
+                    cls._print_engine_interface = DuneEngineInterface.homeSmb.name
+                else:
+                    cls._print_engine_interface = DuneEngineInterface(pe_interface_int).name
+            except (ValueError, KeyError):
+                logging.warning("Failed to get valid print engine interface, defaulting to homeSmb")
+                cls._print_engine_interface = DuneEngineInterface.homeSmb.name
+            
+            # Get engine make with error handling
+            try:
+                pe_make = cls._udw.mainApp.execute("ConnectorDriver PUB_getEngineMake") # type: ignore
+                pe_make_int = int(pe_make)
+                if pe_make_int < 0:
+                    logging.warning("Invalid engine make value (%d), defaulting to oem", pe_make_int)
+                    cls._engine_make = DuneEngineMake.oem.name
+                else:
+                    cls._engine_make = DuneEngineMake(pe_make_int).name
+            except (ValueError, KeyError):
+                logging.warning("Failed to get valid engine make, defaulting to oem")
+                cls._engine_make = DuneEngineMake.oem.name
             logging.info("MediaDune initialized with platform: %s, interface: %s, make: %s",
                          cls._print_engine_platform, cls._print_engine_interface, cls._engine_make)
 

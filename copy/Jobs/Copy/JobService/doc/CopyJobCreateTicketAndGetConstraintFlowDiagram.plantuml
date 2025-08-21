@@ -1,0 +1,61 @@
+@startuml
+note right 
+ResourceProviderRpcStub
+
+1. Create Default Copy Job Ticket.
+2. Get Constraints
+end note
+
+
+partition "JobTicketProviders.cpp" {
+    partition "JobTicketTicketCreationProvider" {
+    (*) --> [1] "createImplementation()"
+    }
+}
+
+partition "JobTicketResourceManagerStandard" {
+    "createImplementation()" --> "createTicketResource()"
+    "createTicketResource()" --> "createTicketAdapterFromDefault()"
+}
+
+partition "dune::copy::Jobs::Copy::JobTicketResourceHelper" {
+    "createTicketAdapterFromDefault()" --> "createTicketAdapter()"
+    note left
+    1. Call getDefaultJobTicket and Get ticket as return values
+    2. Create TicketAdapter with ticket
+    end note
+}
+
+partition "dune::copy::Jobs::Copy::JobServiceStandard" {
+    "createTicketAdapter()" --> [1] "getDefaultJobTicket()"
+    "getDefaultJobTicket()" --> "getFactoryDefaultJobTicket()"
+}
+
+partition "dune::copy::Jobs::Copy::TicketAdapter" {
+    "createTicketAdapter()" --> [2] "TicketAdapter()"
+    note right
+    Constructor, 
+    Ticket passed as parameter from createTicketAdapter
+    end note
+}
+
+partition "JobTicketProviders.cpp" {
+    partition "JobTicketConstraintsGroupProvider" {
+        (*) --> [2] "getImplementation()"
+    }
+}
+
+partition "JobTicketResourceManagerStandard" {
+    "getImplementation()" --> "getConstraints()"
+}
+
+partition "dune::copy::Jobs::Copy::TicketAdapter" {
+    "getConstraints()" --> "TicketAdapter::getConstraints()"
+}
+
+partition "dune::copy::Jobs::Copy::CopyJobConstraintRules" {
+    "TicketAdapter::getConstraints()" --> "getMediaSizeIdConstraints()"
+    "TicketAdapter::getConstraints()" --> "getMediaIdTypeConstraints()"
+}
+
+@enduml

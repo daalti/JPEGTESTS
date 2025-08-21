@@ -1,0 +1,10 @@
+{
+    "instances":[
+        {
+            "name":"CopyAdapter",
+            "data":{
+            },
+            "overrides":[]
+        }
+    ]
+}

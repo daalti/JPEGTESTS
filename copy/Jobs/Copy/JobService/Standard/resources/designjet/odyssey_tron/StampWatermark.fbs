@@ -1,0 +1,152 @@
+// DUNE_NOT_PERSISTENT
+namespace dune.imaging.types;
+
+/**< Watermark - 
+ *     @note
+ */
+
+enum WatermarkType:byte
+{
+    NONE = 0,
+    TEXT_WATERMARK,
+    SECURE_WATERMARK
+}
+
+enum WatermarkTextType:byte
+{
+    NONE = 0,
+    USER_DEFINED_1,
+    ADMIN_DEFINED_1,
+    ADMIN_DEFINED_2,
+    ADMIN_DEFINED_3,
+    ADMIN_DEFINED_4,
+    ADMIN_DEFINED_5,
+    ADMIN_DEFINED_6,
+    ADMIN_DEFINED_7,
+    ADMIN_DEFINED_8,
+    DRAFT,
+    CONFIDENTIAL,
+    SECRET,
+    TOP_SECRET,
+    URGENT
+}
+
+enum StampWatermarkTextColor:byte
+{
+    BLACK = 0,
+    BLUE,
+    GREEN,
+    PURPLE,
+    RED,
+    SKY_BLUE,
+    YELLOW   
+}
+
+enum StampWatermarkTextSize : byte
+{
+    EIGHT_POINT = 0,
+    TWELVE_POINT,
+    TWENTY_POINT,
+    THIRTY_POINT,
+    FORTY_POINT,
+    SIXTY_POINT
+}
+
+enum StampWatermarkTextFont : byte
+{
+    LETTER_GOTHIC = 0,
+    ANTIQUE_OLIVE,
+    CENTURY_SCHOOLBOOK,
+    GARAMOND
+}
+
+enum BackgroundColor : byte
+{
+    GRAY = 0,
+    CYAN,
+    MAGENTA
+}
+
+enum BackgroundPattern : byte
+{
+    SCROLL = 0,
+    LEAF,
+    FLAT
+}
+
+enum StampLocation:byte
+{
+    TOP_LEFT = 0,
+    TOP_CENTER,
+    TOP_RIGHT,
+    BOTTOM_LEFT,
+    BOTTOM_CENTER,
+    BOTTOM_RIGHT
+}
+
+enum StampPolicy:byte
+{
+    NONE = 0,
+    ENFORCED,
+    GUIDED
+}
+
+enum StampType:byte
+{
+    NONE = 0,
+    ADMIN_DEFINED_1,
+    ADMIN_DEFINED_2,
+    ADMIN_DEFINED_3,
+    ADMIN_DEFINED_4,
+    IP_ADDRESS,
+    USER_NAME,
+    PRODUCT_INFORMATION,
+    PAGE_NUMBER,
+    DATE_AND_TIME,
+    DATE,
+    USER_DEFINED_1,
+    USER_DEFINED_2
+}
+
+enum PageNumberingStyle:byte
+{
+    NUMBER = 0,
+    PAGE_PLUS_NUMBER,
+    HYPHEN_NUMBER_HYPHEN
+}
+
+table WatermarkSettings
+{
+    type:dune.imaging.types.WatermarkType=NONE;
+    textType:dune.imaging.types.WatermarkTextType=NONE;
+    customText:string;
+    textColor:dune.imaging.types.StampWatermarkTextColor=BLACK;
+    textSize:dune.imaging.types.StampWatermarkTextSize=FORTY_POINT;
+    textFont:dune.imaging.types.StampWatermarkTextFont=LETTER_GOTHIC;
+    onlyFirstPage:bool=false;
+    rotate45:bool=true;
+    backgroundColor:dune.imaging.types.BackgroundColor=GRAY;
+    backgroundPattern:dune.imaging.types.BackgroundPattern=SCROLL;
+    darkness:uint32=3;
+}
+
+table StampContent
+{
+    stampId:dune.imaging.types.StampType=NONE;
+    customText:string;
+}
+
+table ScanStampLocationFb
+{
+    stampLocation:dune.imaging.types.StampLocation=TOP_LEFT;
+    stampPolicy:dune.imaging.types.StampPolicy=NONE;
+    stampContents:[dune.imaging.types.StampContent];
+    stampTextColor:dune.imaging.types.StampWatermarkTextColor=BLACK;
+    stampTextFont:dune.imaging.types.StampWatermarkTextFont=LETTER_GOTHIC;
+    stampTextSize:dune.imaging.types.StampWatermarkTextSize=TWELVE_POINT;
+    stampStartingPage:uint32=1;
+    stampStartingNumber:uint32=1;
+    stampNumberOfDigits:uint32=1;
+    stampPageNumberingStyle:dune.imaging.types.PageNumberingStyle=NUMBER;
+    stampWhiteBackground:bool=false;
+}

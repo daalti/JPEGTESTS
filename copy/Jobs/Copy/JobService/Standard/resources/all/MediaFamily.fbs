@@ -1,0 +1,25 @@
+namespace dune.imaging.types;
+
+/**
+ * Predefined media types (e.g. Glossy, Plain, etcetera)
+ */
+enum MediaFamily : int
+{
+    ADHESIVE = 0,
+    BACKLIT,
+    BANNERANDSIGN,
+    BONDANDCOATED,
+    BLUEPRINT,
+    CANVAS,
+    CUSTOM,
+    FILM,
+    HEATTRANSFER,
+    PLAIN,
+    PHOTO,
+    TECHNICAL,
+    TEXTILE,
+    WALLCOVERING,
+    UNKNOWN,
+    POSTER,
+    FINEART
+}

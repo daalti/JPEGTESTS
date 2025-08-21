@@ -1,0 +1,61 @@
+{
+    "menuButtons": [
+        {
+            "id": "idcopy_colorMode",
+            "valueResource": "data.src.scan.colorMode",
+            "type": "dune::spice::jobTicket_1::ColorModes::ColorModes"
+        },
+        {
+            "id": "idcopy_quality",
+            "valueResource": "data.dest.print.printQuality",
+            "type": "dune::spice::glossary_1::PrintQuality::PrintQuality"
+        },
+        {
+            "id": "idcopy_paperTray",
+            "valueResource": "data.dest.print.mediaSource",
+            "type": "dune::spice::glossary_1::MediaSourceId::MediaSourceId"
+        },
+        {
+            "id": "idcopy_contentOrientation",
+            "valueResource": "data.src.scan.contentOrientation",
+            "type": "dune::spice::glossary_1::ContentOrientation::ContentOrientation"
+        } 
+    ],
+    "menuSelections": [
+        {
+            "id": "idcopy_colorMode",
+            "titleId": "StringIds.cColor",
+            "valueResource": "data.src.scan.colorMode",
+            "enumType": "dune::spice::jobTicket_1::ColorModes::ColorModes"
+        },
+        {
+            "id": "idcopy_quality",
+            "titleId": "StringIds.cQuality",
+            "valueResource": "data.dest.print.printQuality",
+            "enumType": "dune::spice::glossary_1::PrintQuality::PrintQuality"
+        },
+        
+        {
+            "id": "idcopy_paperTray",
+            "titleId": "StringIds.cPaperTray",
+            "valueResource": "data.dest.print.mediaSource",
+            "enumType": "dune::spice::glossary_1::MediaSourceId::MediaSourceId"
+        },
+        {
+            "id": "idcopy_contentOrientation",
+            "titleId": "StringIds.cOrientation",
+            "valueResource": "data.src.scan.contentOrientation",
+            "enumType": "dune::spice::glossary_1::ContentOrientation::ContentOrientation"
+        }
+    ],
+    "menuSliders": [
+        {
+            "id": "idcopy_exposure",
+            "valueResource": "data.pipelineOptions.imageModifications.exposure",
+            "variation": "VariationB",
+            "from": 1,
+            "to": 9,
+            "stepSize": 1
+        }
+    ]
+}

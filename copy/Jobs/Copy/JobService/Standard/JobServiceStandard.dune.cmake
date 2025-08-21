@@ -1,0 +1,30 @@
+DUNE_ADD_FLAVOR()
+    DUNE_INCLUDE_DIRECTORIES(PRIVATE ${DUNE_BASE_PATH}/scan/scanningsystem/Media/inc
+    ${DUNE_BASE_PATH}/framework/resources/configuration/ConfigurationServiceExtended/inc
+    ${DUNE_BASE_PATH}/framework/resources/configuration/inc/)
+    DUNE_LINK_LIBRARIES(admin/shortcuts/Shortcuts
+                        framework/component
+                        framework/core/threadPool
+                        framework/resources/configuration
+                        framework/data/backup
+                        framework/utils/XmlUtils
+                        framework/data/conversion/SystemConversionHelper
+                        framework/storage/SecureFileErase
+                        job/JobManager
+                        job/JobServiceManager
+                        job/ResourceManager
+                        localization/LocaleProvider
+                        localization/StringIds
+                        print/engine
+                        scan/Jobs/Scan/ScanPipeline
+                        copy/cdm/CopyAdapter
+                        scan/scanningsystem
+                        scan/ScanConstraints
+                        imaging/asset/ImagingAttributeManager
+                        admin/deviceinfo/DeviceInfo
+                        io/net/core/NetworkManager
+                        print/IntentsManager
+                        imaging/types)
+    DUNE_ADD_GTEST(framework/component/TestingUtil
+                    print/Jobs/Print)
+                    

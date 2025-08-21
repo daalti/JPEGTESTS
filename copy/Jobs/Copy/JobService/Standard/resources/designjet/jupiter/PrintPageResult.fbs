@@ -1,0 +1,19 @@
+include "MediaSizeId.fbs";
+include "PrintingState.fbs";
+namespace dune.job;
+
+table PrintPageResultFb {
+    outputSize:dune.imaging.types.MediaSizeId;
+    impressionWidth:uint32;
+    impressionHeight:uint32;
+    completedCopies:uint32;
+    estimatedPrintTime:uint32;
+    printed:bool;
+    rendered:bool;
+    nonWhitePixelCount:uint32;
+    colorPixelCount:uint32;
+    totalPixelCount:uint32;
+    printingState:dune.print.Jobs.PrintingState;
+}
+root_type PrintPageResultFb;
+

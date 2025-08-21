@@ -1,0 +1,252 @@
+{
+    "instances": [
+        {
+            "name": "CopyPipeline",
+            "data": {
+                "pipelineBuilderConfig": {
+                    "pipelineSegements": [
+                        {
+                            "pipelineSegmentType": "MAINTENANCE_SEGMENT",
+                            "pipelinePolicy": "allocate_and_start",
+                            "resourceInstanceProxyList": [
+                                {
+                                    "resourceId": "SCANDEVICE",
+                                    "jobletBoudary": "UNDEFINED",
+                                    "toPipe": "NONE",
+                                    "fromPipe": "NONE",
+                                    "setKeep": "true",
+                                    "isSegmentFirstResource" : "true",
+                                    "pipeType": "IMAGECONTAINER",
+                                    "queuingFlag": "ENQUEUE",
+                                    "isPipeQueueRequired": "true",
+                                    "reusePipeQueue": "true",
+                                    "openForAppending": "false",
+                                    "persistentPipe": "true"
+                                }
+                            ]
+                        },
+                        {
+                            "pipelineSegmentType": "MULTIPAGE_SEGMENT_ONE",
+                            "pipelinePolicy": "allocate_and_start",
+                            "resourceInstanceProxyList": [
+                                {
+                                    "resourceId": "SCANDEVICE",
+                                    "jobletBoudary": "UNDEFINED",
+                                    "toPipe": "NONE",
+                                    "fromPipe": "NONE",
+                                    "setKeep": "true",
+                                    "isSegmentFirstResource" : "true",
+                                    "pipeType": "IMAGECONTAINER",
+                                    "queuingFlag": "ENQUEUE",
+                                    "isPipeQueueRequired": "true",
+                                    "reusePipeQueue": "true",
+                                    "openForAppending": "false",
+                                    "persistentPipe": "true"
+                                }
+                            ]
+                        },
+                        {
+                            "pipelineSegmentType": "MULTIPAGE_SEGMENT_THREE",
+                            "pipelinePolicy": "undefined",
+                            "resourceInstanceProxyList": [
+                                {
+                                    "resourceId": "IMAGERETRIEVER",
+                                    "jobletBoudary": "START",
+                                    "toPipe": "NONE",
+                                    "fromPipe": "SCANDEVICE",
+                                    "setKeep": "true",
+                                    "isSegmentFirstResource" : "true",
+                                    "pipeType": "IMAGECONTAINER",
+                                    "queuingFlag": "BOTH",
+                                    "isPipeQueueRequired": "true",
+                                    "reusePipeQueue": "false",
+                                    "openForAppending": "false",
+                                    "reloadResource": "false",
+                                    "removeImageWhenFinish": "true"
+                                },
+                                {
+                                    "resourceId": "IMAGEPROCESSOR",
+                                    "jobletBoudary": "UNDEFINED",
+                                    "toPipe": "NONE",
+                                    "fromPipe": "NONE",
+                                    "setKeep": "true",
+                                    "isSegmentFirstResource" : "false",
+                                    "pipeType": "IMAGECONTAINER",
+                                    "queuingFlag": "BOTH",
+                                    "isPipeQueueRequired": "true",
+                                    "reusePipeQueue": "false",
+                                    "openForAppending": "false",
+                                    "upScaleStrategy": "QUADRATIC",
+                                    "downScaleStrategy": "QUADRATIC",
+                                    "flowType": "COPY"
+                                },
+                                {
+                                    "resourceId": "RTPFILTER",
+                                    "jobletBoudary": "UNDEFINED",
+                                    "toPipe": "NONE",
+                                    "fromPipe": "NONE",
+                                    "setKeep": "true",
+                                    "isSegmentFirstResource" : "false",
+                                    "pipeType": "IMAGECONTAINER",
+                                    "queuingFlag": "BOTH",
+                                    "isPipeQueueRequired": "true",
+                                    "reusePipeQueue": "false",
+                                    "openForAppending": "false",
+                                    "flowType": "COPY"
+                                },
+                                {
+                                    "resourceId": "PRINTDEVICE",
+                                    "jobletBoudary": "END",
+                                    "toPipe": "NONE",
+                                    "fromPipe": "NONE",
+                                    "setKeep": "true",
+                                    "isSegmentFirstResource" : "false",
+                                    "pipeType": "IMAGECONTAINER",
+                                    "queuingFlag": "NONE",
+                                    "isPipeQueueRequired": "true",
+                                    "reusePipeQueue": "false",
+                                    "openForAppending": "false",
+                                    "flowType": "COPY"
+                                }
+                            ]
+                        },
+                        {
+                            "pipelineSegmentType": "RERUN",
+                            "pipelinePolicy": "undefined",
+                            "resourceInstanceProxyList": [
+                                {
+                                    "resourceId": "IMAGERETRIEVER",
+                                    "jobletBoudary": "START",
+                                    "toPipe": "NONE",
+                                    "fromPipe": "NONE",
+                                    "setKeep": "false",
+                                    "isSegmentFirstResource" : "true",
+                                    "pipeType": "IMAGECONTAINER",
+                                    "queuingFlag": "BOTH",
+                                    "isPipeQueueRequired": "true",
+                                    "reusePipeQueue": "false",
+                                    "openForAppending": "false",
+                                    "reloadResource": "false",
+                                    "removeImageWhenFinish": "true",
+                                    "useTicketPersistentPath": "true"
+                                },
+                                {
+                                    "resourceId": "IMAGEPROCESSOR",
+                                    "jobletBoudary": "UNDEFINED",
+                                    "toPipe": "NONE",
+                                    "fromPipe": "NONE",
+                                    "setKeep": "false",
+                                    "isSegmentFirstResource" : "false",
+                                    "pipeType": "IMAGECONTAINER",
+                                    "queuingFlag": "BOTH",
+                                    "isPipeQueueRequired": "true",
+                                    "reusePipeQueue": "false",
+                                    "openForAppending": "false",
+                                    "flowType": "COPY"
+                                },
+                                {
+                                    "resourceId": "RTPFILTER",
+                                    "jobletBoudary": "UNDEFINED",
+                                    "toPipe": "NONE",
+                                    "fromPipe": "NONE",
+                                    "setKeep": "false",
+                                    "isSegmentFirstResource" : "false",
+                                    "pipeType": "IMAGECONTAINER",
+                                    "queuingFlag": "BOTH",
+                                    "isPipeQueueRequired": "true",
+                                    "reusePipeQueue": "false",
+                                    "openForAppending": "false",
+                                    "flowType": "COPY"
+                                },
+                                {
+                                    "resourceId": "PRINTDEVICE",
+                                    "jobletBoudary": "END",
+                                    "toPipe": "NONE",
+                                    "fromPipe": "NONE",
+                                    "setKeep": "false",
+                                    "isSegmentFirstResource" : "false",
+                                    "pipeType": "IMAGECONTAINER",
+                                    "queuingFlag": "NONE",
+                                    "isPipeQueueRequired": "true",
+                                    "reusePipeQueue": "false",
+                                    "openForAppending": "false",
+                                    "flowType": "COPY"
+                                }
+                            ]
+                        },
+                        {
+                            "pipelineSegmentType": "RETRY",
+                            "pipelinePolicy": "allocate_and_start",
+                            "resourceInstanceProxyList": [
+                                {
+                                    "resourceId": "IMAGERETRIEVER",
+                                    "jobletBoudary": "UNDEFINED",
+                                    "toPipe": "NONE",
+                                    "fromPipe": "NONE",
+                                    "setKeep": "true",
+                                    "isSegmentFirstResource" : "true",
+                                    "pipeType": "IMAGECONTAINER",
+                                    "queuingFlag": "BOTH",
+                                    "isPipeQueueRequired": "true",
+                                    "reusePipeQueue": "false",
+                                    "openForAppending": "false",
+                                    "reloadResource": "false",
+                                    "removeImageWhenFinish": "true",
+                                    "reset": "true",
+                                    "useTicketPersistentPath": "true"
+                                },
+                                {
+                                    "resourceId": "IMAGEPROCESSOR",
+                                    "jobletBoudary": "UNDEFINED",
+                                    "toPipe": "NONE",
+                                    "fromPipe": "NONE",
+                                    "setKeep": "true",
+                                    "isSegmentFirstResource" : "false",
+                                    "pipeType": "IMAGECONTAINER",
+                                    "queuingFlag": "BOTH",
+                                    "isPipeQueueRequired": "true",
+                                    "reusePipeQueue": "false",
+                                    "openForAppending": "false",
+                                    "flowType": "COPY",
+                                    "reset": "true"
+                                },
+                                {
+                                    "resourceId": "RTPFILTER",
+                                    "jobletBoudary": "UNDEFINED",
+                                    "toPipe": "NONE",
+                                    "fromPipe": "NONE",
+                                    "setKeep": "true",
+                                    "isSegmentFirstResource" : "false",
+                                    "pipeType": "IMAGECONTAINER",
+                                    "queuingFlag": "BOTH",
+                                    "isPipeQueueRequired": "true",
+                                    "reusePipeQueue": "false",
+                                    "openForAppending": "false",
+                                    "flowType": "COPY",
+                                    "reset": "true"
+                                },
+                                {
+                                    "resourceId": "PRINTDEVICE",
+                                    "jobletBoudary": "UNDEFINED",
+                                    "toPipe": "NONE",
+                                    "fromPipe": "NONE",
+                                    "setKeep": "true",
+                                    "isSegmentFirstResource" : "false",
+                                    "pipeType": "IMAGECONTAINER",
+                                    "queuingFlag": "NONE",
+                                    "isPipeQueueRequired": "true",
+                                    "reusePipeQueue": "false",
+                                    "openForAppending": "false",
+                                    "flowType": "COPY",
+                                    "reset": "true"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "thresholdOverride": 210
+            },
+            "overrides": []
+        }
+    ]
+}

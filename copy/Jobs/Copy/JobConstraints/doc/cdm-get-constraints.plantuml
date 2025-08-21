@@ -1,0 +1,45 @@
+@startuml
+title
+<size:20><b>Copy Job Ticket Get Constraints</b></size>
+end title
+header HP Confidential
+left footer \t(C) Copyright 2022 HP Development Company, L.P.\l\tAll rights reserved
+
+'get constraints
+
+'modification of the job ticket
+'use of the CSF configuration
+
+participant client
+participant JobTicketResourceManagerStandard as jtrm
+
+participant TicketAdapter as ta
+participant JobConstraintsStandard as jcs
+participant CopyJobDynamicConstraintsStandard as dcstd
+
+activate client
+
+
+client -> jtrm: getConstraints()
+
+activate jtrm
+jtrm -> jtrm : lookup TicketAdapter
+jtrm -> ta: getConstraints()
+activate ta
+ta -> jcs: getConstraints()
+activate jcs
+ta <-- jcs: constraints
+deactivate jcs
+
+ta -> dcstd: getConstraints() 
+activate dcstd
+ta <-- dcstd: constraints
+deactivate dcstd
+ta -> ta: combineConstraints()
+jtrm <-- ta: constraints
+deactivate ta
+client <-- jtrm: constraints
+deactivate jtrm
+
+
+@enduml

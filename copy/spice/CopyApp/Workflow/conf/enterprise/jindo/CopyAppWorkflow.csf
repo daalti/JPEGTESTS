@@ -1,0 +1,246 @@
+{
+    "instances":[
+        {
+            "name":"CopyApp",
+            "data":{
+                "interactive": {
+                    "list":[
+                        "copy_numberOfCopies",
+                        "copy_sides", 
+                        "scan_colorMode",
+                        "scan_originalSizeForInteractive",
+                        "copy_paperSource"
+                    ]
+                },
+                "copyPreviewInteractiveEnabled": true,
+                "isCopyPermissionsConfigurable": true,
+                "listOfMoreOptionSettings":[
+                    "copy_numberOfCopies",
+                    "copy_resize",
+                    "copy_paperSelection",
+                    "copy_mediaSize",
+                    "copy_paperType",
+                    "copy_paperSource",
+                    "copy_sides",
+                    "copy_pagesPerSheet",
+                    "copy_collateToggle"
+                ],
+                "copySettings":{
+                    "list": [
+                        {
+                            "id": "copySettingsPage_",
+                            "titleId": "StringIds.cOptions",
+                            "priority": 1,
+                            "module": "qrc:/menu/MenuList.qml",
+                            "children": [
+                                "scan_scanOptions",
+                                "scan_contentType",
+                                "scan_colorMode",
+                                "scan_resolution",
+                                "scan_pageFlipUpEnabled",
+                                "scan_contentOrientation",
+                                "scan_originalSize",
+                                "scan_lighterDarker",
+                                "scan_autoStraighten",
+                                "scan_scanSpeed",
+                                "copy_printOptions",
+                                "copy_numberOfCopies",
+                                "copy_resize",
+                                "copy_paperSelection",
+                                "copy_quality",
+                                "copy_sides",
+                                "copy_pagesPerSheet",
+                                "copy_collateToggle",
+                                "copy_printingOrder",
+                                "copy_rotate",
+                                "copy_paperSource_top_menu"
+                            ]
+                        },
+                        {
+                            "id": "scan_scanOptions",
+                            "titleId": "StringIds.cScanOptions",
+                            "priority": 1,
+                            "delegate": "MenuSection.qml"
+                        },
+                        {
+                            "id": "scan_contentType",
+                            "titleId": "StringIds.cContentType",
+                            "priority": 2,
+                            "delegate": "qrc:/menu/MenuComboBox.qml",
+                            "displayDependencies": "qrc:/ScanApp/CheckScanMoreOptionAvailability.qml::checkAvailability(\"scan_contentType\")"
+                        },
+                        {
+                            "id": "scan_colorMode",
+                            "titleId": "StringIds.cColorMode",
+                            "priority": 4,
+                            "permissionId": "af9ca74f-ce78-4a06-89b5-dd7094fbac42",
+                            "delegate": "qrc:/menu/MenuComboBox.qml",
+                            "displayDependencies": "qrc:/CopyApp/CopySettingsHelper.qml::isCopyColorPrintSupported() && (qrc:/ScanApp/CheckScanMoreOptionAvailability.qml::checkAvailability(\"scan_colorMode\") || qrc:/ScanApp/CheckScanMoreOptionAvailability.qml::checkAvailability(\"scan_colorModeWithAutoDetect\"))"
+                        },
+                        {
+                            "id": "copy_sides",
+                            "titleId": "StringIds.cSides",
+                            "priority": 5,
+                            "delegate": "qrc:/CopyApp/CopySettingsSidesView.qml",
+                            "displayDependencies": "qrc:/CopyApp/CheckCopyMoreOptionAvailability.qml::checkAvailability(\"copy_sides\")"
+                        },
+                        {
+                            "id": "scan_resolution",
+                            "titleId": "StringIds.cResolution",
+                            "priority": 6,
+                            "delegate": "qrc:/menu/MenuComboBox.qml"
+                        },
+                        {
+                            "id": "scan_pageFlipUpEnabled",
+                            "titleId": "StringIds.c2SidedPages",
+                            "priority": 11,
+                            "delegate": "qrc:/CopyApp/CopyPageFlipUpSwitch.qml",
+                            "displayDependencies": "qrc:/CopyApp/CopySettingsHelper.qml::isDuplexing()"
+                        },
+                        {
+                            "id": "scan_contentOrientation",
+                            "titleId": "StringIds.cContentOrientation",
+                            "priority": 13,
+                            "delegate": "qrc:/menu/MenuComboBox.qml"
+                        },
+                        {
+                            "id": "scan_originalSize",
+                            "titleId": "StringIds.cOriginalSize",
+                            "priority": 14,
+                            "delegate": "qrc:/menu/MenuTextImageBranch.qml",
+                            "module": "qrc:/menu/MenuSelectionList.qml",
+                            "displayDependencies": "qrc:/ScanApp/CheckScanMoreOptionAvailability.qml::checkAvailability(\"scan_originalSize\")"
+                        },
+                        {
+                            "id": "scan_originalSizeForInteractive",
+                            "titleId": "StringIds.cOriginalSize",
+                            "priority": 14,
+                            "delegate": "qrc:/menu/MenuComboBox.qml",
+                            "displayDependencies": "qrc:/ScanApp/CheckScanMoreOptionAvailability.qml::checkAvailability(\"scan_originalSize_combo\")"
+                        },
+                        {
+                            "id": "scan_lighterDarker",
+                            "titleId": "StringIds.cLighterDarker",
+                            "priority": 17,
+                            "delegate": "qrc:/menu/MenuSlider.qml"
+                        },
+                        {
+                            "id": "scan_scanSpeed",
+                            "titleId": "StringIds.cReduceScanSpeed",
+                            "priority": 21,
+                            "delegate": "qrc:/menu/MenuSwitch.qml",
+                            "displayDependencies": "qrc:/ScanApp/CheckScanMoreOptionAvailability.qml::checkAvailability(\"scan_scanSpeed\")"
+                        },
+                        {
+                            "id": "scan_autoStraighten",
+                            "titleId": "StringIds.cAutomaticallyStraighten",
+                            "priority": 22,
+                            "delegate": "qrc:/menu/MenuSwitch.qml"
+                        },
+                        {
+                            "id": "copy_printOptions",
+                            "titleId": "StringIds.cPrintOptions",
+                            "priority": 28,
+                            "delegate": "MenuSection.qml"
+                        },
+                        {
+                            "id": "copy_numberOfCopies",
+                            "titleId": "StringIds.cNumberOfCopies",
+                            "priority": 29,
+                            "delegate": "qrc:/menu/MenuSpinBox.qml"
+                        },
+                        {
+                            "id": "copy_resize",
+                            "titleId": "StringIds.cOutputScale",
+                            "priority": 34,
+                            "module": "qrc:/CopyApp/CopySettingsResizeView.qml",
+                            "delegate": "qrc:/CopyApp/CopySettingsResize.qml"
+                        },
+                        {
+                            "id": "copy_paperSelection",
+                            "titleId": "StringIds.cPaperSelectTitle",
+                            "priority": 35,
+                            "module": "qrc:/menu/MenuList.qml",
+                            "delegate": "qrc:/CopyApp/CopySettingsPaperSelection.qml",
+                            "displayDependencies": "qrc:/CopyApp/CheckCopyMoreOptionAvailability.qml::checkAvailability(\"copy_paperSelection\")",
+                            "children": [
+                                "copy_mediaSize",
+                                "copy_paperType",
+                                "copy_paperSource"
+                            ]
+                        },
+                        {
+                            "id": "copy_mediaSize",
+                            "titleId": "StringIds.cMediaSize",
+                            "priority": 1,
+                            "delegate": "qrc:/menu/MenuTextImageBranch.qml",
+                            "module": "qrc:/menu/MenuSelectionList.qml",
+                            "displayDependencies": "qrc:/CopyApp/CheckCopyMoreOptionAvailability.qml::checkAvailability(\"copy_mediaSize\")"
+                        },
+                        {
+                            "id": "copy_paperType",
+                            "titleId": "StringIds.cPaperType",
+                            "priority": 3,
+                            "delegate": "qrc:/menu/MenuTextImageBranch.qml",
+                            "module": "qrc:/menu/MenuSelectionList.qml",       
+                            "displayDependencies": "qrc:/CopyApp/CheckCopyMoreOptionAvailability.qml::checkAvailability(\"copy_paperType\")"
+                        },
+                        {
+                            "id": "copy_paperSource",
+                            "titleId": "StringIds.cPaperSource",
+                            "priority": 4,
+                            "delegate": "qrc:/menu/MenuComboBox.qml",
+                            "displayDependencies": "qrc:/CopyApp/CheckCopyMoreOptionAvailability.qml::checkAvailability(\"copy_paperSource\")"
+                        },
+                        {
+                            "id": "copy_quality",
+                            "titleId": "StringIds.cQuality",
+                            "priority": 36,
+                            "delegate": "qrc:/menu/MenuComboBox.qml",
+                            "displayDependencies": "qrc:/CopyApp/CheckCopyMoreOptionAvailability.qml::checkAvailability(\"copy_quality\")"
+                        },
+                        {
+                            "id": "copy_pagesPerSheet",
+                            "titleId": "StringIds.cPagesPerSheet",
+                            "priority": 45,
+                            "delegate": "qrc:/CopyApp/CopySettingsPagesPerSheet.qml",
+                            "module": "qrc:/CopyApp/CopySettingsPagesPerSheetView.qml",
+                            "enabled": "qrc:/CopyApp/CopySettingsHelper.qml::isPagesPerSheetEnabled() && qrc:/CopyApp/CopySettingsHelper.qml::isSettingEnabled(\"pipelineOptions/imageModifications/pagesPerSheet\")",
+                            "enabledError":"StringIds.cFeatureCurrentNotAvailable",
+                            "displayDependencies": "qrc:/CopyApp/CheckCopyMoreOptionAvailability.qml::checkAvailability(\"copy_pagesPerSheet\")"
+                        },
+                        {
+                            "id": "copy_outputDestination",
+                            "titleId": "StringIds.cOutputDestination",
+                            "priority": 46,
+                            "delegate": "qrc:/menu/MenuComboBox.qml",
+                            "displayDependencies": "qrc:/CopyApp/CheckCopyMoreOptionAvailability.qml::checkAvailability(\"copy_outputDestination\")"
+                        },
+                        {
+                            "id": "copy_printingOrder",
+                            "titleId": "StringIds.cPageOrder",
+                            "priority": 51,
+                            "delegate": "qrc:/menu/MenuComboBox.qml",
+                            "displayDependencies": "qrc:/CopyApp/CheckCopyMoreOptionAvailability.qml::checkAvailability(\"copy_printingOrder\")"
+                        },
+                        {
+                            "id": "copy_collateToggle",
+                            "titleId": "StringIds.cCollate",
+                            "priority": 52,
+                            "delegate": "qrc:/menu/MenuSwitch.qml",
+                            "displayDependencies": "qrc:/CopyApp/CheckCopyMoreOptionAvailability.qml::checkAvailability(\"copy_collateToggle\")"
+                        },
+                        {
+                            "id": "copy_paperSource_top_menu",
+                            "titleId": "StringIds.cPaperSource",
+                            "priority": 54,
+                            "delegate": "qrc:/menu/MenuComboBox.qml",
+                            "displayDependencies": "qrc:/CopyApp/CopySettingsHelper.qml::isOutputDestinationEnabled() && qrc:/CopyApp/CheckCopyMoreOptionAvailability.qml::checkAvailability(\"copy_outputDestination\")"
+                        }
+                    ]
+                }
+            },
+            "overrides": []
+        }
+    ]
+}

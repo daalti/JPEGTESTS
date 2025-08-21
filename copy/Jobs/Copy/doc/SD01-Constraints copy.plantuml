@@ -1,0 +1,58 @@
+@startuml
+title
+<size:20><b>Copy Job Ticket Constraints</b></size>
+end title
+header HP Confidential
+left footer \t(C) Copyright 2024 HP Development Company, L.P.\l\tAll rights reserved
+
+participant JobTicketResourceManagerStandard as jtrm
+participant CopyJobService as js
+participant JobTicketResourceHelper as rh
+participant CompanyTicketAdapter as ta
+participant JobConstraintsStandard as cs
+participant ScanConstraintsStandard as scs
+participant CopyJobDynamicConstraintsStandard as dcst
+'participant CopyJobDynamicConstraintsLargeFormat as dclf
+
+activate jtrm
+activate js
+js -> rh : new
+activate rh
+js <-- rh
+activate cs
+activate scs
+activate dcst
+''activate dclf
+
+
+jtrm -> rh : createTicketAdapter()
+rh -> ta : new
+activate ta
+rh <-- ta
+jtrm <-- rh 
+
+jtrm -> ta : getConstraints()
+
+ta -> cs : getConstraints()
+note right of cs
+    Reads job service constraints configuration
+    from csf which includes scan constraints
+    definition specific to the job service.
+end note
+cs -> scs : getScanConstraints(config data)
+note right of scs
+    Reads common scan configuration
+    data from csf.
+end note
+scs -> scs : Generate and merge scan\nconstraints from configuration\nfrom both components.
+cs <-- scs
+cs -> cs : Generate and merge\ncopy specific constraints.
+ta <-- cs : ConstraintsGroup
+ta -> dcst : getDynamicConstraints()
+ta <-- dcst : ConstraintsGroup
+ta -> ta : Merge dynamic copy\nconstraints.
+'cs -> dclf : updateTicketAndConstraints(jobTicket, constraintsGroup)
+'cs <-- dclf
+jtrm <-- ta : ConstraintsGroup
+
+@enduml

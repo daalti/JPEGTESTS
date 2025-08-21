@@ -211,11 +211,3 @@ class MediaAres(Media):
             status_values: List of status values (e.g. ["READY"], ["OCCUPIED"]).
         """
         pass
-
-    def reset_inputs(self) -> None:
-        """
-        Reset all inputs to their default state.
-        This is useful for clearing any media-related settings or states.
-        """
-        pass
-       

@@ -1,0 +1,254 @@
+{
+  "constraints": {
+    "plexMode": [
+      "SIMPLEX"
+    ],
+    "plexBinding": [
+      "ONE_SIDED"
+    ],
+    "collate": [
+      "Collate",
+      "Uncollate"
+    ],
+    "copyMargins": [
+      "CLIPCONTENT",
+      "ADDTOCONTENT"
+    ],
+    "minCopies": 1,
+    "maxCopies": 99,
+    "stepCopies": 1.0,
+    "printQuality": [
+      "DRAFT",
+      "NORMAL",
+      "BEST"
+    ],
+    "mediaPrintSupportedSource": [
+      "AUTOSELECT",
+      "MAINROLL",
+      "MAIN",
+      "TOP"
+    ],
+    "mediaPrintSupportedDestinations": [
+      "STANDARDBIN"
+    ],
+    "mediaPrintSupportedSize": [
+      "ANY"
+    ],
+    "mediaSupportedType": [
+      {
+        "type": {
+          "id": "STATIONERY"
+        },
+        "supportedMediaSource": [
+          "MAINROLL",
+          "MAIN",
+          "TOP"
+        ],
+        "duplex": [
+          "SIMPLEX"
+        ]
+      },
+      {
+        "type": {
+          "id": "HP_BRIGHT_WHITE"
+        },
+        "supportedMediaSource": [
+          "MAINROLL",
+          "MAIN",
+          "TOP"
+        ],
+        "duplex": [
+          "SIMPLEX"
+        ]
+      },
+      {
+        "type": {
+          "id": "PLAIN_PAPER_RETAIL"
+        },
+        "supportedMediaSource": [
+          "MAINROLL",
+          "MAIN",
+          "TOP"
+        ],
+        "duplex": [
+          "SIMPLEX"
+        ]
+      },
+      {
+        "type": {
+          "id": "BLUEPRINT"
+        },
+        "supportedMediaSource": [
+          "MAINROLL",
+          "MAIN",
+          "TOP"
+        ],
+        "duplex": [
+          "SIMPLEX"
+        ]
+      },
+      {
+        "type": {
+          "id": "BLUEPRINT_WITH_RED_STAMP"
+        },
+        "supportedMediaSource": [
+          "MAINROLL",
+          "MAIN",
+          "TOP"
+        ],
+        "duplex": [
+          "SIMPLEX"
+        ]
+      },
+      {
+        "type": {
+          "id": "UNIVERSAL_BOND"
+        },
+        "supportedMediaSource": [
+          "MAINROLL",
+          "MAIN",
+          "TOP"
+        ],
+        "duplex": [
+          "SIMPLEX"
+        ]
+      },
+      {
+        "type": {
+          "id": "COATED"
+        },
+        "supportedMediaSource": [
+          "MAINROLL",
+          "MAIN",
+          "TOP"
+        ],
+        "duplex": [
+          "SIMPLEX"
+        ]
+      },
+      {
+        "type": {
+          "id": "HEAVY_COATED"
+        },
+        "supportedMediaSource": [
+          "MAINROLL",
+          "MAIN",
+          "TOP"
+        ],
+        "duplex": [
+          "SIMPLEX"
+        ]
+      },
+      {
+        "type": {
+          "id": "UNIVERSAL_HEAVYWEIGHT_COATED"
+        },
+        "supportedMediaSource": [
+          "MAINROLL",
+          "MAIN",
+          "TOP"
+        ],
+        "duplex": [
+          "SIMPLEX"
+        ]
+      },
+      {
+        "type": {
+          "id": "GENERIC_COATED"
+        },
+        "supportedMediaSource": [
+          "MAINROLL",
+          "MAIN",
+          "TOP"
+        ],
+        "duplex": [
+          "SIMPLEX"
+        ]
+      },
+      {
+        "type": {
+          "id": "GENERIC_HEAVY_COATED"
+        },
+        "supportedMediaSource": [
+          "MAINROLL",
+          "MAIN",
+          "TOP"
+        ],
+        "duplex": [
+          "SIMPLEX"
+        ]
+      }
+    ],
+    "scanJobConstraint": {
+      "inputPlexMode": [
+        "SIMPLEX"
+      ],
+      "colorMode": [
+        "COLOR",
+        "GRAYSCALE",
+        "BLACKANDWHITE"
+      ],
+      "originalContentType": [
+        "LINE_DRAWING",
+        "MIXED",
+        "IMAGE"
+      ],
+      "supportedMediaTypes": [
+        "WHITE_PAPER",
+        "BLUEPRINTS",
+        "TRANSLUCENT_PAPER"
+      ],
+      "scanPagesFlipUpEnabled": [
+        false,
+        true
+      ],
+      "pagesPerSheet": [
+        "OneUp"
+      ],
+      "minScanExposure": 1,
+      "maxScanExposure": 9,
+      "stepScanExposure": 1.0,
+      "minScalePercent": 25,
+      "maxScalePercent": 400,
+      "step": 1.0,
+      "scaleSelection": [
+        "NONE",
+        "CUSTOM",
+        "STANDARD_SIZE_SCALING",
+        "SCALE_TO_OUTPUT"
+      ],
+      "scaleToSizes": [
+        "A0",
+        "A1",
+        "A2",
+        "A3",
+        "A4",
+        "B1",
+        "B2",
+        "B3",
+        "B4",
+        "LETTER",
+        "LEDGER",
+        "C_SIZE",
+        "D_SIZE",
+        "E_SIZE",
+        "ARCH_A",
+        "ARCH_B",
+        "ARCH_C",
+        "ARCH_D",
+        "ARCH_E"
+      ],
+      "mdfResolutions": [
+        200,
+        300,
+        600
+      ],
+      "mdfOriginalSizes": [
+        {
+          "id": "ANY",
+          "mediaOrientation": "PORTRAIT"
+        }
+      ]
+    }
+  }
+}

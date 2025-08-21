@@ -1,0 +1,11 @@
+{
+    "instances": [
+        {
+            "name": "MyInstance",
+            "data": {
+                "thisIsADummyField": 0
+            },
+            "overrides": []
+        }
+    ]
+}

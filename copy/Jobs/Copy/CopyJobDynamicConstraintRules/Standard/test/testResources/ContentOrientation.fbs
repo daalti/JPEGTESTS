@@ -1,0 +1,12 @@
+namespace dune.imaging.types;
+
+/**< Specifies the orientation of the content of the orignal that the user is scanning  */
+enum ContentOrientation:byte
+{
+  PORTRAIT = 0,
+  LANDSCAPE,
+  REVERSEPORTRAIT,
+  REVERSELANDSCAPE,
+  UNDEFINED,
+  AUTODETECT
+}

@@ -1,0 +1,61 @@
+
+{
+    "ticketSettings":
+    {
+        "scanJobIntent":
+        {
+            "originalContentType":"MIXED",
+            "originalMediaType":"WHITE_PAPER",
+            "colorMode":"COLOR",
+            "longPlotScan":false,
+            "outputXResolution":"E300DPI",
+            "outputYResolution":"E300DPI",
+            "scanXResolution":"E300DPI",
+            "scanYResolution":"E300DPI",
+            "invertColors":false,
+            "autoRelease":false,
+            "scanAcquisitionsSpeed": "AUTO",
+            "autoDeskew":true,
+            "backgroundColorRemoval":false,
+            "backgroundColorRemovalLevel":0,
+            "blackEnhancementLevel":60,
+            "xScalePercent":100,
+            "yScalePercent":100,
+            "scaleToFitEnabled":false,
+            "scaleToFit":false,
+            "scaleSelection":"NONE",
+            "scaleToSize":"LETTER",
+            "scaleToOutput":"AUTOSELECT",
+
+            "outputCanvas":
+            {
+                "outputCanvasMediaSize":"ANY",
+                "outputCanvasMediaId":"AUTOSELECT",
+                "outputCanvasXExtent":0,
+                "outputCanvasYExtent":0,
+                "outputCanvasAnchor":"TOPCENTER",
+                "outputCanvasOrientation":"LANDSCAPE"
+            }
+        },
+        
+        "outputMediaOrientation":"LANDSCAPE",
+        "outputMediaDestination":"STACKER",
+        "copies":1,
+        "copyQuality":"DRAFT",
+        "resize": 100,
+        "copyMargins":"CLIPCONTENT",
+        "collate":"Collate"
+
+    },
+    "metadata":
+    {
+        "shortcutType": "eSINGLEJOB",
+        "isReadOnly": true,
+        "isFactory": true,
+        "isCopyAllowed": true,
+        "action": "eOPEN",
+        "origin": "eEXTERNALSERVICE",
+        "source": "eSCAN",
+        "destinations": ["ePRINT"]
+    }
+}

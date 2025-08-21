@@ -18,7 +18,7 @@ class MediaSize(Enum):
     EightPointFiveByThirteen = "na_foolscap_8.5x13in"
     Size16K195x270 = "om_16k_195x270mm"
     Legal = "na_legal_8.5x14in"
-
+    FourXSix = "na_index-4x6_4x6in"
 
 class MediaInputIds(Enum):
     MultipurposeTray = 0

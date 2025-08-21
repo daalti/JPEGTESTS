@@ -1,0 +1,12 @@
+{
+    "ScreenTests": [
+        {
+            "Hash": "fecf3e27e4531ffc64c54f1e67fcfc87ef4768e27e7ba32fb35b87fa9c46bc41",
+            "TestName": "LayoutTest-GivenNotLoadedMfpCopyApp_P-WhenInitWithoutMediaStateArrive_thenEjectButtonIsInvisible-320x240xdarkTheme"
+        },
+        {
+            "Hash": "fecf3e27e4531ffc64c54f1e67fcfc87ef4768e27e7ba32fb35b87fa9c46bc41",
+            "TestName": "LayoutTest-GivenNotLoadedMfpCopyApp_P-WhenInitWithoutMediaStateArrive_thenEjectButtonIsInvisible-600x800xdarkTheme"
+        }
+    ]
+}

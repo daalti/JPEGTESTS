@@ -1,0 +1,13 @@
+{
+    "instances": [
+        {
+            "name": "QuickCopy",
+            "data": {
+                "listOfWidgetSummary":[
+                    "scan_colorMode", "scan_contentType", "copy_quality"
+                ],
+            },
+            "overrides": []
+        }
+    ]
+}

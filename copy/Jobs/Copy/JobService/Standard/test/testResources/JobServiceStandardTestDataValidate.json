@@ -1,0 +1,49 @@
+{
+    "jobRetryCount": 0,
+    "validateTicketsOnInitialization":true,
+    "jobIntentConfiguration": {
+        "defaultValues": {
+            "scanJobIntent": {
+                "outputXResolution": "E300DPI",
+                "outputYResolution": "E300DPI",
+                "scanXResolution": "E300DPI",
+                "scanYResolution": "E300DPI",
+                "originalContentType": "MIXED",
+                "colorMode": "COLOR",
+                "inputPlexMode": "SIMPLEX",
+                "scanSource":"MDF",
+                "inputMediaSizeId": "ANY",
+                "invertColors": "false",
+                "scanAcquisitionsSpeed":"AUTO",
+                "outputCanvas":
+                {
+                    "outputCanvasMediaSize":"ANY",
+                    "outputCanvasMediaId":"AUTOSELECT",
+                    "outputCanvasXExtent":"2.6",
+                    "outputCanvasYExtent":"2.6",
+                    "outputCanvasAnchor":"TOPLEFT",
+                    "outputCanvasOrientation":"PORTRAIT"
+                },
+                "scaleSelection": "CUSTOM",
+                "scaleToSize": "ANY",
+                "scaleToOutput": "AUTOSELECT",
+                "scanCaptureMode":"JOBBUILD",
+                "generatePreview":"true"
+            },
+            "outputMediaSizeId": "ANY",
+            "outputMediaIdType": "ANY",
+            "outputMediaSource": "AUTOSELECT",
+            "outputMediaDestination":"STACKER",
+            "outputPlexMode": "SIMPLEX",
+            "outputPlexBinding": "ONE_SIDED",
+            "copies": 1,
+            "copyQuality":"DRAFT",
+            "resize": 100,
+            "copyMargins":"CLIPCONTENT",
+            "collate":"Collate",
+            "autoRotate": true,
+            "printingOrder": "FIRST_PAGE_ON_TOP",
+            "mediaFamily": "PLAIN"
+        }
+    }
+}

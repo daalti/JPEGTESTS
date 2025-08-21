@@ -1,0 +1,34 @@
+[
+    {
+        "alias": "scanManualDuplexSecondSide",
+        "action_type": "ActionModule",
+        "action": {
+            "module": "qrc:/CopyApp/CopyJobPromptsModule.qml"
+        },
+        "experience" : "workflow"
+    },
+    {
+        "alias": "scanManualDuplexSecondPage",
+        "action_type": "ActionModule",
+        "action": {
+            "module": "qrc:/CopyApp/CopyJobPromptsModule.qml"
+        },
+        "experience" : "workflow"
+    },
+    {
+        "alias": "mdfEjectPage",
+        "action_type": "ActionModule",
+        "action": {
+            "module": "qrc:/CopyApp/CopyJobPromptsModule.qml"
+        },
+        "experience" : "workflow"
+    },
+    {
+        "alias": "morePagesDetectedForCollate",
+        "action_type": "ActionModule",
+        "action": {
+            "module": "qrc:/CopyApp/CopyJobPromptsModule.qml"
+        },
+        "experience" : "workflow"
+    }
+]

@@ -1,0 +1,54 @@
+namespace dune.imaging.types;
+enum CopyOutputNumberUpCount:byte
+    {
+        
+        OneUp = 0,
+        TwoUp,
+        FourUp,
+        EightUp
+    }
+
+ enum NumberUpPresentationDirection:byte
+    {
+        
+        ToBottomToLeft = 0,
+        
+        ToBottomToRight,
+        
+        ToLeftToBottom,
+        
+        ToLeftToTop,
+        
+        ToRightToBottom,
+        
+        ToRightToTop,
+        
+        ToTopToLeft,
+        
+        ToTopToRight
+    }
+     
+ enum NumberUpTilePlacementType:byte
+    {
+       
+        LeftToRightNupTilePlacement = 0,                  // Traditional Left to Right Nup Tiling
+        
+        RightToLeftNupTilePlacement,                     // Nup tiling for right to left cultures
+        
+        IDCardScanTilePlacement                         // Use top to bottom tiling anchored at 0,0 and halfway down the page
+    }
+
+ enum ImageBorder:byte
+    {
+        
+        NoBorder = 0,
+
+        DefaultLineBorder
+    }
+
+ enum BookletFormat:byte
+    {
+        Off = 0,
+
+        LeftEdge
+    }

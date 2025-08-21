@@ -1,0 +1,22 @@
+<RCC>
+    <qresource prefix="/CopyApp">
+        <file>copyApp.scxml</file>
+        <file>main.qml</file>
+        <file>CopyControllerProselect.qml</file>
+        <file>CopyLandingView.qml</file>
+        <file>CopySettingsSidesView.qml</file>
+        <file>CopySettingsSide.qml</file>
+        <file>CopySettingsHelper.js</file>
+        <file>CopySettingsPaperSelection.qml</file>
+        <file>CopyMenuView.qml</file>
+        <file>QuickSetListView.qml</file>
+        <file>CopyJobPromptsModule.qml</file>
+        <file>QuickSetSaveOptionsView.qml</file>
+        <file>QuickSetSaveNewView.qml</file>
+        <file>QuickSetEnterNewName.qml</file>
+        <file>CopySettingsResizeView.qml</file>
+        <file>CopySettingsResize.qml</file>
+        <file>CopyCustomSizeKeyboardView.qml</file>
+        <file>CopyPageFlipUpSwitch.qml</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,650 @@
+{
+    "instances": [
+        {
+            "name": "CopyJobService",
+            "data": {
+                "jobRetryCount": 0,
+                "hasSharedPaperPath": false,
+                "prePrintConfiguration": "ENTERPRISE",
+                "copyBasicPipeline": false,
+                "jobIntentConfiguration": {
+                    "defaultValues": {
+                        "scanJobIntent": {
+                            "inputMediaSizeId": "ANY",
+                            "outputXResolution": "E600DPI",
+                            "inputPlexMode": "SIMPLEX",
+                            "outputYResolution": "E600DPI",
+                            "scanXResolution": "E600DPI",
+                            "scanYResolution": "E600DPI",
+                            "scaleToFitEnabled": true,
+                            "scaleSelection": "FITTOPAGE",
+                            "scanFeedOrientation": "SHORTEDGE",
+                            "originalContentType": "MIXED",
+                            "colorMode": "AUTODETECT",
+                            "stampTopLeft": {
+                                "stampLocation": "TOP_LEFT",
+                                "stampPolicy": "NONE",
+                                "stampContents": [
+                                    {
+                                        "stampId": "NONE"
+                                    }
+                                ],
+                                "stampTextColor": "BLACK",
+                                "stampTextFont": "LETTER_GOTHIC",
+                                "stampTextSize": "TWELVE_POINT",
+                                "stampStartingPage": 1,
+                                "stampStartingNumber": 1,
+                                "stampNumberOfDigits": 1,
+                                "stampPageNumberingStyle": "NUMBER",
+                                "stampWhiteBackground": false
+                            },
+                            "stampTopCenter": {
+                                "stampLocation": "TOP_CENTER",
+                                "stampPolicy": "NONE",
+                                "stampContents": [
+                                    {
+                                        "stampId": "NONE"
+                                    }
+                                ],
+                                "stampTextColor": "BLACK",
+                                "stampTextFont": "LETTER_GOTHIC",
+                                "stampTextSize": "TWELVE_POINT",
+                                "stampStartingPage": 1,
+                                "stampStartingNumber": 1,
+                                "stampNumberOfDigits": 1,
+                                "stampPageNumberingStyle": "NUMBER",
+                                "stampWhiteBackground": false
+                            },
+                            "stampTopRight": {
+                                "stampLocation": "TOP_RIGHT",
+                                "stampPolicy": "NONE",
+                                "stampContents": [
+                                    {
+                                        "stampId": "NONE"
+                                    }
+                                ],
+                                "stampTextColor": "BLACK",
+                                "stampTextFont": "LETTER_GOTHIC",
+                                "stampTextSize": "TWELVE_POINT",
+                                "stampStartingPage": 1,
+                                "stampStartingNumber": 1,
+                                "stampNumberOfDigits": 1,
+                                "stampPageNumberingStyle": "NUMBER",
+                                "stampWhiteBackground": false
+                            },
+                            "stampBottomLeft": {
+                                "stampLocation": "BOTTOM_LEFT",
+                                "stampPolicy": "NONE",
+                                "stampContents": [
+                                    {
+                                        "stampId": "NONE"
+                                    }
+                                ],
+                                "stampTextColor": "BLACK",
+                                "stampTextFont": "LETTER_GOTHIC",
+                                "stampTextSize": "TWELVE_POINT",
+                                "stampStartingPage": 1,
+                                "stampStartingNumber": 1,
+                                "stampNumberOfDigits": 1,
+                                "stampPageNumberingStyle": "NUMBER",
+                                "stampWhiteBackground": false
+                            },
+                            "stampBottomCenter": {
+                                "stampLocation": "BOTTOM_CENTER",
+                                "stampPolicy": "NONE",
+                                "stampContents": [
+                                    {
+                                        "stampId": "NONE"
+                                    }
+                                ],
+                                "stampTextColor": "BLACK",
+                                "stampTextFont": "LETTER_GOTHIC",
+                                "stampTextSize": "TWELVE_POINT",
+                                "stampStartingPage": 1,
+                                "stampStartingNumber": 1,
+                                "stampNumberOfDigits": 1,
+                                "stampPageNumberingStyle": "NUMBER",
+                                "stampWhiteBackground": false
+                            },
+                            "stampBottomRight": {
+                                "stampLocation": "BOTTOM_RIGHT",
+                                "stampPolicy": "NONE",
+                                "stampContents": [
+                                    {
+                                        "stampId": "NONE"
+                                    }
+                                ],
+                                "stampTextColor": "BLACK",
+                                "stampTextFont": "LETTER_GOTHIC",
+                                "stampTextSize": "TWELVE_POINT",
+                                "stampStartingPage": 1,
+                                "stampStartingNumber": 1,
+                                "stampNumberOfDigits": 1,
+                                "stampPageNumberingStyle": "NUMBER",
+                                "stampWhiteBackground": false
+                            },
+                            "scanHighlight": 1,
+                            "scanGamma": 1,
+                            "shadow": 1,
+                            "backgroundRemoval": 2,
+                            "contrast": 4,
+                            "sharpen": 2,
+                            "autoPaperColorRemoval":"false",
+                            "autoPaperColorRemovalLevel":1,
+                            "autoTone":"false",
+                            "autoToneLevel":2,
+                            "blankPageDetection": "Disable",
+                            "pagesPerSheet": "OneUp",
+                            "numberUpPresentationDirection": "ToBottomToLeft",
+                            "imageBorder": "NoBorder",
+                            "scanImagePreview": "MakeOptional",
+                            "bookletFormat": "Off",
+                            "watermarkSettings" : {
+                                "type": "NONE",
+                                "textType": "NONE",
+                                "customText": "",
+                                "textColor": "BLACK",
+                                "textSize": "FORTY_POINT",
+                                "textFont": "LETTER_GOTHIC",
+                                "onlyFirstPage": false,
+                                "rotate45": true,
+                                "backgroundColor": "GRAY",
+                                "backgroundPattern": "SCROLL",
+                                "darkness" : 3
+                            }
+                        },
+                        "outputMediaSizeId": "ANY",
+                        "outputMediaOrientation": "PORTRAIT",
+                        "outputMediaIdType": "STATIONERY",
+                        "outputMediaSource": "AUTOSELECT",
+                        "outputMediaDestination": "STANDARDBIN",
+                        "outputPlexMode": "SIMPLEX",
+                        "outputPlexBinding": "ONE_SIDED",
+                        "copies": 1,
+                        "copyQuality": "NORMAL",
+                        "resize": 91,
+                        "lighterDarker": 4,
+                        "collate": "Collate",
+                        "printingOrder": "FIRST_PAGE_ON_TOP"
+                    }
+                },
+                "stringIds": [
+                    {
+                        "type": "COPY",
+                        "stringId": "StringIds.cCopyAppHeading"
+                    },
+                    {
+                        "type": "scanning",
+                        "stringId": "StringIds.cScanning"
+                    },
+                    {
+                        "type": "copying",
+                        "stringId": "StringIds.cCopying"
+                    },
+                    {
+                        "type": "copyCanceled",
+                        "stringId": "StringIds.cCopyCanceledMessage"
+                    },
+                    {
+                        "type": "copySuccess",
+                        "stringId": "StringIds.cCopyComplete"
+                    }
+                ],
+                "isSupportedIdCardCopy": false,
+                "isPrintService": true,
+                "isMediaTypeVisibilityTogglingSupported": true,
+                "multiPageSupportedFromFlatbed": true
+            },
+            "overrides": [
+                {
+                    "runtimeProducts": ["Camden", "Bowie"],
+                    "protos": [],
+                    "data": {},
+                    "patch": [
+                        {
+                            "op": "remove",
+                            "path": "/jobIntentConfiguration/defaultValues/scanJobIntent/autoPaperColorRemoval"
+                        },
+                        {
+                            "op": "remove",
+                            "path": "/jobIntentConfiguration/defaultValues/scanJobIntent/autoPaperColorRemovalLevel"
+                        },
+                        {
+                            "op": "remove",
+                            "path": "/jobIntentConfiguration/defaultValues/scanJobIntent/autoTone"
+                        },
+                        {
+                            "op": "remove",
+                            "path": "/jobIntentConfiguration/defaultValues/scanJobIntent/autoToneLevel"
+                        }
+                    ]
+                },
+                {
+                    "runtimeProducts": ["Busch", "Dagger"],
+                    "protos": [],
+                    "data": {},
+                    "patch": [
+                        {
+                            "op":"replace",
+                            "path": "/jobIntentConfiguration/defaultValues/scanJobIntent/colorMode",
+                            "value": "GRAYSCALE"
+                        },
+                        {
+                            "op": "remove",
+                            "path": "/jobIntentConfiguration/defaultValues/scanJobIntent/autoPaperColorRemoval"
+                        },
+                        {
+                            "op": "remove",
+                            "path": "/jobIntentConfiguration/defaultValues/scanJobIntent/autoPaperColorRemovalLevel"
+                        },
+                        {
+                            "op": "remove",
+                            "path": "/jobIntentConfiguration/defaultValues/scanJobIntent/autoTone"
+                        },
+                        {
+                            "op": "remove",
+                            "path": "/jobIntentConfiguration/defaultValues/scanJobIntent/autoToneLevel"
+                        }
+                    ]
+                },
+                {
+                    "runtimeProducts": ["Bell"],
+                    "protos": [],
+                    "data": {
+                        "jobRetryCount": 0,
+                        "hasSharedPaperPath": false,
+                        "prePrintConfiguration": "ENTERPRISE",
+                        "copyBasicPipeline": false,
+                        "jobIntentConfiguration": {
+                            "defaultValues": {
+                                "scanJobIntent": {
+                                    "inputMediaSizeId": "ANY",
+                                    "outputXResolution": "E600DPI",
+                                    "inputPlexMode": "SIMPLEX",
+                                    "outputYResolution": "E600DPI",
+                                    "scanXResolution": "E600DPI",
+                                    "scanYResolution": "E600DPI",
+                                    "scaleToFitEnabled": true,
+                                    "scaleSelection": "FITTOPAGE",
+                                    "scanFeedOrientation": "SHORTEDGE",
+                                    "originalContentType": "MIXED",
+                                    "colorMode": "AUTODETECT",
+                                    "stampTopLeft": {
+                                        "stampLocation": "TOP_LEFT",
+                                        "stampPolicy": "NONE",
+                                        "stampContents": [
+                                            {
+                                                "stampId": "NONE"
+                                            }
+                                        ],
+                                        "stampTextColor": "BLACK",
+                                        "stampTextFont": "LETTER_GOTHIC",
+                                        "stampTextSize": "TWELVE_POINT",
+                                        "stampStartingPage": 1,
+                                        "stampStartingNumber": 1,
+                                        "stampNumberOfDigits": 1,
+                                        "stampPageNumberingStyle": "NUMBER",
+                                        "stampWhiteBackground": false
+                                    },
+                                    "stampTopCenter": {
+                                        "stampLocation": "TOP_CENTER",
+                                        "stampPolicy": "NONE",
+                                        "stampContents": [
+                                            {
+                                                "stampId": "NONE"
+                                            }
+                                        ],
+                                        "stampTextColor": "BLACK",
+                                        "stampTextFont": "LETTER_GOTHIC",
+                                        "stampTextSize": "TWELVE_POINT",
+                                        "stampStartingPage": 1,
+                                        "stampStartingNumber": 1,
+                                        "stampNumberOfDigits": 1,
+                                        "stampPageNumberingStyle": "NUMBER",
+                                        "stampWhiteBackground": false
+                                    },
+                                    "stampTopRight": {
+                                        "stampLocation": "TOP_RIGHT",
+                                        "stampPolicy": "NONE",
+                                        "stampContents": [
+                                            {
+                                                "stampId": "NONE"
+                                            }
+                                        ],
+                                        "stampTextColor": "BLACK",
+                                        "stampTextFont": "LETTER_GOTHIC",
+                                        "stampTextSize": "TWELVE_POINT",
+                                        "stampStartingPage": 1,
+                                        "stampStartingNumber": 1,
+                                        "stampNumberOfDigits": 1,
+                                        "stampPageNumberingStyle": "NUMBER",
+                                        "stampWhiteBackground": false
+                                    },
+                                    "stampBottomLeft": {
+                                        "stampLocation": "BOTTOM_LEFT",
+                                        "stampPolicy": "NONE",
+                                        "stampContents": [
+                                            {
+                                                "stampId": "NONE"
+                                            }
+                                        ],
+                                        "stampTextColor": "BLACK",
+                                        "stampTextFont": "LETTER_GOTHIC",
+                                        "stampTextSize": "TWELVE_POINT",
+                                        "stampStartingPage": 1,
+                                        "stampStartingNumber": 1,
+                                        "stampNumberOfDigits": 1,
+                                        "stampPageNumberingStyle": "NUMBER",
+                                        "stampWhiteBackground": false
+                                    },
+                                    "stampBottomCenter": {
+                                        "stampLocation": "BOTTOM_CENTER",
+                                        "stampPolicy": "NONE",
+                                        "stampContents": [
+                                            {
+                                                "stampId": "NONE"
+                                            }
+                                        ],
+                                        "stampTextColor": "BLACK",
+                                        "stampTextFont": "LETTER_GOTHIC",
+                                        "stampTextSize": "TWELVE_POINT",
+                                        "stampStartingPage": 1,
+                                        "stampStartingNumber": 1,
+                                        "stampNumberOfDigits": 1,
+                                        "stampPageNumberingStyle": "NUMBER",
+                                        "stampWhiteBackground": false
+                                    },
+                                    "stampBottomRight": {
+                                        "stampLocation": "BOTTOM_RIGHT",
+                                        "stampPolicy": "NONE",
+                                        "stampContents": [
+                                            {
+                                                "stampId": "NONE"
+                                            }
+                                        ],
+                                        "stampTextColor": "BLACK",
+                                        "stampTextFont": "LETTER_GOTHIC",
+                                        "stampTextSize": "TWELVE_POINT",
+                                        "stampStartingPage": 1,
+                                        "stampStartingNumber": 1,
+                                        "stampNumberOfDigits": 1,
+                                        "stampPageNumberingStyle": "NUMBER",
+                                        "stampWhiteBackground": false
+                                    },
+                                    "scanHighlight": 1,
+                                    "scanGamma": 1,
+                                    "shadow": 1,
+                                    "backgroundRemoval": 2,
+                                    "contrast": 4,
+                                    "sharpen": 2,
+                                    "autoPaperColorRemoval":"false",
+                                    "autoPaperColorRemovalLevel":1,
+                                    "autoTone":"false",
+                                    "autoToneLevel":2,
+                                    "blankPageDetection": "Disable",
+                                    "pagesPerSheet": "OneUp",
+                                    "numberUpPresentationDirection": "ToBottomToLeft",
+                                    "imageBorder": "NoBorder",
+                                    "scanImagePreview": "MakeOptional",
+                                    "bookletFormat": "Off",
+                                    "watermarkSettings" : {
+                                        "type": "NONE",
+                                        "textType": "NONE",
+                                        "customText": "",
+                                        "textColor": "BLACK",
+                                        "textSize": "FORTY_POINT",
+                                        "textFont": "LETTER_GOTHIC",
+                                        "onlyFirstPage": false,
+                                        "rotate45": true,
+                                        "backgroundColor": "GRAY",
+                                        "backgroundPattern": "SCROLL",
+                                        "darkness" : 3
+                                    }
+                                },
+                                "outputMediaSizeId": "ANY",
+                                "outputMediaOrientation": "PORTRAIT",
+                                "outputMediaIdType": "STATIONERY",
+                                "outputMediaSource": "AUTOSELECT",
+                                "outputMediaDestination": "STANDARDBIN",
+                                "outputPlexMode": "SIMPLEX",
+                                "outputPlexBinding": "ONE_SIDED",
+                                "copies": 1,
+                                "copyQuality": "NORMAL",
+                                "resize": 91,
+                                "lighterDarker": 4,
+                                "collate": "Collate",
+                                "printingOrder": "FIRST_PAGE_ON_TOP",
+                                "stapleOption": "NONE",
+                                "punchOption": "NONE"
+                            }
+                        },
+                        "stringIds": [
+                            {
+                                "type": "COPY",
+                                "stringId": "StringIds.cCopyAppHeading"
+                            },
+                            {
+                                "type": "scanning",
+                                "stringId": "StringIds.cScanning"
+                            },
+                            {
+                                "type": "copying",
+                                "stringId": "StringIds.cCopying"
+                            },
+                            {
+                                "type": "copyCanceled",
+                                "stringId": "StringIds.cCopyCanceledMessage"
+                            },
+                            {
+                                "type": "copySuccess",
+                                "stringId": "StringIds.cCopyComplete"
+                            }
+                        ],
+                        "isSupportedIdCardCopy": false,
+                        "isPrintService": true,
+                        "isMediaTypeVisibilityTogglingSupported": true,
+                        "multiPageSupportedFromFlatbed": true
+                    }
+                },
+                {
+                    "runtimeProducts": ["Curie"],
+                    "protos": [],
+                    "data": {
+                        "jobRetryCount": 0,
+                        "hasSharedPaperPath": false,
+                        "prePrintConfiguration": "ENTERPRISE",
+                        "copyBasicPipeline": false,
+                        "jobIntentConfiguration": {
+                            "defaultValues": {
+                                "scanJobIntent": {
+                                    "inputMediaSizeId": "ANY",
+                                    "outputXResolution": "E600DPI",
+                                    "inputPlexMode": "SIMPLEX",
+                                    "outputYResolution": "E600DPI",
+                                    "scanXResolution": "E600DPI",
+                                    "scanYResolution": "E600DPI",
+                                    "scaleToFitEnabled": true,
+                                    "scaleSelection": "FITTOPAGE",
+                                    "scanFeedOrientation": "SHORTEDGE",
+                                    "originalContentType": "MIXED",
+                                    "colorMode": "AUTODETECT",
+                                    "stampTopLeft": {
+                                        "stampLocation": "TOP_LEFT",
+                                        "stampPolicy": "NONE",
+                                        "stampContents": [
+                                            {
+                                                "stampId": "NONE"
+                                            }
+                                        ],
+                                        "stampTextColor": "BLACK",
+                                        "stampTextFont": "LETTER_GOTHIC",
+                                        "stampTextSize": "TWELVE_POINT",
+                                        "stampStartingPage": 1,
+                                        "stampStartingNumber": 1,
+                                        "stampNumberOfDigits": 1,
+                                        "stampPageNumberingStyle": "NUMBER",
+                                        "stampWhiteBackground": false
+                                    },
+                                    "stampTopCenter": {
+                                        "stampLocation": "TOP_CENTER",
+                                        "stampPolicy": "NONE",
+                                        "stampContents": [
+                                            {
+                                                "stampId": "NONE"
+                                            }
+                                        ],
+                                        "stampTextColor": "BLACK",
+                                        "stampTextFont": "LETTER_GOTHIC",
+                                        "stampTextSize": "TWELVE_POINT",
+                                        "stampStartingPage": 1,
+                                        "stampStartingNumber": 1,
+                                        "stampNumberOfDigits": 1,
+                                        "stampPageNumberingStyle": "NUMBER",
+                                        "stampWhiteBackground": false
+                                    },
+                                    "stampTopRight": {
+                                        "stampLocation": "TOP_RIGHT",
+                                        "stampPolicy": "NONE",
+                                        "stampContents": [
+                                            {
+                                                "stampId": "NONE"
+                                            }
+                                        ],
+                                        "stampTextColor": "BLACK",
+                                        "stampTextFont": "LETTER_GOTHIC",
+                                        "stampTextSize": "TWELVE_POINT",
+                                        "stampStartingPage": 1,
+                                        "stampStartingNumber": 1,
+                                        "stampNumberOfDigits": 1,
+                                        "stampPageNumberingStyle": "NUMBER",
+                                        "stampWhiteBackground": false
+                                    },
+                                    "stampBottomLeft": {
+                                        "stampLocation": "BOTTOM_LEFT",
+                                        "stampPolicy": "NONE",
+                                        "stampContents": [
+                                            {
+                                                "stampId": "NONE"
+                                            }
+                                        ],
+                                        "stampTextColor": "BLACK",
+                                        "stampTextFont": "LETTER_GOTHIC",
+                                        "stampTextSize": "TWELVE_POINT",
+                                        "stampStartingPage": 1,
+                                        "stampStartingNumber": 1,
+                                        "stampNumberOfDigits": 1,
+                                        "stampPageNumberingStyle": "NUMBER",
+                                        "stampWhiteBackground": false
+                                    },
+                                    "stampBottomCenter": {
+                                        "stampLocation": "BOTTOM_CENTER",
+                                        "stampPolicy": "NONE",
+                                        "stampContents": [
+                                            {
+                                                "stampId": "NONE"
+                                            }
+                                        ],
+                                        "stampTextColor": "BLACK",
+                                        "stampTextFont": "LETTER_GOTHIC",
+                                        "stampTextSize": "TWELVE_POINT",
+                                        "stampStartingPage": 1,
+                                        "stampStartingNumber": 1,
+                                        "stampNumberOfDigits": 1,
+                                        "stampPageNumberingStyle": "NUMBER",
+                                        "stampWhiteBackground": false
+                                    },
+                                    "stampBottomRight": {
+                                        "stampLocation": "BOTTOM_RIGHT",
+                                        "stampPolicy": "NONE",
+                                        "stampContents": [
+                                            {
+                                                "stampId": "NONE"
+                                            }
+                                        ],
+                                        "stampTextColor": "BLACK",
+                                        "stampTextFont": "LETTER_GOTHIC",
+                                        "stampTextSize": "TWELVE_POINT",
+                                        "stampStartingPage": 1,
+                                        "stampStartingNumber": 1,
+                                        "stampNumberOfDigits": 1,
+                                        "stampPageNumberingStyle": "NUMBER",
+                                        "stampWhiteBackground": false
+                                    },
+                                    "scanHighlight": 1,
+                                    "scanGamma": 1,
+                                    "shadow": 1,
+                                    "backgroundRemoval": 2,
+                                    "contrast": 4,
+                                    "sharpen": 2,
+                                    "autoPaperColorRemoval":"false",
+                                    "autoPaperColorRemovalLevel":1,
+                                    "autoTone":"false",
+                                    "autoToneLevel":2,
+                                    "blankPageDetection": "Disable",
+                                    "pagesPerSheet": "OneUp",
+                                    "numberUpPresentationDirection": "ToBottomToLeft",
+                                    "imageBorder": "NoBorder",
+                                    "scanImagePreview": "MakeOptional",
+                                    "bookletFormat": "Off",
+                                    "watermarkSettings" : {
+                                        "type": "NONE",
+                                        "textType": "NONE",
+                                        "customText": "",
+                                        "textColor": "BLACK",
+                                        "textSize": "FORTY_POINT",
+                                        "textFont": "LETTER_GOTHIC",
+                                        "onlyFirstPage": false,
+                                        "rotate45": true,
+                                        "backgroundColor": "GRAY",
+                                        "backgroundPattern": "SCROLL",
+                                        "darkness" : 3
+                                    }
+                                },
+                                "outputMediaSizeId": "ANY",
+                                "outputMediaOrientation": "PORTRAIT",
+                                "outputMediaIdType": "STATIONERY",
+                                "outputMediaSource": "AUTOSELECT",
+                                "outputMediaDestination": "STANDARDBIN",
+                                "outputPlexMode": "SIMPLEX",
+                                "outputPlexBinding": "ONE_SIDED",
+                                "copies": 1,
+                                "copyQuality": "NORMAL",
+                                "resize": 91,
+                                "lighterDarker": 4,
+                                "collate": "Collate",
+                                "printingOrder": "FIRST_PAGE_ON_TOP",
+                                "stapleOption": "NONE"
+                            }
+                        },
+                        "stringIds": [
+                            {
+                                "type": "COPY",
+                                "stringId": "StringIds.cCopyAppHeading"
+                            },
+                            {
+                                "type": "scanning",
+                                "stringId": "StringIds.cScanning"
+                            },
+                            {
+                                "type": "copying",
+                                "stringId": "StringIds.cCopying"
+                            },
+                            {
+                                "type": "copyCanceled",
+                                "stringId": "StringIds.cCopyCanceledMessage"
+                            },
+                            {
+                                "type": "copySuccess",
+                                "stringId": "StringIds.cCopyComplete"
+                            }
+                        ],
+                        "isSupportedIdCardCopy": false,
+                        "isPrintService": true,
+                        "isMediaTypeVisibilityTogglingSupported": true,
+                        "multiPageSupportedFromFlatbed": true
+                    }
+                }
+            ]
+        }
+    ]
+}

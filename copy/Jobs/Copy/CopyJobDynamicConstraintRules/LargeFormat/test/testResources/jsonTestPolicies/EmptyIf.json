@@ -1,0 +1,17 @@
+{
+    "listOfRulesBasedOnTicketValues":[
+        {
+            "settingName":"src/scan/colorMode",
+            "rules":[
+                {
+                    "then":{
+                        "supportedValues": [
+                            {"unionValue":{"value":"COLOR"},"unionValue_type":"ColorMode"},
+                            {"unionValue":{"value":"GRAYSCALE"},"unionValue_type":"ColorMode"}
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

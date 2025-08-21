@@ -1,0 +1,66 @@
+namespace dune.admin.shortcuts;
+
+enum Type : uint32{
+    eSINGLEJOB,
+    eMULTIPLEJOB,
+    eWEBAPP,
+    eLINKAPP,
+    eNATIVEAPP,
+    eCLOUDAPP,
+    eNATIVEWEBAPP
+}
+
+enum Action : uint32{
+    eOPEN,
+    eEXECUTE
+}
+
+enum Origin : uint32{
+    eDEVICE,
+    eEXTERNALSERVICE
+} 
+
+enum State : uint32{
+    eREADY,
+    eNOTCONFIGURED,
+    eBROKEN,
+    eDISABLED
+} 
+
+enum Source : uint32{
+    eSCAN,
+    eUSB,
+    eFAX,
+    eJOBSTORAGE,
+    eNETWORK,
+    eNETWORKFOLDER,
+    eLDAP
+} 
+
+enum Destination : uint32{
+    ePRINT,
+    eUSB,
+    eFAX,
+    eNETWORKFOLDER,
+    eEMAIL,
+    eSHAREPOINT,
+    eHTTP,
+    eJOBSTORAGE
+}
+
+table FactoryShortuctDef {
+    fileName: string;
+    uuid: string;
+    titleStringID: string;
+}
+
+table ShortcutMetadata {
+    shortcutType: Type;
+    isReadOnly: bool;
+    isFactory: bool;
+    isCopyAllowed: bool;
+    action: Action;
+    origin: Origin;
+    source: Source;
+    destinations: [Destination];
+}

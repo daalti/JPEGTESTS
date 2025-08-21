@@ -1,0 +1,12 @@
+namespace dune.print.Jobs;
+
+enum PrintingState:byte
+{
+  NONE = 0,
+  PROCESSING,
+  WAITING,
+  PREPARING_TO_PRINT,
+  PRINTING,
+  DRYING,
+  COMPLETED
+}

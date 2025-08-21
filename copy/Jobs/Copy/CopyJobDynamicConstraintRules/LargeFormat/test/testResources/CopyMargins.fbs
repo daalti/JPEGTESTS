@@ -1,0 +1,8 @@
+namespace dune.imaging.types;
+
+enum CopyMargins:byte
+{
+  OVERSIZE = 0,
+  CLIPCONTENT = 1,
+  ADDTOCONTENT = 2
+}

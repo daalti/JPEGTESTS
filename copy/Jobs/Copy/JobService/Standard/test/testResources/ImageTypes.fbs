@@ -1,0 +1,33 @@
+namespace dune.imaging.types;
+
+enum InstanceType:byte
+{
+    ///< Indicates that the type has not been set or is unknown.
+    NONE,                 
+    ///< Indicates image was produced by a source component with
+    ///< very little processing
+    SOURCE_RAW,
+    ///< An image produced by a source filter which has been processed
+    ///< for a destination.
+    SOURCE_PROCESSED,     
+    ///< A thumbnail representation of an image which does not
+    ///< contain feature marks.
+    THUMBNAIL_MARKED,
+    ///< A thumbnail representation of an image which DOES include
+    ///< feature marks.    
+    THUMBNAIL_UNMARKED,   
+    ///< An image prepared for archive purposes.
+    ARCHIVE
+}
+
+enum ImageType:byte
+{
+    ///< Indicates that the type has not been set or is unknown.
+    NONE,
+    ///< An image of StripImage type    
+    STRIP,
+    ///< An image of BufferedImage type
+    BUFFERED,
+    ///< An image of StreamImage type
+    STREAM
+}

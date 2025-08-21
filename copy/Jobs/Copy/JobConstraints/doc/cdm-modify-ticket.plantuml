@@ -1,0 +1,41 @@
+@startuml
+title
+<size:20><b>Copy Job Ticket modify</b></size>
+end title
+header HP Confidential
+left footer \t(C) Copyright 2022 HP Development Company, L.P.\l\tAll rights reserved
+
+participant client
+participant JobTicketResourceManagerStandard as jtrm
+participant TicketAdapter as ta
+
+activate client
+
+
+client -> jtrm: change setting
+activate jtrm
+jtrm -> jtrm: lookup TicketAdapter
+
+jtrm -> ta: getConstraints(before modify)
+activate ta
+jtrm <- ta: constraints
+deactivate ta
+jtrm -> jtrm: save constraints
+
+jtrm -> ta: modify
+activate ta
+ta -> ta: getConstraints() [see 'cdm-get-constraints.plantuml']
+ta -> ta: set ticket property
+jtrm <- ta: modified
+deactivate ta 
+
+jtrm -> ta: getConstraints(after modify)
+activate ta
+jtrm <- ta: constraints
+deactivate ta 
+
+jtrm -> ui : raiseEvent(constraintsChanged) [if they did change]
+client <- jtrm: ok 
+
+
+@enduml

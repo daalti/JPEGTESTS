@@ -1,0 +1,47 @@
+
+{
+    "ticketSettings":
+    {
+        "scanJobIntent":
+        {
+            "scanSource":"MDF",
+            "inputMediaSizeId":"ANY",
+            "backgroundNoiseRemoval":true,
+            "backgroundColorRemoval":true,
+            "backgroundColorRemovalLevel":0,
+            "longPlotScan":false,
+            "autoDeskew":true,
+            "colorMode":"COLOR",
+            "originalMediaType":"WHITE_PAPER",
+            "edgeToEdgeScan":false,
+            "scanXResolution":"E300DPI",
+            "scanYResolution":"E300DPI",
+            "originalContentType":"MIXED",
+            "scaleSelection":"NONE",
+            "scaleToSize":"A2",
+            "scaleToOutput":"MAINROLL"
+        },       
+        "outputMediaSizeId":"ANY",
+        "outputMediaIdType":"STATIONERY",
+        "outputMediaSource":"AUTOSELECT",
+        "outputMediaDestination":"STANDARDBIN",
+        "outputPlexMode":"SIMPLEX",
+        "outputPlexBinding":"ONE_SIDED",
+        "copies":1,
+        "copyQuality":"BEST",
+        "resize":91,
+        "lighterDarker":4,
+        "collate":"Uncollate"
+    },
+    "metadata":
+    {
+        "shortcutType": "eSINGLEJOB",
+        "isReadOnly": true,
+        "isFactory": true,
+        "isCopyAllowed": true,
+        "action": "eOPEN",
+        "origin": "eEXTERNALSERVICE",
+        "source": "eSCAN",
+        "destinations": ["ePRINT"]
+    }
+}
