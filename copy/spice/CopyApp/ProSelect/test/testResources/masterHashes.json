@@ -1,8 +1,0 @@
-{
-    "ScreenTests": [
-        {
-            "Hash": "f0d725445d7dcfcd0447eeef87bd1247d439667313bebe1686fc60b96c91ff20",
-            "TestName": "LayoutTest-GivenCopyAppProSelectIsStarted_P-WhenTicketModelDefined_ThenLandingScreenShowsCorrectlyScreenCapture-114x200"
-        }
-    ]
-}

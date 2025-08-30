@@ -1,9 +1,0 @@
-include "MediaType.fbs";
-
-namespace dune.imaging.types;
-
-table MediaIdFbs
-{
-  type:MediaIdType;
-  custom:string;
-}

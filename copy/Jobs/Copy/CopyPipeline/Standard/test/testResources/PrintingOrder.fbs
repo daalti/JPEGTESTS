@@ -1,9 +1,0 @@
-namespace dune.imaging.types;
-
-/**< Indicates the printing order of the pages */
-enum PrintingOrder : byte
-{
-    FIRST_PAGE_ON_TOP,
-    LAST_PAGE_ON_TOP,
-    UNKNOWN
-}

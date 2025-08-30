@@ -1,6 +1,0 @@
-namespace dune.imaging.types;
-
-table DistanceFbs {
-    value : int32  = 0;
-    dpi   : uint32 = 1;
-}

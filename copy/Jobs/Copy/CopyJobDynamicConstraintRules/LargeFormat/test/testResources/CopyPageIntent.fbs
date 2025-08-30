@@ -1,8 +1,0 @@
-include "PrintPageIntent.fbs";
-
-namespace dune.job;
-
-table CopyPageIntentFb {
-    printPageIntent:dune.job.PrintPageIntentFb;
-}
-root_type CopyPageIntentFb;

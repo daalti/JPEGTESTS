@@ -1,9 +1,0 @@
-DUNE_ADD_COMPONENT()
-    DUNE_LINK_LIBRARIES(
-        framework/component
-        framework/underware/Interpreter
-        ws/cdm/framework/MicroServiceFactory
-        ws/cdm/services/Copy
-    )
-    DUNE_ADD_SRC_COMPONENT()
-    DUNE_ADD_GTEST()

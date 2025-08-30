@@ -1,7 +1,0 @@
-namespace dune.copy.spice;
-// DUNE_NOT_PERSISTENT
-table QuickCopyFooterConfig {
-    thisIsADummyField: uint32;
-}
-
-root_type QuickCopyFooterConfig;

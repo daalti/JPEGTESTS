@@ -1,7 +1,0 @@
-namespace dune.copy;
-
-enum SheetCollate:byte
-{
-  Collate,
-  Uncollate
-}

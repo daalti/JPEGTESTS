@@ -1,3 +1,0 @@
-namespace dune.print.engine.simulator;
-
-enum InputDevType : uint32 { Tray, Roll }

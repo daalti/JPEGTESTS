@@ -1,4 +1,0 @@
-DUNE_ADD_COMPONENT()
-    DUNE_LINK_LIBRARIES(
-        spice/core)
-    DUNE_SET_FEATURE(Copy)
