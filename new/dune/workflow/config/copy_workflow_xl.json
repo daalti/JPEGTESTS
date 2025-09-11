@@ -1,0 +1,181 @@
+{
+  "name": "Copy Workflow XL",
+  "version": "2.0.0",
+  "description": "Configuration for XL Copy Operations workflow",
+  "initial_state": "HOME",
+  
+  "states": [
+    {
+      "name": "HOME",
+      "type": "simple",
+      "metadata": {
+        "description": "Main home screen",
+        "view_elements": ["view_ui_main_app"]
+      }
+    },
+    {
+      "name": "COPY_LANDING",
+      "type": "simple",
+      "metadata": {
+        "description": "Copy application landing page",
+        "view_elements": ["view_copy_screen", "button_copy_more_options"]
+      }
+    },
+    {
+      "name": "COPY_OPTIONS_LIST",
+      "type": "simple",
+      "metadata": {
+        "description": "Copy options list view",
+        "view_elements": ["view_copy_option_list"]
+      }
+    },
+    {
+      "name": "COPY_WIDGET_CARD",
+      "type": "simple",
+      "metadata": {
+        "description": "Copy widget card view",
+        "view_elements": ["view_copy_widget_card_screen"]
+      }
+    },
+    {
+      "name": "COPY_COLOR_LIST",
+      "type": "simple",
+      "metadata": {
+        "description": "Color selection list",
+        "view_elements": ["view_color_list"]
+      }
+    },
+    {
+      "name": "COPY_ORIGINAL_PAPER_LIST",
+      "type": "simple",
+      "metadata": {
+        "description": "Original paper type selection list",
+        "view_elements": ["view_original_paper_type_list"]
+      }
+    },
+    {
+      "name": "COPY_CONTENT_TYPE_LIST",
+      "type": "simple",
+      "metadata": {
+        "description": "Content type selection list",
+        "view_elements": ["view_content_type_list"]
+      }
+    },
+    {
+      "name": "COPY_RESOLUTION_LIST",
+      "type": "simple",
+      "metadata": {
+        "description": "Resolution selection list",
+        "view_elements": ["view_resolution_list"]
+      }
+    },
+    {
+      "name": "COPY_START_PREVIEW",
+      "type": "simple",
+      "metadata": {
+        "description": "If MDF is present, show preview before starting copy",
+        "view_elements": ["button_done"]
+      }
+    }
+  ],
+  
+"transitions": [
+    {
+      "from_state": "COPY_OPTIONS_LIST",
+      "to_state": "COPY_COLOR_LIST",
+      "metadata": {
+        "button": "combo_color",
+        "animation_duration": 1
+      }
+    },
+    {
+      "from_state": "COPY_COLOR_LIST",
+      "to_state": "COPY_OPTIONS_LIST",
+      "metadata": {
+        "auto_transition": true,
+        "animation_duration": 0.5
+      }
+    },
+    {
+      "from_state": "COPY_OPTIONS_LIST",
+      "to_state": "COPY_ORIGINAL_PAPER_LIST",
+      "metadata": {
+        "button": "combo_original_paper_type",
+        "animation_duration": 0.5
+      }
+    },
+    {
+      "from_state": "COPY_ORIGINAL_PAPER_LIST",
+      "to_state": "COPY_OPTIONS_LIST",
+      "metadata": {
+        "auto_transition": true,
+        "animation_duration": 0.5
+      }
+    },
+    {
+      "from_state": "COPY_OPTIONS_LIST",
+      "to_state": "COPY_CONTENT_TYPE_LIST",
+      "metadata": {
+        "button": "combo_content_type_row",
+        "animation_duration": 0.5
+      }
+    },
+    {
+      "from_state": "COPY_CONTENT_TYPE_LIST",
+      "to_state": "COPY_OPTIONS_LIST",
+      "metadata": {
+        "auto_transition": true,
+        "animation_duration": 0.5
+      }
+    },
+    {
+      "from_state": "COPY_OPTIONS_LIST",
+      "to_state": "COPY_RESOLUTION_LIST",
+      "metadata": {
+        "button": "combo_resolution",
+        "animation_duration": 0.5
+      }
+    },
+    {
+      "from_state": "COPY_RESOLUTION_LIST",
+      "to_state": "COPY_OPTIONS_LIST",
+      "metadata": {
+        "auto_transition": true,
+        "animation_duration": 0.5
+      }
+    },
+     {
+      "from_state": "COPY_LANDING",
+      "to_state": "COPY_START_PREVIEW",
+      "metadata": {
+        "button": "button_start_copy",
+        "animation_duration": 4
+      }
+     },
+    {
+      "from_state": "COPY_START_PREVIEW",
+      "to_state": "COPY_LANDING",
+      "metadata": {
+        "button": "button_done",
+        "animation_duration": 2
+      }
+     }
+  ],
+  "metadata": {
+    "platform": "DUNE",
+    "ui_type": "WORKFLOW",
+    "ui_size": "XL",
+    "feature": "COPY",
+    "supported_locales": ["en_US", "es_ES", "fr_FR"],
+    "performance_thresholds": {
+      "navigation_timeout": 5.0,
+      "option_selection_timeout": 2.0,
+      "start_operation_timeout": 10.0
+    },
+    "error_recovery": {
+      "max_retries": 3,
+      "retry_delay": 1.0,
+      "fallback_state": "HOME"
+    }
+  }
+}
